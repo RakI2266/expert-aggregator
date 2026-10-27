@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expert Letters - Лента заявок</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body style="display:flex">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3L2 8l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="sidebar-logo-text">
+          <h1>Expert Letters</h1>
+          <span>Кабинет эксперта</span>
+        </div>
+      </div>
+    </div>
+        <nav class="sidebar-nav">
+      <a href="feed.html" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+        <span>Все заявки</span>
+      </a>
+      <a href="favorites.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>Избранное</span>
+        <span class="nav-count" id="navFavCount">0</span>
+      </a>
+      <a href="answers.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        <span>Мои ответы</span>
+        <span class="nav-count" id="navAnsCount">0</span>
+      </a>
+      <a href="hidden.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        <span>Скрытые</span>
+      </a>
+<a href="settings.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span>Настройки</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="userAvatar">ЭС</div>
+        <div class="user-details">
+          <div class="name" id="userName">-</div>
+          <div class="role">Экспертная организация</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <h2>Все заявки</h2>
+      <div class="topbar-actions">
+        <button type="button" class="btn btn-secondary" id="logoutBtn">Выйти</button>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="filters-toolbar" id="filtersToolbar">
+        <div class="filter-group filter-search">
+          <label for="searchInput">Поиск</label>
+          <input class="input" id="searchInput" type="search" placeholder="Номер дела, суд, текст вопросов" autocomplete="off">
+        </div>
+        <div class="filter-group">
+          <label for="courtFilter">Суд</label>
+          <div class="select-wrapper">
+            <select id="courtFilter">
+              <option value="">Все суды</option>
+              <option value="__mine__">Мои суды</option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label for="expertiseFilter">Вид экспертизы</label>
+          <div class="select-wrapper">
+            <select id="expertiseFilter">
+              <option value="">Все</option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label for="deadlineFilter">Приём</label>
+          <div class="select-wrapper">
+            <select id="deadlineFilter">
+              <option value="">Все открытые</option>
+              <option value="soon">≤ 3 дн.</option>
+              <option value="week">≤ 7 дн.</option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-actions">
+          <button type="button" class="btn btn-secondary btn-sm" id="btnMoreFilters" aria-expanded="false" aria-controls="filtersAdvanced">Ещё</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="btnSavePreset">Сохранить фильтр</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="btnClearFilters">Сбросить</button>
+        </div>
+      </div>
+      <div class="filters-advanced" id="filtersAdvanced">
+        <div class="filter-group">
+          <label for="pubFrom">Публикация от</label>
+          <input type="date" class="input" id="pubFrom">
+        </div>
+        <div class="filter-group">
+          <label for="pubTo">Публикация до</label>
+          <input type="date" class="input" id="pubTo">
+        </div>
+        <div class="filter-group">
+          <label for="hearingFrom">Дата суда от</label>
+          <input type="date" class="input" id="hearingFrom">
+        </div>
+      </div>
+      <p class="form-hint feed-courts-hint" id="courtsHint" hidden>
+        Суды не выбраны - фильтр «Мои суды» недоступен. <a href="settings.html">Выберите суды в настройках</a>, и лента будет показывать их по умолчанию.
+      </p>
+      <div class="saved-presets" id="savedPresets"></div>
+      <div class="filter-chips" id="filterChips"></div>
+
+      <div class="feed-toolbar">
+        <span class="feed-count" id="feedCount" aria-live="polite">Найдено: 0</span>
+        <div class="feed-sort">
+          <label for="sortSelect">Сортировка</label>
+          <select id="sortSelect" class="input">
+            <option value="new">Сначала новые</option>
+            <option value="deadline">Скоро дедлайн приёма</option>
+            <option value="hearing">Скоро заседание</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="feed-list" id="feedList"></div>
+      <div class="empty-state" id="emptyState" style="display:none">
+        <div class="empty-state-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></div>
+        <h3>Заявок не найдено</h3>
+        <p id="emptyText">По выбранным фильтрам нет открытых заявок. Сбросьте фильтры или загляните позже.</p>
+        <button type="button" class="btn btn-secondary btn-sm" id="btnClearFilters2">Показать все заявки</button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    [hidden] { display:none !important; }
+    .feed-toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:4px 0 12px; }
+    .feed-sort { display:flex; align-items:center; gap:8px; min-width:0; }
+    .feed-sort label { font-size:13px; color:var(--text-secondary); font-weight:600; white-space:nowrap; }
+    .feed-sort select { max-width:100%; min-width:0; width:auto; padding:7px 10px; font-size:13.5px; }
+    .feed-courts-hint { font-size:13px; color:var(--text-secondary); margin:0 0 10px; }
+    .feed-card-title a { color:inherit; text-decoration:none; }
+    .feed-card-title a:hover { text-decoration:underline; }
+    .feed-card-title { overflow-wrap:anywhere; }
+    .feed-card-meta span { overflow-wrap:anywhere; }
+    .feed-card-badges { display:inline-flex; gap:6px; align-items:center; flex-wrap:wrap; }
+    .feed-card { cursor:pointer; }
+    .preset-name { overflow-wrap:anywhere; }
+  </style>
+
+  <script src="../js/app.js"></script>
+  <script>
+  (function () {
+    const state = requireAuth('expert');
+    if (!state) return;
+    const user = state.currentUser;
+    document.getElementById('userName').textContent = user.orgName || user.name;
+    document.getElementById('userAvatar').textContent = (user.orgName || user.name).slice(0, 2);
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+
+    function refreshNavCounts() {
+      try {
+        const fav = getFavorites().length;
+        const ans = getMyAnswers(user.id).length;
+        const elF = document.getElementById('navFavCount');
+        const elA = document.getElementById('navAnsCount');
+        if (elF) { elF.textContent = fav; elF.classList.toggle('has-items', fav > 0); }
+        if (elA) { elA.textContent = ans; elA.classList.toggle('has-items', ans > 0); }
+      } catch (e) {}
+    }
+    refreshNavCounts();
+
+    const PRESETS_KEY = 'el_feed_presets_' + user.id;
+    const ACTIVE_KEY = 'el_feed_active_' + user.id;
+    const SEEN_KEY = 'el_seen_' + user.id;
+    const SORT_KEY = 'el_feed_sort_' + user.id;
+    const myCourts = getExpertDefaultCourts(user);
+
+    function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+    function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+    function lsDel(k) { try { localStorage.removeItem(k); } catch (e) {} }
+
+    function getSeen() {
+      try { const a = JSON.parse(lsGet(SEEN_KEY) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; }
+    }
+
+    const $ = id => document.getElementById(id);
+    const courtSel = $('courtFilter');
+    if (!myCourts.length) {
+      const opt = courtSel.querySelector('option[value="__mine__"]');
+      if (opt) opt.remove();
+      $('courtsHint').hidden = false;
+    } else {
+      const opt = courtSel.querySelector('option[value="__mine__"]');
+      opt.textContent = 'Мои суды (' + myCourts.length + ')';
+    }
+    COURTS.forEach(c => {
+      const o = document.createElement('option');
+      o.value = c; o.textContent = c;
+      courtSel.appendChild(o);
+    });
+    const expSel = $('expertiseFilter');
+    EXPERTISE_TYPES.forEach(tp => {
+      const o = document.createElement('option');
+      o.value = tp; o.textContent = tp;
+      expSel.appendChild(o);
+    });
+    const sortSel = $('sortSelect');
+    const savedSort = lsGet(SORT_KEY);
+    if (savedSort && sortSel.querySelector('option[value="' + savedSort.replace(/[^a-z]/g, '') + '"]')) sortSel.value = savedSort;
+
+    const defaultCourt = myCourts.length ? '__mine__' : '';
+    let activePresetId = null;
+
+    function getFilterState() {
+      return {
+        q: $('searchInput').value || '',
+        court: courtSel.value,
+        expertise: expSel.value,
+        pubFrom: $('pubFrom').value,
+        pubTo: $('pubTo').value,
+        hearingFrom: $('hearingFrom').value,
+        deadline: $('deadlineFilter').value,
+        advanced: $('filtersAdvanced').classList.contains('open')
+      };
+    }
+
+    function setSelect(sel, v) {
+      sel.value = v || '';
+      if (sel.value !== (v || '')) sel.value = '';
+    }
+
+    function setAdvanced(open) {
+      $('filtersAdvanced').classList.toggle('open', open);
+      $('filtersToolbar').classList.toggle('with-advanced', open);
+      $('btnMoreFilters').textContent = open ? 'Скрыть' : 'Ещё';
+      $('btnMoreFilters').setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    function applyFilterState(s) {
+      if (!s) return;
+      $('searchInput').value = s.q || '';
+      setSelect(courtSel, s.court);
+      setSelect(expSel, s.expertise ? normalizeExpertiseType(s.expertise) : '');
+      $('pubFrom').value = s.pubFrom || '';
+      $('pubTo').value = s.pubTo || '';
+      $('hearingFrom').value = s.hearingFrom || '';
+      setSelect($('deadlineFilter'), s.deadline);
+      setAdvanced(!!s.advanced);
+    }
+
+    function loadPresets() {
+      try {
+        const list = JSON.parse(lsGet(PRESETS_KEY) || '[]');
+        return Array.isArray(list) ? list.filter(p => p && typeof p.id === 'string') : [];
+      } catch (e) { return []; }
+    }
+    function savePresets(list) { lsSet(PRESETS_KEY, JSON.stringify(list)); }
+    function uidLocal() { return 'pf-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }
+
+    function askName(title, def) {
+      const name = prompt(title, def || '');
+      if (name === null) return null;
+      return String(name).trim().slice(0, 60);
+    }
+
+    function saveCurrentPreset() {
+      const s = getFilterState();
+      const hasAny = s.q || s.court || s.expertise || s.pubFrom || s.pubTo || s.hearingFrom || s.deadline;
+      if (!hasAny) { toast('Настройте хотя бы один параметр фильтра', 'error'); return; }
+      const list = loadPresets();
+      if (activePresetId) {
+        const existing = list.find(p => p.id === activePresetId);
+        if (existing && confirm('Обновить сохранённый фильтр «' + existing.name + '»?\n\nОК - обновить\nОтмена - сохранить как новый')) {
+          existing.state = s;
+          savePresets(list);
+          toast('Фильтр «' + existing.name + '» обновлён', 'success');
+          renderPresets();
+          return;
+        }
+      }
+      const name = askName('Название фильтра:', activePresetId ? '' : 'Мой фильтр');
+      if (name === null) return;
+      const preset = { id: uidLocal(), name: name || 'Мой фильтр', state: s };
+      list.push(preset);
+      savePresets(list);
+      activePresetId = preset.id;
+      lsSet(ACTIVE_KEY, activePresetId);
+      toast('Фильтр «' + preset.name + '» сохранён', 'success');
+      renderPresets();
+    }
+
+    function applyPreset(id) {
+      const p = loadPresets().find(x => x.id === id);
+      if (!p) return;
+      activePresetId = id;
+      lsSet(ACTIVE_KEY, id);
+      applyFilterState(p.state);
+      renderAll();
+    }
+
+    function renamePreset(id) {
+      const list = loadPresets();
+      const p = list.find(x => x.id === id);
+      if (!p) return;
+      const name = askName('Новое название:', p.name);
+      if (name === null) return;
+      if (!name) { toast('Название не может быть пустым', 'error'); return; }
+      p.name = name;
+      savePresets(list);
+      toast('Переименовано', 'success');
+      renderPresets();
+    }
+
+    function deletePreset(id) {
+      const list = loadPresets();
+      const p = list.find(x => x.id === id);
+      if (!p) return;
+      if (!confirm('Удалить фильтр «' + p.name + '»?')) return;
+      savePresets(list.filter(x => x.id !== id));
+      if (activePresetId === id) { activePresetId = null; lsDel(ACTIVE_KEY); }
+      toast('Фильтр удалён', 'success');
+      renderPresets();
+    }
+
+    function renderPresets() {
+      const el = $('savedPresets');
+      const list = loadPresets();
+      if (!list.length) { el.innerHTML = ''; return; }
+      el.innerHTML = '<div class="presets-label">Сохранённые фильтры</div><div class="presets-list">' +
+        list.map(p => {
+          const active = p.id === activePresetId ? ' active' : '';
+          const nm = esc(p.name);
+          return '<div class="preset-chip' + active + '">' +
+            '<button type="button" class="preset-name" data-act="apply" data-id="' + esc(p.id) + '" title="Применить">' + nm + '</button>' +
+            '<button type="button" class="preset-act" data-act="rename" data-id="' + esc(p.id) + '" aria-label="Переименовать фильтр ' + nm + '">✎</button>' +
+            '<button type="button" class="preset-act danger" data-act="delete" data-id="' + esc(p.id) + '" aria-label="Удалить фильтр ' + nm + '">×</button>' +
+          '</div>';
+        }).join('') + '</div>';
+    }
+    $('savedPresets').addEventListener('click', e => {
+      const b = e.target.closest('button[data-act]');
+      if (!b) return;
+      const id = b.dataset.id;
+      if (b.dataset.act === 'apply') applyPreset(id);
+      else if (b.dataset.act === 'rename') renamePreset(id);
+      else if (b.dataset.act === 'delete') deletePreset(id);
+    });
+
+    function clearFilters() {
+      applyFilterState({ advanced: $('filtersAdvanced').classList.contains('open') });
+      activePresetId = null;
+      lsDel(ACTIVE_KEY);
+      renderAll();
+    }
+
+    function onFilterChange() { renderFeed(); renderChips(); }
+
+    function renderChips() {
+      const s = getFilterState();
+      const chips = [];
+      if (s.q) chips.push({ k: 'q', label: 'Поиск: ' + s.q });
+      if (s.court === '__mine__') chips.push({ k: 'court', label: 'Мои суды' });
+      else if (s.court) chips.push({ k: 'court', label: s.court });
+      if (s.expertise) chips.push({ k: 'expertise', label: s.expertise });
+      if (s.deadline === 'soon') chips.push({ k: 'deadline', label: 'Приём ≤ 3 дн.' });
+      if (s.deadline === 'week') chips.push({ k: 'deadline', label: 'Приём ≤ 7 дн.' });
+      if (s.pubFrom) chips.push({ k: 'pubFrom', label: 'Публикация с ' + formatDate(s.pubFrom) });
+      if (s.pubTo) chips.push({ k: 'pubTo', label: 'Публикация до ' + formatDate(s.pubTo) });
+      if (s.hearingFrom) chips.push({ k: 'hearingFrom', label: 'Суд с ' + formatDate(s.hearingFrom) });
+      const el = $('filterChips');
+      el.innerHTML = chips.map(c =>
+        '<span class="filter-chip">' + esc(c.label) +
+        '<button type="button" data-chip="' + c.k + '" aria-label="Убрать фильтр: ' + esc(c.label) + '">×</button></span>'
+      ).join('');
+    }
+    $('filterChips').addEventListener('click', e => {
+      const b = e.target.closest('button[data-chip]');
+      if (!b) return;
+      const map = { q: 'searchInput', court: 'courtFilter', expertise: 'expertiseFilter',
+        deadline: 'deadlineFilter', pubFrom: 'pubFrom', pubTo: 'pubTo', hearingFrom: 'hearingFrom' };
+      const id = map[b.dataset.chip];
+      if (id) $(id).value = '';
+      onFilterChange();
+    });
+
+    function matchesMyCourts(r) {
+      const court = String(r.court || '').toLowerCase();
+      return myCourts.some(pc => court === String(pc).toLowerCase());
+    }
+
+    function getFilteredList() {
+      const s = getFilterState();
+      let list = getOpenRequestsForExpert().filter(r => !hasActiveAnswer(r.id, user.id));
+      if (s.court === '__mine__') list = list.filter(matchesMyCourts);
+      else if (s.court) list = list.filter(r => r.court === s.court);
+      if (s.expertise) {
+        const want = normalizeExpertiseType(s.expertise);
+        list = list.filter(r => normalizeExpertiseType(r.expertiseType) === want);
+      }
+      if (s.q.trim()) {
+        const q = s.q.trim().toLowerCase();
+        list = list.filter(r => [r.caseNumber, r.court, r.expertiseType, r.additionalInfo]
+          .concat(r.questions || []).some(v => String(v || '').toLowerCase().includes(q)));
+      }
+      if (s.pubFrom) list = list.filter(r => r.publishedAt && localDateStr(r.publishedAt) >= s.pubFrom);
+      if (s.pubTo) list = list.filter(r => r.publishedAt && localDateStr(r.publishedAt) <= s.pubTo);
+      if (s.hearingFrom) list = list.filter(r => r.hearingDate && r.hearingDate >= s.hearingFrom);
+      if (s.deadline) {
+        const max = s.deadline === 'soon' ? 3 : 7;
+        list = list.filter(r => { const d = daysUntilDate(r.acceptUntil); return d != null && d >= 0 && d <= max; });
+      }
+      const sort = sortSel.value;
+      const byNew = (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt);
+      if (sort === 'deadline') {
+        list.sort((a, b) => String(a.acceptUntil || '9999').localeCompare(String(b.acceptUntil || '9999')) || byNew(a, b));
+      } else if (sort === 'hearing') {
+        const key = r => r.hearingDate ? r.hearingDate + ' ' + (r.hearingTime || '99:99') : '9999';
+        list.sort((a, b) => key(a).localeCompare(key(b)) || byNew(a, b));
+      } else list.sort(byNew);
+      return list;
+    }
+
+    function plural(n, one, few, many) {
+      const m10 = n % 10, m100 = n % 100;
+      if (m10 === 1 && m100 !== 11) return one;
+      if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
+      return many;
+    }
+
+    function renderFeed() {
+      const list = getFilteredList();
+      const el = $('feedList');
+      const empty = $('emptyState');
+      $('feedCount').textContent = 'Найдено: ' + list.length + ' ' + plural(list.length, 'заявка', 'заявки', 'заявок');
+      if (!list.length) {
+        el.innerHTML = '';
+        empty.style.display = 'block';
+        $('emptyText').textContent = courtSel.value === '__mine__'
+          ? 'По вашим судам сейчас нет открытых заявок. Выберите «Все суды» или загляните позже.'
+          : 'По выбранным фильтрам нет открытых заявок. Сбросьте фильтры или загляните позже.';
+        return;
+      }
+      empty.style.display = 'none';
+      const seen = getSeen();
+      el.innerHTML = list.map(r => {
+        const fav = isFavorite(r.id);
+        const rid = encodeURIComponent(r.id);
+        const isNew = !seen.includes(r.id);
+        const n = countActiveAnswers(r);
+        return '<div class="feed-card" data-id="' + esc(r.id) + '">' +
+          '<div class="feed-card-header">' +
+            '<div class="feed-card-title"><a href="request.html?id=' + rid + '">' + esc(r.caseNumber) + '</a></div>' +
+            '<span class="feed-card-badges">' +
+              (isNew ? '<span class="badge badge-new">Новая</span>' : '') +
+              '<span class="answers-count-pill">Откликов: ' + n + '</span>' +
+              appStatusBadge(r) +
+            '</span>' +
+          '</div>' +
+          '<div class="feed-card-meta">' +
+            '<span>' + esc(r.court) + '</span>' +
+            '<span>' + esc(normalizeExpertiseType(r.expertiseType)) + '</span>' +
+            '<span>Опубликована: <strong>' + esc(formatDateTime(r.publishedAt)) + '</strong></span>' +
+            '<span>Приём до: <strong>' + esc(formatDate(r.acceptUntil)) + '</strong> (' + esc(daysLeft(r.acceptUntil)) + ')</span>' +
+            (r.hearingDate ? '<span>Суд: ' + esc(formatHearing(r.hearingDate, r.hearingTime)) + '</span>' : '') +
+          '</div>' +
+          '<div class="feed-card-actions">' +
+            '<a href="request.html?id=' + rid + '" class="btn btn-primary btn-sm">Открыть</a>' +
+            '<button type="button" class="btn btn-secondary btn-sm" data-act="fav" aria-pressed="' + (fav ? 'true' : 'false') + '">' + (fav ? '★ В избранном' : '☆ В избранное') + '</button>' +
+            '<button type="button" class="btn btn-ghost btn-sm" data-act="hide">Скрыть</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    $('feedList').addEventListener('click', e => {
+      const card = e.target.closest('.feed-card');
+      if (!card) return;
+      const id = card.dataset.id;
+      const btn = e.target.closest('button[data-act]');
+      if (btn) {
+        e.stopPropagation();
+        if (btn.dataset.act === 'fav') doFav(id);
+        else if (btn.dataset.act === 'hide') doHide(id);
+        return;
+      }
+      if (e.target.closest('a, button, input, select, label')) return;
+      location.href = 'request.html?id=' + encodeURIComponent(id);
+    });
+
+    function doFav(id) {
+      const wasFav = isFavorite(id);
+      const on = toggleFavorite(id);
+      if (on !== wasFav) toast(on ? 'Добавлено в избранное' : 'Убрано из избранного', 'success');
+      renderFeed();
+      refreshNavCounts();
+    }
+    function doHide(id) {
+      hideRequest(id);
+      renderFeed();
+      toast('Заявка скрыта', 'success', {
+        actionLabel: 'Отменить',
+        onAction: () => { unhideRequest(id); renderFeed(); toast('Заявка возвращена в ленту', 'success'); }
+      });
+    }
+
+    function renderAll() { renderFeed(); renderChips(); renderPresets(); }
+
+    // Слушатели
+    let searchT = null;
+    $('searchInput').addEventListener('input', () => { clearTimeout(searchT); searchT = setTimeout(onFilterChange, 120); });
+    ['courtFilter', 'expertiseFilter', 'deadlineFilter', 'pubFrom', 'pubTo', 'hearingFrom'].forEach(id =>
+      $(id).addEventListener('change', onFilterChange));
+    sortSel.addEventListener('change', () => { lsSet(SORT_KEY, sortSel.value); renderFeed(); });
+    $('btnMoreFilters').addEventListener('click', () => setAdvanced(!$('filtersAdvanced').classList.contains('open')));
+    $('btnSavePreset').addEventListener('click', saveCurrentPreset);
+    $('btnClearFilters').addEventListener('click', clearFilters);
+    $('btnClearFilters2').addEventListener('click', clearFilters);
+
+    // Начальное состояние: активный сохранённый фильтр или «Мои суды» по умолчанию
+    activePresetId = lsGet(ACTIVE_KEY) || null;
+    const activePreset = activePresetId ? loadPresets().find(x => x.id === activePresetId) : null;
+    if (activePreset) applyFilterState(activePreset.state);
+    else { activePresetId = null; setSelect(courtSel, defaultCourt); }
+
+    renderAll();
+    mountNotificationBell();
+  })();
+  </script>
+</body>
+</html>

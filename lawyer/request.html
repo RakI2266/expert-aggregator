@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expert Letters - Заявка</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+    .req-section { margin-bottom: 14px; }
+    .answers-toolbar { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 18px; padding: 12px 18px; border-bottom: 1px solid #F1F5F9; }
+    .answers-toolbar .filter-group label { font-size: 11.5px; }
+    .answers-toolbar .check-inline { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 500; cursor: pointer; min-height: 36px; }
+    .compare-wrap { padding: 12px 18px 0; }
+    .answers-scroll { overflow-x: auto; }
+    .org-cell { display: flex; align-items: flex-start; gap: 8px; }
+    .org-cell .org-main { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; min-width: 0; }
+    .shortlist-btn { flex: 0 0 auto; background: none; border: 0; padding: 0 2px; font-size: 18px; line-height: 1; cursor: pointer; color: #94A3B8; min-width: 28px; min-height: 28px; }
+    .shortlist-btn[aria-pressed="true"] { color: #F59E0B; }
+    .file-btn { text-align: left; overflow-wrap: anywhere; min-width: 150px; max-width: 220px; white-space: normal; }
+    .comment-cell { max-width: 240px; font-size: 13px; color: var(--text-secondary); word-break: break-word; }
+    .sub-muted { display: block; font-size: 12px; color: var(--text-muted); font-weight: 500; margin-top: 2px; }
+    .row-actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start; }
+    .row-actions .chat-wrap { display: inline-flex; flex-direction: column; gap: 2px; max-width: 190px; }
+    .row-actions .tooltip-hint { font-size: 11.5px; color: var(--text-muted); line-height: 1.3; white-space: normal; }
+    .modal-card, .modal { max-height: calc(100vh - 32px); overflow: auto; }
+    .reason-fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+    .reason-fieldset legend { font-size: 13px; font-weight: 600; margin-bottom: 8px; padding: 0; }
+    .modal-card .form-group { margin-top: 12px; }
+    .modal-card .select-wrapper select { width: 100%; min-width: 0; }
+    .outcome-grid { display: grid; grid-template-columns: max-content 1fr; gap: 8px 16px; font-size: 14px; }
+    .outcome-grid dt { color: var(--text-muted); font-weight: 500; }
+    .outcome-grid dd { margin: 0; font-weight: 600; word-break: break-word; }
+    .reopen-box { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: flex-end; }
+    .reopen-box .form-group { margin: 0; }
+    .edit-history { list-style: none; margin: 0; padding: 0; }
+    .edit-history > li { padding: 12px 0; border-bottom: 1px solid #F1F5F9; }
+    .edit-history > li:last-child { border-bottom: 0; }
+    .edit-history .edit-date { font-size: 12.5px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+    .diff-list { word-break: break-word; }
+    .questions-list li, .data-cell .value { word-break: break-word; }
+    .notfound-card { text-align: center; }
+    @media (max-width: 720px) {
+      .outcome-grid { grid-template-columns: 1fr; gap: 2px; }
+      .outcome-grid dd { margin-bottom: 8px; }
+      .file-btn, .comment-cell, .row-actions .chat-wrap { max-width: none; min-width: 0; }
+      .answers-toolbar { padding: 12px; }
+      .compare-wrap { padding: 12px 12px 0; }
+    }
+  </style>
+</head>
+<body style="display:flex">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3L2 8l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="sidebar-logo-text">
+          <h1>Expert Letters</h1>
+          <span>Личный кабинет юриста</span>
+        </div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <span>Мои заявки</span>
+      </a>
+      <a href="create.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        <span>Создать заявку</span>
+      </a>
+      <a href="settings.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span>Настройки</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="userAvatar">-</div>
+        <div class="user-details">
+          <div class="name" id="userName">-</div>
+          <div class="role">Юрист</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h2 id="pageTitle">-</h2>
+      </div>
+      <div class="topbar-actions">
+        <a href="dashboard.html" class="btn btn-secondary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          К списку
+        </a>
+        <button type="button" class="btn btn-secondary" id="logoutBtn">Выйти</button>
+      </div>
+    </header>
+
+    <div class="content content-wide content-compact" id="pageContent">
+      <div id="expiredBanner" class="req-section" hidden></div>
+
+      <div class="card" id="dataCard">
+        <div class="card-header">
+          <h3>Данные заявки</h3>
+          <span id="statusBadge"></span>
+        </div>
+        <div class="card-body" id="dataBody"></div>
+      </div>
+
+      <div class="action-bar" id="actionBar"></div>
+
+      <div class="card req-section" id="outcomeCard" hidden></div>
+
+      <div class="card req-section" id="answersCard">
+        <div class="card-header responses-header">
+          <h3 id="responsesTitle" tabindex="-1">Ответы экспертов</h3>
+          <button type="button" class="btn btn-secondary btn-sm" id="downloadAllBtn" hidden>Скачать все (ZIP)</button>
+        </div>
+        <div id="compareSummary" class="compare-wrap" hidden></div>
+        <div id="answersToolbar" class="answers-toolbar" hidden></div>
+        <div id="responsesBody">
+          <div class="empty-state"><p>Ответов пока нет</p></div>
+        </div>
+      </div>
+
+      <div class="card req-section" id="editHistoryCard" hidden>
+        <div class="card-header"><h3>История изменений заявки</h3></div>
+        <div class="card-body" id="editHistoryBody"></div>
+      </div>
+
+      <div class="card chat-card-wrap" id="chatCard">
+        <div class="card-body" style="padding:0" id="chatMount" tabindex="-1"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="historyModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="historyModalTitle">
+      <div class="modal-header">
+        <h3 id="historyModalTitle">История изменений ответа</h3>
+        <button type="button" class="modal-close" data-close-modal aria-label="Закрыть">&times;</button>
+      </div>
+      <div class="modal-body" id="historyBody"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="closeModal">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="closeModalTitle" aria-describedby="closeModalHint">
+      <h3 id="closeModalTitle">Закрыть приём ответов</h3>
+      <p class="modal-hint" id="closeModalHint">Новые ответы приниматься не будут. Эксперты, приславшие предложения, получат уведомление с результатом.</p>
+      <form id="closeForm" novalidate>
+        <fieldset class="reason-fieldset">
+          <legend>Причина закрытия <span class="req-mark" aria-hidden="true">*</span></legend>
+          <div class="reason-list" id="reasonList"></div>
+        </fieldset>
+        <div class="form-group" id="selectAnswerWrap" hidden>
+          <label for="selectedAnswer">Какое предложение выбрано <span class="req-mark" aria-hidden="true">*</span></label>
+          <div class="select-wrapper"><select id="selectedAnswer"></select></div>
+        </div>
+        <div class="form-group" id="reasonNoteWrap" hidden>
+          <label for="closeReasonNote">Пояснение <span class="req-mark" aria-hidden="true">*</span></label>
+          <textarea id="closeReasonNote" rows="2" placeholder="Кратко опишите причину"></textarea>
+        </div>
+        <div class="field-error" id="closeError" role="alert"></div>
+        <div class="preview-actions" style="margin-top:16px">
+          <button type="submit" class="btn btn-danger" id="confirmCloseBtn">Закрыть приём</button>
+          <button type="button" class="btn btn-secondary" data-close-modal>Отмена</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/chat-ui.js"></script>
+  <script>
+  (function () {
+    const state = requireAuth('lawyer');
+    if (!state) return;
+    const user = state.currentUser;
+    const userName = user.name || '-';
+    document.getElementById('userName').textContent = userName;
+    document.getElementById('userAvatar').textContent = userName.split(/\s+/).filter(Boolean).map(w => w[0]).slice(0, 2).join('') || '-';
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+
+    const DOWNLOAD_STUB = 'Демо: скачивание файла появится в рабочей версии';
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id');
+    let request = id ? getRequest(id) : null;
+
+    // ---------- Несуществующая / чужая заявка ----------
+    if (!request || request.lawyerId !== user.id) {
+      document.getElementById('pageTitle').textContent = 'Заявка не найдена';
+      document.title = 'Expert Letters - Заявка не найдена';
+      document.getElementById('pageContent').innerHTML =
+        '<div class="card notfound-card"><div class="empty-state">' +
+          '<h3>Заявка не найдена</h3>' +
+          '<p>Возможно, ссылка устарела или заявка принадлежит другому пользователю.</p>' +
+          '<a href="dashboard.html" class="btn btn-primary btn-sm">К списку заявок</a>' +
+        '</div></div>';
+      mountNotificationBell();
+      return;
+    }
+
+    // «Новый» - считаем ДО отметки о просмотре
+    const unseenIds = new Set(getUnseenAnswerIds(request));
+    markAnswersViewed(request.id);
+    request = getRequest(request.id);
+
+    // ---------- Модалки: доступность ----------
+    const FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+    const modalStack = [];
+    function openModal(ov, focusEl, restoreSel) {
+      ov._opener = document.activeElement;
+      ov._restoreSel = restoreSel || null;
+      ov.classList.add('show');
+      if (!modalStack.includes(ov)) modalStack.push(ov);
+      const f = focusEl || ov.querySelector(FOCUSABLE);
+      if (f) { f.focus(); if (document.activeElement !== f) setTimeout(() => f.focus(), 0); }
+    }
+    function closeModal(ov) {
+      ov.classList.remove('show');
+      const i = modalStack.indexOf(ov);
+      if (i >= 0) modalStack.splice(i, 1);
+      let target = ov._opener;
+      if (!target || !document.body.contains(target)) target = ov._restoreSel ? document.querySelector(ov._restoreSel) : null;
+      if (!target) target = document.getElementById('responsesTitle');
+      if (target && target.focus) target.focus();
+    }
+    document.addEventListener('keydown', e => {
+      const top = modalStack[modalStack.length - 1];
+      if (!top) return;
+      if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closeModal(top); return; }
+      if (e.key === 'Tab') {
+        const items = Array.from(top.querySelectorAll(FOCUSABLE)).filter(el => el.offsetParent !== null);
+        if (!items.length) return;
+        const first = items[0], last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        else if (!top.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+      }
+    }, true);
+    document.querySelectorAll('.modal-overlay').forEach(ov => {
+      ov.addEventListener('click', e => {
+        if (e.target === ov || e.target.closest('[data-close-modal]')) closeModal(ov);
+      });
+    });
+
+    // ---------- Данные заявки ----------
+    function renderHeader() {
+      document.getElementById('pageTitle').textContent = request.caseNumber;
+      document.title = 'Expert Letters - ' + request.caseNumber;
+      document.getElementById('statusBadge').innerHTML = appStatusBadge(request);
+    }
+
+    function renderData() {
+      const st = effectiveStatus(request);
+      const left = st === 'accepting' ? ' <span class="days">(' + esc(daysLeft(request.acceptUntil)) + ')</span>' : '';
+      const atts = request.attachments || [];
+      document.getElementById('dataBody').innerHTML =
+        '<div class="data-grid">' +
+          '<div class="data-cell"><div class="label">Номер дела</div><div class="value highlight">' + esc(request.caseNumber) + '</div></div>' +
+          '<div class="data-cell"><div class="label">Приём ответов до</div><div class="value highlight">' + esc(formatDate(request.acceptUntil)) + left + '</div></div>' +
+          '<div class="data-cell"><div class="label">Дата заседания</div><div class="value">' + esc(formatHearing(request.hearingDate, request.hearingTime)) + '</div></div>' +
+          '<div class="data-cell span-2"><div class="label">Суд</div><div class="value">' + esc(request.court) + '</div></div>' +
+          '<div class="data-cell"><div class="label">Опубликована</div><div class="value">' + esc(formatDateTime(request.publishedAt)) + '</div></div>' +
+          '<div class="data-cell span-3"><div class="label">Вид экспертизы</div><div class="value">' + esc(request.expertiseType) + '</div></div>' +
+          '<div class="data-cell span-3"><div class="label">Вопросы</div><div class="value"><ol class="questions-list">' +
+            (request.questions || []).map(q => '<li>' + esc(q) + '</li>').join('') + '</ol></div></div>' +
+          (request.additionalInfo ? '<div class="data-cell span-3"><div class="label">Доп. информация</div><div class="value">' + esc(request.additionalInfo) + '</div></div>' : '') +
+          (atts.length ? '<div class="data-cell span-3"><div class="label">Вложения</div><div class="value"><ul class="attach-list">' +
+            atts.map(f => '<li>📄 ' + esc(f) + '</li>').join('') + '</ul></div></div>' : '') +
+        '</div>';
+    }
+
+    function renderBanner() {
+      const el = document.getElementById('expiredBanner');
+      if (effectiveStatus(request) !== 'expired') { el.hidden = true; el.innerHTML = ''; return; }
+      const n = countActiveAnswers(request);
+      el.hidden = false;
+      el.innerHTML =
+        '<div class="lock-banner" role="status">' +
+          '<span class="lock-banner-icon" aria-hidden="true">⏰</span>' +
+          '<div class="lock-banner-text"><strong>Срок приёма истёк - выберите эксперта или закройте приём</strong>' +
+            '<div>Приём закончился ' + esc(formatDate(request.acceptUntil)) + '. Получено ответов: ' + n + '. Эксперты ждут решения.</div></div>' +
+          '<button type="button" class="btn btn-primary btn-sm" id="expiredCloseBtn">' + (n ? 'Выбрать эксперта / закрыть' : 'Закрыть приём') + '</button>' +
+        '</div>';
+      document.getElementById('expiredCloseBtn').addEventListener('click', () => openCloseModal({}));
+    }
+
+    function renderActions() {
+      const bar = document.getElementById('actionBar');
+      if (request.status !== 'closed') {
+        const expired = effectiveStatus(request) === 'expired';
+        bar.hidden = false;
+        bar.innerHTML =
+          '<a href="create.html?edit=' + encodeURIComponent(request.id) + '" class="btn btn-secondary">Редактировать</a>' +
+          '<button type="button" class="btn btn-danger" id="openCloseBtn">Закрыть приём ответов</button>' +
+          '<span class="action-hint">' + (expired ? 'Чтобы продлить приём - измените срок в заявке' : 'Заявка исчезнет из ленты экспертов') + '</span>';
+        document.getElementById('openCloseBtn').addEventListener('click', () => openCloseModal({}));
+      } else {
+        bar.hidden = true;
+        bar.innerHTML = '';
+      }
+    }
+
+    // ---------- Итог закрытой заявки ----------
+    function answerSummary(a) {
+      return esc(a.organizationName) + ' - ' + esc(a.expertName) + ', ' + esc(formatPrice(a.price)) + ', ' + esc(a.termDays) + ' дн.';
+    }
+    function renderOutcome() {
+      const card = document.getElementById('outcomeCard');
+      if (request.status !== 'closed') { card.hidden = true; card.innerHTML = ''; return; }
+      const sel = request.selectedAnswerId ? request.answers.find(a => a.id === request.selectedAnswerId) : null;
+      const canReopen = canReopenAcceptance(request);
+      card.hidden = false;
+      card.innerHTML =
+        '<div class="card-header"><h3 id="outcomeTitle" tabindex="-1">Итог: приём закрыт</h3>' + appStatusBadge(request) + '</div>' +
+        '<div class="card-body">' +
+          '<dl class="outcome-grid">' +
+            '<dt>Закрыт</dt><dd>' + esc(formatDateTime(request.closedAt)) + '</dd>' +
+            '<dt>Причина</dt><dd>' + esc(closeReasonLabel(request.closeReason)) + (request.closeReasonNote ? ' - ' + esc(request.closeReasonNote) : '') + '</dd>' +
+            (sel ? '<dt>Выбранный эксперт</dt><dd><span class="badge badge-selected">Выбран</span> ' + answerSummary(sel) + '</dd>' : '') +
+          '</dl>' +
+          (canReopen
+            ? '<div class="reopen-box" id="reopenBox">' +
+                '<button type="button" class="btn btn-secondary" id="reopenBtn">Возобновить приём</button>' +
+                '<div class="form-group" id="reopenDateWrap" hidden>' +
+                  '<label for="reopenDate">Новый срок приёма <span class="req-mark" aria-hidden="true">*</span></label>' +
+                  '<input type="date" id="reopenDate" class="input" min="' + esc(todayStr()) + '"' + (request.hearingDate ? ' max="' + esc(request.hearingDate) + '"' : '') + ' aria-describedby="reopenError">' +
+                '</div>' +
+                '<div class="field-error" id="reopenError" role="alert"></div>' +
+                '<p class="form-hint" style="flex-basis:100%;margin:0">Возобновить можно в течение 24 ч после закрытия. Эксперты получат уведомление.</p>' +
+              '</div>'
+            : '<p class="form-hint" style="margin-top:12px">Редактирование недоступно. Переписка сохранена для просмотра.</p>') +
+        '</div>';
+      if (canReopen) document.getElementById('reopenBtn').addEventListener('click', doReopen);
+    }
+
+    function doReopen() {
+      const btn = document.getElementById('reopenBtn');
+      const wrap = document.getElementById('reopenDateWrap');
+      const input = document.getElementById('reopenDate');
+      const err = document.getElementById('reopenError');
+      const date = wrap.hidden ? undefined : input.value;
+      if (!wrap.hidden && !date) {
+        err.textContent = 'Укажите новую дату'; err.style.display = 'block';
+        input.setAttribute('aria-invalid', 'true'); input.focus();
+        return;
+      }
+      btn.disabled = true;
+      const res = reopenAcceptance(request.id, date);
+      if (res.error) {
+        btn.disabled = false;
+        err.textContent = res.error; err.style.display = 'block';
+        if (res.needDate) {
+          wrap.hidden = false;
+          input.setAttribute('aria-invalid', 'true');
+          btn.textContent = 'Возобновить с новой датой';
+          input.focus();
+        }
+        return;
+      }
+      toast('Приём ответов возобновлён', 'success');
+      refreshAll();
+      const t = document.getElementById('responsesTitle');
+      if (t) t.focus();
+    }
+
+    // ---------- Сравнение предложений ----------
+    let sortKey = 'submittedAt';
+    let sortDir = -1;
+    let onlyShortlist = false;
+
+    function hasLawyerThread(orgId) {
+      const th = getThreadForPair(request.id, orgId);
+      return !!(th && th.lawyerId === user.id && (th.messages || []).some(m => m.authorRole === 'expert'));
+    }
+
+    function median(arr) {
+      const s = arr.slice().sort((a, b) => a - b);
+      const m = Math.floor(s.length / 2);
+      return s.length % 2 ? s[m] : Math.round((s[m - 1] + s[m]) / 2);
+    }
+
+    function statusCell(a) {
+      if (a.withdrawn) {
+        return '<span class="badge badge-withdrawn">Отозван</span><span class="sub-muted">' + esc(formatDateTime(a.withdrawnAt)) + '</span>';
+      }
+      let b;
+      if (request.status === 'closed' && request.selectedAnswerId === a.id) b = '<span class="badge badge-selected">Выбран</span>';
+      else if (request.status === 'closed' && request.selectedAnswerId) b = '<span class="badge badge-rejected">Не выбран</span>';
+      else b = answerStatusBadge(a.status);
+      return b + '<span class="sub-muted">Получено ' + esc(formatDateTime(a.submittedAt)) + '</span>' +
+        ((a.versions && a.versions.length) ? '<span class="sub-muted">Обновлён (' + a.versions.length + ')</span>' : '');
+    }
+
+    function renderAnswers() {
+      const active = getActiveAnswers(request);
+      const withdrawn = (request.answers || []).filter(a => a.withdrawn);
+      const closed = request.status === 'closed';
+      const shortCount = active.filter(a => a.shortlisted).length;
+
+      document.getElementById('responsesTitle').textContent =
+        'Ответы экспертов (' + active.length + ')' + (withdrawn.length ? ' · отозвано: ' + withdrawn.length : '');
+      document.getElementById('downloadAllBtn').hidden = !active.length;
+
+      // Сводка
+      const sumEl = document.getElementById('compareSummary');
+      if (active.length) {
+        const prices = active.map(a => Number(a.price) || 0);
+        const terms = active.map(a => Number(a.termDays) || 0);
+        const stat = (v, l) => '<div class="compare-stat"><div class="value">' + esc(v) + '</div><div class="label">' + esc(l) + '</div></div>';
+        sumEl.hidden = false;
+        sumEl.innerHTML = '<div class="compare-summary" aria-label="Сводка по предложениям">' +
+          stat(String(active.length), 'ответов') +
+          stat(formatPrice(Math.min.apply(null, prices)), 'мин. цена') +
+          stat(formatPrice(median(prices)), 'медиана') +
+          stat(formatPrice(Math.max.apply(null, prices)), 'макс. цена') +
+          stat(Math.min.apply(null, terms) + ' дн.', 'мин. срок') +
+        '</div>';
+      } else { sumEl.hidden = true; sumEl.innerHTML = ''; }
+
+      // Панель: сортировка + шорт-лист
+      const tb = document.getElementById('answersToolbar');
+      if (active.length > 1 || shortCount) {
+        tb.hidden = false;
+        const cur = sortKey + ':' + sortDir;
+        const opt = (v, l) => '<option value="' + v + '"' + (cur === v ? ' selected' : '') + '>' + l + '</option>';
+        tb.innerHTML =
+          '<div class="filter-group"><label for="answersSort">Сортировка</label><div class="select-wrapper"><select id="answersSort">' +
+            opt('submittedAt:-1', 'Сначала новые') + opt('price:1', 'Цена: по возрастанию') + opt('price:-1', 'Цена: по убыванию') +
+            opt('termDays:1', 'Срок: по возрастанию') + opt('termDays:-1', 'Срок: по убыванию') +
+          '</select></div></div>' +
+          '<label class="check-inline"><input type="checkbox" id="onlyShortlist"' + (onlyShortlist ? ' checked' : '') + '> Только шорт-лист (' + shortCount + ')</label>';
+        document.getElementById('answersSort').addEventListener('change', e => {
+          const p = e.target.value.split(':'); sortKey = p[0]; sortDir = Number(p[1]); renderAnswers();
+          document.getElementById('answersSort').focus();
+        });
+        document.getElementById('onlyShortlist').addEventListener('change', e => {
+          onlyShortlist = e.target.checked; renderAnswers();
+          document.getElementById('onlyShortlist').focus();
+        });
+      } else { tb.hidden = true; tb.innerHTML = ''; if (!shortCount) onlyShortlist = false; }
+
+      const body = document.getElementById('responsesBody');
+      if (!active.length && !withdrawn.length) {
+        body.innerHTML = '<div class="empty-state"><p>Ответов пока нет. Эксперты увидят заявку в ленте и пришлют предложения.</p></div>';
+        return;
+      }
+
+      let rows = active.slice();
+      if (onlyShortlist) rows = rows.filter(a => a.shortlisted);
+      rows.sort((a, b) => {
+        if (sortKey === 'price') return ((a.price || 0) - (b.price || 0)) * sortDir;
+        if (sortKey === 'termDays') return ((a.termDays || 0) - (b.termDays || 0)) * sortDir;
+        return (new Date(a.submittedAt) - new Date(b.submittedAt)) * sortDir;
+      });
+      const showWithdrawn = onlyShortlist ? [] : withdrawn;
+      if (!rows.length && !showWithdrawn.length) {
+        body.innerHTML = '<div class="empty-state"><p>' + (onlyShortlist ? 'В шорт-листе пока нет ответов - отметьте предложения звёздочкой.' : 'Активных ответов нет.') + '</p></div>';
+        return;
+      }
+
+      const minPrice = active.length > 1 ? Math.min.apply(null, active.map(a => Number(a.price) || 0)) : null;
+      const minTerm = active.length > 1 ? Math.min.apply(null, active.map(a => Number(a.termDays) || 0)) : null;
+      const ariaSort = k => sortKey === k ? (sortDir > 0 ? 'ascending' : 'descending') : 'none';
+      const ind = k => sortKey === k ? (sortDir > 0 ? '↑' : '↓') : '↕';
+
+      const rowHtml = a => {
+        const isSel = closed && request.selectedAnswerId === a.id;
+        const price = esc(formatPrice(a.price));
+        const term = esc(a.termDays);
+        const priceHtml = (minPrice !== null && Number(a.price) === minPrice) ? '<span class="cell-best" title="Минимальная цена">' + price + '</span>' : price;
+        const termHtml = (minTerm !== null && Number(a.termDays) === minTerm) ? '<span class="cell-best" title="Минимальный срок">' + term + '</span>' : term;
+        const hintId = 'chatHint-' + esc(a.id);
+        const chatBtn = hasLawyerThread(a.organizationId)
+          ? '<button type="button" class="btn btn-secondary btn-sm" data-action="chat" data-org="' + esc(a.organizationId) + '">Чат</button>'
+          : '<span class="chat-wrap"><button type="button" class="btn btn-secondary btn-sm" aria-disabled="true" aria-describedby="' + hintId + '" data-action="chat-disabled">Чат</button>' +
+            '<span class="tooltip-hint" id="' + hintId + '">Эксперт может написать вам после отправки письма</span></span>';
+        return '<tr class="' + (isSel ? 'row-selected' : '') + '" data-answer-id="' + esc(a.id) + '">' +
+          '<td data-label="Организация"><div class="org-cell">' +
+            '<button type="button" class="shortlist-btn" data-action="shortlist" data-id="' + esc(a.id) + '" aria-pressed="' + (a.shortlisted ? 'true' : 'false') + '" aria-label="Шорт-лист: ' + esc(a.organizationName) + '" title="' + (a.shortlisted ? 'Убрать из шорт-листа' : 'Добавить в шорт-лист') + '">' + (a.shortlisted ? '★' : '☆') + '</button>' +
+            '<span class="org-main"><strong>' + esc(a.organizationName) + '</strong>' +
+              (unseenIds.has(a.id) ? '<span class="badge badge-new">Новый</span>' : '') +
+            '</span></div></td>' +
+          '<td data-label="Эксперт">' + esc(a.expertName) + '</td>' +
+          '<td data-label="Стоимость">' + priceHtml + '</td>' +
+          '<td data-label="Срок (дн.)">' + termHtml + '</td>' +
+          '<td data-label="Комментарий" class="comment-cell">' + (a.additionalInfo ? esc(a.additionalInfo) : '-') + '</td>' +
+          '<td data-label="Файл">' + (a.fileName ? '<button type="button" class="btn-open file-btn" data-action="pdf" aria-label="Скачать ' + esc(a.fileName) + '">📄 ' + esc(a.fileName) + '</button>' : '-') + '</td>' +
+          '<td data-label="Статус">' + statusCell(a) + '</td>' +
+          '<td data-label="Действия"><div class="row-actions">' +
+            (!closed ? '<button type="button" class="btn btn-primary btn-sm" data-action="select" data-id="' + esc(a.id) + '">Выбрать</button>' : '') +
+            chatBtn +
+            ((a.versions && a.versions.length) ? '<button type="button" class="btn btn-secondary btn-sm" data-action="history" data-id="' + esc(a.id) + '">История</button>' : '') +
+          '</div></td>' +
+        '</tr>';
+      };
+      const withdrawnHtml = a =>
+        '<tr class="row-withdrawn" data-answer-id="' + esc(a.id) + '">' +
+          '<td data-label="Организация"><div class="org-cell"><span class="org-main"><strong>' + esc(a.organizationName) + '</strong></span></div></td>' +
+          '<td data-label="Эксперт">' + esc(a.expertName) + '</td>' +
+          '<td data-label="Стоимость">' + esc(formatPrice(a.price)) + '</td>' +
+          '<td data-label="Срок (дн.)">' + esc(a.termDays) + '</td>' +
+          '<td data-label="Комментарий" class="comment-cell">' + (a.additionalInfo ? esc(a.additionalInfo) : '-') + '</td>' +
+          '<td data-label="Файл">' + (a.fileName ? esc(a.fileName) : '-') + '</td>' +
+          '<td data-label="Статус">' + statusCell(a) + '</td>' +
+          '<td data-label="Действия">-</td>' +
+        '</tr>';
+
+      body.innerHTML =
+        '<div class="answers-scroll"><table class="table-responsive" id="answersTable">' +
+          '<caption class="sr-only">Сравнение предложений экспертов</caption>' +
+          '<thead><tr>' +
+            '<th scope="col">Организация</th>' +
+            '<th scope="col">Эксперт</th>' +
+            '<th scope="col" aria-sort="' + ariaSort('price') + '"><button type="button" class="th-sort" data-sort="price">Стоимость <span aria-hidden="true">' + ind('price') + '</span></button></th>' +
+            '<th scope="col" aria-sort="' + ariaSort('termDays') + '"><button type="button" class="th-sort" data-sort="termDays">Срок (дн.) <span aria-hidden="true">' + ind('termDays') + '</span></button></th>' +
+            '<th scope="col">Комментарий</th>' +
+            '<th scope="col">Файл</th>' +
+            '<th scope="col">Статус</th>' +
+            '<th scope="col">Действия</th>' +
+          '</tr></thead>' +
+          '<tbody>' + rows.map(rowHtml).join('') + showWithdrawn.map(withdrawnHtml).join('') + '</tbody>' +
+        '</table></div>';
+    }
+
+    document.getElementById('downloadAllBtn').addEventListener('click', () => toast(DOWNLOAD_STUB, 'info'));
+
+    document.getElementById('responsesBody').addEventListener('click', e => {
+      const sortBtn = e.target.closest('.th-sort');
+      if (sortBtn) {
+        const k = sortBtn.getAttribute('data-sort');
+        if (sortKey === k) sortDir *= -1; else { sortKey = k; sortDir = 1; }
+        renderAnswers();
+        const again = document.querySelector('#answersTable .th-sort[data-sort="' + k + '"]');
+        if (again) again.focus();
+        return;
+      }
+      const btn = e.target.closest('[data-action]');
+      if (!btn) return;
+      const action = btn.getAttribute('data-action');
+      const aid = btn.getAttribute('data-id');
+      if (action === 'pdf') { toast(DOWNLOAD_STUB, 'info'); return; }
+      if (action === 'shortlist') {
+        const on = toggleShortlist(request.id, aid);
+        if (on === null) return;
+        request = getRequest(request.id);
+        renderAnswers();
+        const again = document.querySelector('#answersTable .shortlist-btn[data-id="' + CSS.escape(aid) + '"]');
+        if (again) again.focus();
+        toast(on ? 'Добавлено в шорт-лист' : 'Убрано из шорт-листа', 'info');
+        return;
+      }
+      if (action === 'select') { openCloseModal({ reason: 'expert_selected', answerId: aid, preselectReason: true }); return; }
+      if (action === 'history') { showHistory(aid); return; }
+      if (action === 'chat') { openChatFor(btn.getAttribute('data-org')); return; }
+      if (action === 'chat-disabled') { toast('Эксперт может написать вам после отправки письма', 'info'); return; }
+    });
+
+    // ---------- История версий ответа ----------
+    function showHistory(answerId) {
+      const a = request.answers.find(x => x.id === answerId);
+      if (!a) return;
+      const versions = [...(a.versions || [])].reverse();
+      let html =
+        '<div class="version-block current">' +
+          '<div class="version-label">Текущая версия · ' + esc(formatDateTime(a.submittedAt)) + '</div>' +
+          '<div>Стоимость: <strong>' + esc(formatPrice(a.price)) + '</strong></div>' +
+          '<div>Срок: <strong>' + esc(a.termDays) + ' дн.</strong></div>' +
+          '<div>Эксперт: <strong>' + esc(a.expertName) + '</strong></div>' +
+          (a.additionalInfo ? '<div style="margin-top:6px;font-style:italic;color:#64748B">' + esc(a.additionalInfo) + '</div>' : '') +
+        '</div>';
+      versions.forEach((v, i) => {
+        html +=
+          '<div class="version-block">' +
+            '<div class="version-label">Версия ' + (versions.length - i) + ' · ' + esc(formatDateTime(v.submittedAt || v.savedAt)) + '</div>' +
+            '<div>Стоимость: <strong>' + esc(formatPrice(v.price)) + '</strong></div>' +
+            '<div>Срок: <strong>' + esc(v.termDays) + ' дн.</strong></div>' +
+            '<div>Эксперт: <strong>' + esc(v.expertName) + '</strong></div>' +
+          '</div>';
+      });
+      document.getElementById('historyBody').innerHTML = html;
+      openModal(document.getElementById('historyModal'), null, '#answersTable [data-action="history"][data-id="' + CSS.escape(answerId) + '"]');
+    }
+
+    // ---------- Модалка закрытия приёма ----------
+    const closeModalEl = document.getElementById('closeModal');
+    const closeErr = document.getElementById('closeError');
+    function setCloseError(msg) {
+      closeErr.textContent = msg || '';
+      closeErr.style.display = msg ? 'block' : 'none';
+    }
+    function syncReasonUI() {
+      const r = (closeModalEl.querySelector('input[name="closeReason"]:checked') || {}).value;
+      document.getElementById('selectAnswerWrap').hidden = r !== 'expert_selected';
+      document.getElementById('reasonNoteWrap').hidden = r !== 'other';
+      ['selectedAnswer', 'closeReasonNote'].forEach(fid => document.getElementById(fid).removeAttribute('aria-invalid'));
+      setCloseError('');
+    }
+    function openCloseModal(opts) {
+      opts = opts || {};
+      const active = getActiveAnswers(request);
+      const list = document.getElementById('reasonList');
+      list.innerHTML = CLOSE_REASONS.map(r => {
+        const disabled = r.id === 'expert_selected' && !active.length;
+        const checked = opts.preselectReason && opts.reason === r.id && !disabled;
+        return '<label class="reason-option">' +
+          '<input type="radio" name="closeReason" value="' + esc(r.id) + '"' + (checked ? ' checked' : '') + (disabled ? ' disabled' : '') + '>' +
+          '<span>' + esc(r.label) + (disabled ? ' <small style="color:var(--text-muted)">(нет активных ответов)</small>' : '') + '</span>' +
+        '</label>';
+      }).join('');
+      const sel = document.getElementById('selectedAnswer');
+      sel.innerHTML = '<option value="">- выберите предложение -</option>' +
+        active.map(a => '<option value="' + esc(a.id) + '"' + (opts.answerId === a.id ? ' selected' : '') + '>' +
+          esc(a.organizationName) + ' - ' + esc(a.expertName) + ', ' + esc(formatPrice(a.price)) + ', ' + esc(a.termDays) + ' дн.' +
+          (a.shortlisted ? ' ★' : '') + '</option>').join('');
+      document.getElementById('closeReasonNote').value = '';
+      syncReasonUI();
+      const btn = document.getElementById('confirmCloseBtn');
+      btn.disabled = false;
+      const focusEl = opts.preselectReason && opts.answerId ? btn : list.querySelector('input:not([disabled])');
+      openModal(closeModalEl, focusEl, opts.answerId ? '#answersTable [data-action="select"][data-id="' + CSS.escape(opts.answerId) + '"]' : '#openCloseBtn');
+    }
+    document.getElementById('reasonList').addEventListener('change', syncReasonUI);
+    document.getElementById('closeForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const btn = document.getElementById('confirmCloseBtn');
+      if (btn.disabled) return;
+      const reasonInput = closeModalEl.querySelector('input[name="closeReason"]:checked');
+      const reason = reasonInput ? reasonInput.value : '';
+      const sel = document.getElementById('selectedAnswer');
+      const noteEl = document.getElementById('closeReasonNote');
+      const note = noteEl.value.trim();
+      if (!reason) {
+        setCloseError('Выберите причину закрытия');
+        const f = closeModalEl.querySelector('input[name="closeReason"]:not([disabled])'); if (f) f.focus();
+        return;
+      }
+      if (reason === 'expert_selected' && !sel.value) {
+        setCloseError('Выберите, какое предложение выбрано');
+        sel.setAttribute('aria-invalid', 'true'); sel.setAttribute('aria-describedby', 'closeError'); sel.focus();
+        return;
+      }
+      if (reason === 'other' && !note) {
+        setCloseError('Укажите пояснение для причины «Другое»');
+        noteEl.setAttribute('aria-invalid', 'true'); noteEl.setAttribute('aria-describedby', 'closeError'); noteEl.focus();
+        return;
+      }
+      btn.disabled = true;
+      const res = closeAcceptance(request.id, reason, reason === 'other' ? note : '', reason === 'expert_selected' ? sel.value : null);
+      if (!res || res.error) {
+        btn.disabled = false;
+        setCloseError((res && res.error) || 'Не удалось закрыть приём');
+        return;
+      }
+      closeModalEl._opener = null;
+      closeModalEl._restoreSel = null;
+      refreshAll();
+      closeModal(closeModalEl);
+      const t = document.getElementById('outcomeTitle');
+      if (t) t.focus();
+      toast(reason === 'expert_selected' ? 'Эксперт выбран, приём ответов закрыт' : 'Приём ответов закрыт', 'success');
+    });
+
+    // ---------- История изменений заявки ----------
+    function renderEditHistory() {
+      const card = document.getElementById('editHistoryCard');
+      const hist = request.editHistory || [];
+      if (!hist.length) { card.hidden = true; return; }
+      const versions = hist.map(h => requestSnapshot(h)).concat([requestSnapshot(request)]);
+      const items = [];
+      hist.forEach((h, i) => {
+        const changes = computeRequestDiff(versions[i], versions[i + 1]);
+        if (!changes.length) return;
+        items.push('<li><div class="edit-date">' + esc(formatDateTime(h.editedAt)) + '</div>' +
+          '<ul class="diff-list">' + changes.map(c =>
+            '<li><span class="diff-label">' + esc(c.label) + '</span> ' +
+            '<span class="diff-before">' + esc(c.before) + '</span> ' +
+            '<span class="diff-after">' + esc(c.after) + '</span></li>').join('') +
+          '</ul></li>');
+      });
+      if (!items.length) { card.hidden = true; return; }
+      card.hidden = false;
+      document.getElementById('editHistoryBody').innerHTML = '<ul class="edit-history">' + items.reverse().join('') + '</ul>';
+    }
+
+    // ---------- Чат ----------
+    let chatCtl = null;
+    function openChatFor(orgId) {
+      if (!chatCtl || !orgId) return;
+      chatCtl.setOrg(orgId);
+      try {
+        const p = new URLSearchParams(location.search);
+        p.set('org', orgId);
+        history.replaceState(null, '', location.pathname + '?' + p.toString());
+      } catch (e) {}
+      const card = document.getElementById('chatCard');
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const ta = document.getElementById('chatText');
+      (ta || document.getElementById('chatMount')).focus({ preventScroll: true });
+    }
+
+    function refreshAll() {
+      request = getRequest(request.id) || request;
+      renderHeader();
+      renderBanner();
+      renderData();
+      renderActions();
+      renderOutcome();
+      renderAnswers();
+      renderEditHistory();
+      if (chatCtl) chatCtl.refresh();
+    }
+
+    refreshAll();
+
+    const orgParam = params.get('org');
+    const knownOrg = orgParam && (request.answers.some(a => a.organizationId === orgParam) || hasLawyerThread(orgParam)) ? orgParam : null;
+    chatCtl = mountChat({
+      mount: document.getElementById('chatMount'),
+      request: request,
+      organizationId: knownOrg,
+      showThreadSwitcher: true
+    });
+
+    mountNotificationBell();
+  })();
+  </script>
+</body>
+</html>

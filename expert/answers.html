@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expert Letters - Мои ответы</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body style="display:flex">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3L2 8l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="sidebar-logo-text">
+          <h1>Expert Letters</h1>
+          <span>Кабинет эксперта</span>
+        </div>
+      </div>
+    </div>
+        <nav class="sidebar-nav">
+      <a href="feed.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+        <span>Все заявки</span>
+      </a>
+      <a href="favorites.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>Избранное</span>
+        <span class="nav-count" id="navFavCount">0</span>
+      </a>
+      <a href="answers.html" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        <span>Мои ответы</span>
+        <span class="nav-count" id="navAnsCount">0</span>
+      </a>
+      <a href="hidden.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        <span>Скрытые</span>
+      </a>
+<a href="settings.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span>Настройки</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="userAvatar">ЭС</div>
+        <div class="user-details">
+          <div class="name" id="userName">-</div>
+          <div class="role">Экспертная организация</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <h2>Мои ответы</h2>
+      <div class="topbar-actions">
+        <button type="button" class="btn btn-secondary" id="logoutBtn">Выйти</button>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="tabs" id="tabs" role="tablist" aria-label="Фильтр ответов">
+        <button type="button" class="tab active" role="tab" aria-selected="true" data-filter="all">Все <span class="tab-count"></span></button>
+        <button type="button" class="tab" role="tab" aria-selected="false" data-filter="active">Активные <span class="tab-count"></span></button>
+        <button type="button" class="tab" role="tab" aria-selected="false" data-filter="selected">Выбрали меня <span class="tab-count"></span></button>
+        <button type="button" class="tab" role="tab" aria-selected="false" data-filter="not_selected">Не выбрали <span class="tab-count"></span></button>
+        <button type="button" class="tab" role="tab" aria-selected="false" data-filter="withdrawn">Отозванные <span class="tab-count"></span></button>
+      </div>
+
+      <div class="filters">
+        <div class="filter-group">
+          <label for="searchInput">Поиск</label>
+          <input class="input" id="searchInput" type="search" placeholder="Номер дела / суд" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="table-card">
+        <table class="table-responsive answers-table">
+          <thead>
+            <tr>
+              <th scope="col">Номер дела</th>
+              <th scope="col">Суд</th>
+              <th scope="col">Стоимость</th>
+              <th scope="col">Срок</th>
+              <th scope="col">Статус ответа</th>
+              <th scope="col">Статус заявки</th>
+              <th scope="col">Результат</th>
+              <th scope="col">Дата отправки</th>
+              <th scope="col">Дата суда</th>
+              <th scope="col">Действия</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <div class="empty-state" id="emptyState" style="display:none">
+          <div class="empty-state-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div>
+          <h3 id="emptyTitle">Пока нет ответов</h3>
+          <p id="emptyText">Отправьте информационное письмо по заявке из ленты - оно появится здесь.</p>
+          <a href="feed.html" class="btn btn-primary btn-sm">Открыть ленту</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    [hidden] { display:none !important; }
+    .tabs { flex-wrap:wrap; }
+    .tab-count { opacity:.7; font-weight:500; }
+    .answers-table td { overflow-wrap:anywhere; }
+    @media (min-width: 721px) {
+      .answers-table td { overflow-wrap:normal; word-break:normal; }
+      .answers-table td[data-label="Суд"] { min-width:170px; }
+      .answers-table td[data-label="Номер дела"] { white-space:nowrap; }
+      .answers-table td[data-label="Результат"] .badge { white-space:nowrap; }
+      .answers-table td[data-label="Срок"], .answers-table td[data-label="Стоимость"] { white-space:nowrap; }
+    }
+    /* На обычных ноутбуках убираем второстепенные колонки, чтобы «Действия» были видны без прокрутки */
+    @media (min-width: 721px) and (max-width: 1700px) {
+      .answers-table th:nth-child(5), .answers-table td[data-label="Статус ответа"],
+      .answers-table th:nth-child(9), .answers-table td[data-label="Дата суда"] { display:none; }
+    }
+    .answers-table .actions-cell { white-space:normal; }
+    .answers-table .actions-wrap { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+    .btn-open.danger { color:#DC2626; border-color:#FECACA; }
+    .versions { margin-top:6px; font-size:12.5px; }
+    .versions summary { cursor:pointer; color:var(--primary, #2563EB); font-weight:600; }
+    .versions ol { margin:6px 0 0; padding-left:18px; color:var(--text-secondary); }
+    .versions li { margin-bottom:4px; }
+    tr.row-withdrawn td { opacity:.75; }
+  </style>
+
+  <script src="../js/app.js"></script>
+  <script>
+  (function () {
+    const state = requireAuth('expert');
+    if (!state) return;
+    const user = state.currentUser;
+    const $ = id => document.getElementById(id);
+    $('userName').textContent = user.orgName || user.name;
+    $('userAvatar').textContent = (user.orgName || user.name).slice(0, 2);
+    $('logoutBtn').addEventListener('click', logout);
+
+    function refreshNavCounts() {
+      try {
+        const fav = getFavorites().length;
+        const ans = getMyAnswers(user.id).length;
+        const elF = $('navFavCount'), elA = $('navAnsCount');
+        if (elF) { elF.textContent = fav; elF.classList.toggle('has-items', fav > 0); }
+        if (elA) { elA.textContent = ans; elA.classList.toggle('has-items', ans > 0); }
+      } catch (e) {}
+    }
+    refreshNavCounts();
+
+    const FILTERS = {
+      all: () => true,
+      active: o => o === 'pending' || o === 'awaiting_decision',
+      selected: o => o === 'selected',
+      not_selected: o => o === 'not_selected' || o === 'closed_no_choice',
+      withdrawn: o => o === 'withdrawn'
+    };
+    const EMPTY = {
+      all: ['Пока нет ответов', 'Отправьте информационное письмо по заявке из ленты - оно появится здесь.'],
+      active: ['Нет активных ответов', 'Активные - ответы по заявкам, где юрист ещё не сделал выбор.'],
+      selected: ['Пока вас не выбирали', 'Здесь появятся заявки, где юрист выбрал ваше предложение.'],
+      not_selected: ['Нет закрытых заявок', 'Здесь появятся заявки, где выбран другой исполнитель или приём закрыт без выбора.'],
+      withdrawn: ['Нет отозванных ответов', 'Отозванные предложения сохраняются здесь для истории.']
+    };
+    let currentFilter = 'all';
+
+    function setFilter(f) {
+      if (!FILTERS[f]) f = 'all';
+      currentFilter = f;
+      document.querySelectorAll('#tabs .tab').forEach(t => {
+        const on = t.dataset.filter === f;
+        t.classList.toggle('active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      renderList();
+    }
+
+    function versionsHtml(a) {
+      const v = (a.versions || []).slice().reverse();
+      if (!v.length) return '';
+      return '<details class="versions"><summary>История версий (' + v.length + ')</summary><ol>' +
+        v.map(x => '<li>' + esc(formatDateTime(x.submittedAt)) + ': ' + esc(formatPrice(x.price)) + ', ' + esc(x.termDays) + ' дн., ' +
+          esc(x.expertName) + (x.fileName ? ', файл ' + esc(x.fileName) : '') +
+          (x.additionalInfo ? '<br><span>' + esc(x.additionalInfo) + '</span>' : '') + '</li>').join('') +
+        '</ol></details>';
+    }
+
+    function renderList() {
+      const q = ($('searchInput').value || '').trim().toLowerCase();
+      const all = getMyAnswers(user.id, true).map(i => Object.assign(i, { outcome: getAnswerOutcome(i.request, i.answer) }));
+      document.querySelectorAll('#tabs .tab').forEach(t => {
+        const n = all.filter(i => FILTERS[t.dataset.filter](i.outcome)).length;
+        t.querySelector('.tab-count').textContent = n ? '(' + n + ')' : '';
+      });
+      let items = all.filter(i => FILTERS[currentFilter](i.outcome));
+      if (q) items = items.filter(i => String(i.request.caseNumber).toLowerCase().includes(q) || String(i.request.court).toLowerCase().includes(q));
+
+      const tbody = $('tbody');
+      const empty = $('emptyState');
+      if (!items.length) {
+        tbody.innerHTML = '';
+        const e = q ? ['Ничего не найдено', 'Измените поисковый запрос.'] : EMPTY[currentFilter];
+        $('emptyTitle').textContent = e[0];
+        $('emptyText').textContent = e[1];
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      tbody.innerHTML = items.map(({ request: r, answer: a, outcome }) => {
+        const rid = encodeURIComponent(r.id);
+        const acc = isAccepting(r);
+        const editable = !a.withdrawn && canEditAnswer(r, a);
+        const chatUnread = a.withdrawn ? 0 : getUnreadChatCountForRequest(r.id);
+        const chatBadge = chatUnread ? '<span class="chat-row-badge" title="Новые сообщения">' + chatUnread + '</span>' : '';
+        let actions = '<a href="request.html?id=' + rid + '" class="btn-open">Открыть</a>';
+        if (!a.withdrawn) {
+          actions += '<a href="request.html?id=' + rid + '#chatMount" class="btn-open">Чат' + (chatUnread ? ' (' + chatUnread + ')' : '') + '</a>';
+          if (editable) actions += '<a href="answer.html?id=' + rid + '&edit=' + encodeURIComponent(a.id) + '" class="btn-open">Изменить</a>';
+          if (acc) actions += '<button type="button" class="btn-open danger" data-act="withdraw" data-req="' + esc(r.id) + '" data-ans="' + esc(a.id) + '">Отозвать</button>';
+        }
+        const rowCls = a.withdrawn ? 'row-withdrawn' : (outcome === 'selected' ? 'row-selected' : '');
+        return '<tr' + (rowCls ? ' class="' + rowCls + '"' : '') + '>' +
+          '<td data-label="Номер дела"><a class="case-number" href="request.html?id=' + rid + '">' + esc(r.caseNumber) + '</a>' + chatBadge + '</td>' +
+          '<td data-label="Суд">' + esc(r.court) + '</td>' +
+          '<td data-label="Стоимость">' + esc(formatPrice(a.price)) + '</td>' +
+          '<td data-label="Срок">' + esc(a.termDays) + ' дн.</td>' +
+          '<td data-label="Статус ответа">' + (a.withdrawn ? '<span class="badge badge-withdrawn">Отозван</span>' : answerStatusBadge(a.status)) + '</td>' +
+          '<td data-label="Статус заявки">' + appStatusBadge(r) + '</td>' +
+          '<td data-label="Результат">' + outcomeBadge(outcome) + '</td>' +
+          '<td data-label="Дата отправки" style="white-space:nowrap">' + esc(formatDateTime(a.submittedAt)) +
+            (a.withdrawn && a.withdrawnAt ? '<br><small>отозван ' + esc(formatDateTime(a.withdrawnAt)) + '</small>' : '') + '</td>' +
+          '<td data-label="Дата суда">' + (r.hearingDate ? esc(formatHearing(r.hearingDate, r.hearingTime)) : '-') + '</td>' +
+          '<td data-label="Действия" class="actions-cell"><div class="actions-wrap">' + actions + '</div>' + versionsHtml(a) + '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function doWithdraw(btn) {
+      if (!confirm('Отозвать предложение? Юрист больше не увидит этот ответ. Пока приём открыт, можно отправить новый.')) return;
+      btn.disabled = true;
+      if (withdrawAnswer(btn.dataset.req, btn.dataset.ans)) {
+        toast('Ответ отозван', 'success');
+        refreshNavCounts();
+        renderList();
+      } else {
+        btn.disabled = false;
+        toast('Не удалось отозвать: приём ответов уже завершён', 'error');
+        renderList();
+      }
+    }
+
+    $('tabs').addEventListener('click', e => { const t = e.target.closest('.tab'); if (t) setFilter(t.dataset.filter); });
+    $('tbody').addEventListener('click', e => {
+      const b = e.target.closest('button[data-act="withdraw"]');
+      if (b && !b.disabled) doWithdraw(b);
+    });
+    $('searchInput').addEventListener('input', renderList);
+
+    renderList();
+    mountNotificationBell();
+  })();
+  </script>
+</body>
+</html>

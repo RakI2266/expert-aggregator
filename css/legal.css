@@ -1,0 +1,49 @@
+:root { --bg:#F7F9FC; --card:#fff; --border:#E2E8F0; --text:#0F172A; --muted:#64748B; --sec:#475569; --accent:#2563EB; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin:0; font-family: Inter, -apple-system, 'Segoe UI', sans-serif; background:var(--bg); color:var(--text); line-height:1.65; -webkit-font-smoothing:antialiased; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.skip-link { position:absolute; left:12px; top:-60px; padding:10px 14px; background:var(--text); color:#fff; border-radius:8px; z-index:10; }
+.skip-link:focus { top:12px; }
+.lg-wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+.lg-header { background: rgba(255,255,255,.92); border-bottom:1px solid var(--border); position: sticky; top:0; z-index:5; backdrop-filter: blur(10px); }
+.lg-header-inner { display:flex; align-items:center; justify-content:space-between; height:64px; }
+.lg-brand { display:flex; align-items:center; gap:10px; color:var(--text); text-decoration:none; font-weight:600; font-size:17px; }
+.lg-brand b { color: var(--accent); font-weight: 600; }
+.lg-brand-icon { width:34px; height:34px; border-radius:9px; background:linear-gradient(145deg,#2563EB,#1E40AF); display:grid; place-items:center; }
+.lg-brand-icon svg { width:17px; height:17px; fill:#fff; }
+.lg-back { font-size:14px; color:var(--sec); text-decoration:none; font-weight:500; }
+.lg-back:hover { color: var(--accent); }
+.lg-layout { display:grid; grid-template-columns: 240px minmax(0,1fr); gap: 40px; padding-top: 40px; padding-bottom: 64px; }
+.lg-nav { position: sticky; top: 88px; align-self: start; display:flex; flex-direction:column; gap:4px; }
+.lg-nav a { padding:9px 12px; border-radius:10px; color:var(--sec); text-decoration:none; font-size:14px; line-height:1.4; }
+.lg-nav a:hover { background:#EEF2F7; color:var(--text); }
+.lg-nav a[aria-current="page"] { background:#EFF6FF; color:#1E40AF; font-weight:600; }
+.lg-doc { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:40px 44px; font-size:15.5px; min-width:0; }
+.lg-doc h1 { font-size:28px; line-height:1.25; letter-spacing:-.4px; margin:0 0 6px; }
+.lg-doc h2 { font-size:18px; margin:30px 0 10px; line-height:1.35; }
+.lg-doc p { margin: 0 0 12px; color: #1E293B; }
+.lg-doc p:first-of-type { color: var(--muted); font-size: 14px; }
+.lg-doc .lg-lead { color: var(--muted); font-size: 14px; }
+.lg-doc ol, .lg-doc ul { padding-left: 22px; margin: 0 0 14px; }
+.lg-doc li { margin-bottom: 8px; }
+.legal-table { overflow-x:auto; margin: 6px 0 18px; border:1px solid var(--border); border-radius:12px; }
+.legal-table table { border-collapse: collapse; width:100%; font-size:14px; min-width: 560px; }
+.legal-table th, .legal-table td { text-align:left; vertical-align:top; padding:10px 12px; border-bottom:1px solid var(--border); }
+.legal-table th { background:#F8FAFC; font-weight:600; font-size:13px; color:var(--sec); }
+.legal-table tr:last-child td { border-bottom:0; }
+.ph-empty { background:#FEF3C7; color:#92400E; border-radius:4px; padding:0 4px; font-weight:600; }
+.legal-note { display:inline-block; background:#FEF3C7; color:#92400E; border:1px dashed #F59E0B; border-radius:6px; padding:1px 8px; font-size:13px; margin-left:4px; }
+.lg-footer { border-top:1px solid var(--border); background:#fff; padding: 22px 0; font-size:13px; color:var(--muted); }
+.lg-footer p { margin: 0 0 6px; }
+.lg-footer a { color: var(--sec); }
+@media (max-width: 860px) {
+  .lg-layout { grid-template-columns: 1fr; gap: 16px; padding-top: 20px; }
+  .lg-nav { position: static; flex-direction: row; overflow-x: auto; gap: 6px; padding-bottom: 4px; }
+  .lg-nav a { white-space: nowrap; border:1px solid var(--border); background:#fff; }
+  .lg-doc { padding: 24px 18px; border-radius: 14px; font-size: 15px; }
+  .lg-doc h1 { font-size: 22px; }
+  .lg-wrap { padding: 0 14px; }
+}
+@media print { .lg-header, .lg-nav, .lg-footer, .skip-link { display:none; } .lg-doc { border:0; padding:0; } .lg-layout { display:block; } }

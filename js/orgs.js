@@ -1,0 +1,35 @@
+// Auto-generated expert organizations registry
+const EXPERT_ORGS = [
+  { id: 1, name: 'ООО «ПГС»', shortName: 'ПГС', site: 'https://www.pgs.expert/', logo: '01_PGS.png' },
+  { id: 2, name: 'ООО «КапиталСтрой»', shortName: 'КапиталСтрой', site: 'https://mymatrix.ru/', logo: '02_KapitalStroy.png' },
+  { id: 3, name: 'ООО «ТРИАДА ЭКСПЕРТ»', shortName: 'Триада Эксперт', site: 'https://triexpert.ru/', logo: '03_TriadaExpert.png' },
+  { id: 4, name: 'ООО «МОСКОВСКИЙ ЦЕНТР СТРОИТЕЛЬНОЙ ЭКСПЕРТИЗЫ «БЕСТРА»', shortName: 'Бестра', site: 'https://bestra.ru/', logo: '04_Bestra.png' },
+  { id: 5, name: 'АНО ЭПЦ «Топ Эксперт»', shortName: 'Топ Эксперт', site: 'https://anotopexpert.ru/', logo: '05_TopExpert.png' },
+  { id: 6, name: 'ООО НИИ независимой судебной экспертизы «Эксперт-Столица»', shortName: 'Эксперт-Столица', site: 'https://expertiza-sud.ru/', logo: '06_ExpertStolica.png' },
+  { id: 7, name: 'ООО «НИИ МИГС»', shortName: 'НИИ МИГС', site: 'https://nii-migs.ru/', logo: '07_NII_MIGS.png' },
+  { id: 8, name: 'ООО «Межрегиональный центр экспертизы»', shortName: 'ОМРЦЭ', site: 'https://www.omrce.ru/', logo: '08_OMRCE.png' },
+  { id: 9, name: 'ООО «ДЕПАРТАМЕНТ»', shortName: 'Департамент', site: 'https://expertpgs.ru/', logo: '09_Departament.png' },
+  { id: 10, name: 'ООО «Центр Независимых Строительных Экспертиз»', shortName: 'ЦНСЭ', site: 'https://cnse24.ru/', logo: '10_CNSE.png' },
+  { id: 11, name: 'ООО «ЭкспертСтрой-Инжиниринг»', shortName: 'ЭкспертСтрой', site: 'https://expertstroy.com/', logo: '11_ExpertStroy.png' },
+  { id: 12, name: 'ООО «Строй-Эксперт»', shortName: 'Строй-Эксперт', site: 'https://stroi-ekspert.com/', logo: '12_StroyEkspert.png' },
+  { id: 13, name: 'ООО «Строительная экспертиза и технадзор»', shortName: 'СЭиТН', site: 'https://seitn.ru/', logo: '13_Seitn.png' },
+  { id: 14, name: 'ООО «МИНЭКС»', shortName: 'МИНЭКС', site: 'https://minexpert.ru/', logo: '14_Mineks.png' },
+  { id: 15, name: 'ООО «АкадемЭкспертиза»', shortName: 'АкадемЭкспертиза', site: 'https://академ-ех.рф/', logo: '15_AkademExpertise.png' },
+  { id: 16, name: 'ООО «Независимая Экспертная Организация «Макс»', shortName: 'НЭО Макс', site: 'https://neo-maks.ru/', logo: '16_NeoMaks.png' },
+  { id: 17, name: 'АНО «ГлавЭкспертиза»', shortName: 'ГлавЭкспертиза', site: 'https://gekspert.ru/', logo: '17_GlavExpertise.png' },
+  { id: 18, name: 'ООО «Скала»', shortName: 'Скала', site: 'https://expert-snp.ru/', logo: '18_Skala.png' },
+  { id: 19, name: 'ООО «Граунд»', shortName: 'Граунд', site: 'https://graund.net/', logo: '19_Graund.png' },
+  { id: 20, name: 'ООО «ФАВ ЭКСПЕРТ»', shortName: 'ФАВ Эксперт', site: 'https://mosplanirovka.ru/', logo: '20_FavExpert.png' },
+  { id: 21, name: 'ООО «ФБОЭ»', shortName: 'ФБОЭ', site: 'https://fboe.ru/', logo: '21_FBOE.png' },
+  { id: 22, name: 'ООО «Инсайт»', shortName: 'Инсайт', site: 'https://insaitexp.ru/', logo: '22_Insait.png' },
+  { id: 23, name: 'ООО «Правострой»', shortName: 'Правострой', site: 'https://pravostroj.ru/', logo: '23_Pravostroy.png' },
+  { id: 24, name: 'ООО «Центр экспертных заключений»', shortName: 'Центр экспертных заключений', site: 'https://msk.cityprof.ru/', logo: '24_CentrExpertZakl.png' },
+  { id: 25, name: 'АНО НКЦ СЭ «Гильдия»', shortName: 'Гильдия', site: 'https://expguild.com/', logo: '25_Gildiya.png' },
+  { id: 26, name: 'ООО «Национальный экспертный центр»', shortName: 'Национальный экспертный центр', site: 'https://ng-expertiza.ru/', logo: '26_NacionalExpert.png' },
+  { id: 27, name: 'ООО «Стройэкспертиза»', shortName: 'Стройэкспертиза', site: 'https://seprf.ru/', logo: '27_Stroyexpertise.png' },
+  { id: 28, name: 'ООО «Эксперт+»', shortName: 'Эксперт+', site: 'https://expertplus.net/', logo: '28_ExpertPlus.png' },
+  { id: 29, name: 'ООО «Экспертная компания «ВалРус»', shortName: 'ВалРус', site: 'https://valrus.com/', logo: '29_ValRus.png' },
+];
+
+function orgLogoUrl(logo) { return '../assets/logos/' + logo; }
+function orgLogoUrlFromRoot(logo) { return 'assets/logos/' + logo; }

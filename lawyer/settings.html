@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expert Letters - Настройки</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .field-error.show { display: block; }
+    .notif-row { padding: 12px 0; border-bottom: 1px solid #F1F5F9; word-break: break-word; }
+    .notif-row .t { font-weight: 600; font-size: 14px; }
+    .notif-row .b { font-size: 13.5px; color: var(--text-secondary); margin-top: 2px; }
+    .notif-row .d { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+    @media (max-width: 720px) { .form-row { grid-template-columns: 1fr !important; } }
+  </style>
+</head>
+<body style="display:flex">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3L2 8l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="sidebar-logo-text">
+          <h1>Expert Letters</h1>
+          <span>Личный кабинет юриста</span>
+        </div>
+      </div>
+    </div>
+        <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <span>Мои заявки</span>
+      </a>
+      <a href="create.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        <span>Создать заявку</span>
+      </a>
+<a href="settings.html" class="nav-item active" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span>Настройки</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="userAvatar">ИП</div>
+        <div class="user-details">
+          <div class="name" id="userName">-</div>
+          <div class="role">Юрист</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <h2>Настройки</h2>
+      <div class="topbar-actions">
+        <button type="button" class="btn btn-secondary" id="logoutBtn">Выйти</button>
+      </div>
+    </header>
+
+    <div class="content content-narrow">
+      <div class="card" id="plan">
+        <div class="card-header"><h3>Тариф</h3></div>
+        <div class="card-body" style="padding:20px 24px">
+          <div id="planStatus" style="margin-bottom:16px"></div>
+          <div class="plan-grid" id="planGrid"></div>
+        </div>
+      </div>
+
+      <!-- Profile -->
+      <div class="card">
+        <div class="card-header"><h3>Профиль</h3></div>
+        <form class="card-body" style="padding: 24px;" id="profileForm" novalidate>
+          <div class="form-row">
+            <div class="form-group" id="fg-profName">
+              <label for="profName" class="label-required">ФИО <span class="req-mark" aria-hidden="true">*</span></label>
+              <input type="text" id="profName" autocomplete="name" aria-required="true" aria-describedby="err-profName">
+              <div class="field-error" id="err-profName"></div>
+            </div>
+            <div class="form-group" id="fg-profEmail">
+              <label for="profEmail" class="label-required">Email <span class="req-mark" aria-hidden="true">*</span></label>
+              <input type="email" id="profEmail" autocomplete="email" aria-required="true" aria-describedby="err-profEmail">
+              <div class="field-error" id="err-profEmail"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="profPhone">Телефон</label>
+            <input type="tel" id="profPhone" autocomplete="tel">
+          </div>
+          <button type="submit" class="btn btn-primary" id="saveProfileBtn">Сохранить профиль</button>
+        </form>
+      </div>
+
+      <!-- Notifications -->
+      <div class="card">
+        <div class="card-header"><h3>Уведомления</h3></div>
+        <div class="card-body" style="padding: 24px;">
+          <div class="settings-section">
+            <h4>Каналы</h4>
+            <div class="checkbox-row">
+              <input type="checkbox" id="chInApp">
+              <label for="chInApp">Внутри сайта</label>
+            </div>
+            <div class="checkbox-row">
+              <input type="checkbox" id="chEmail">
+              <label for="chEmail">Email</label>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h4>Telegram</h4>
+            <div id="tgBox"></div>
+          </div>
+
+          <div class="settings-section">
+            <h4>События</h4>
+            <div class="checkbox-row">
+              <input type="checkbox" id="evNewAnswer">
+              <label for="evNewAnswer">Новый ответ эксперта</label>
+            </div>
+            <div class="checkbox-row">
+              <input type="checkbox" id="evAnswerUpdated">
+              <label for="evAnswerUpdated">Эксперт обновил ответ</label>
+            </div>
+            <div class="checkbox-row">
+              <input type="checkbox" id="evClosed">
+              <label for="evClosed">Заявка закрыта</label>
+            </div>
+            <div class="checkbox-row">
+              <input type="checkbox" id="evCourt">
+              <label for="evCourt">Напоминание о дате суда</label>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h4>Напоминания о дате суда</h4>
+            <div class="checkbox-row"><input type="checkbox" id="d7"><label for="d7">За 7 дней</label></div>
+            <div class="checkbox-row"><input type="checkbox" id="d3"><label for="d3">За 3 дня</label></div>
+            <div class="checkbox-row"><input type="checkbox" id="d0"><label for="d0">В день заседания</label></div>
+          </div>
+
+          <button type="button" class="btn btn-primary" id="saveNotifBtn">Сохранить уведомления</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h3>Последние уведомления</h3></div>
+        <div class="card-body" id="notifList" style="padding: 16px 24px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+  (function () {
+    const state = requireAuth('lawyer');
+    if (!state) return;
+    let user = state.currentUser;
+    const $ = id => document.getElementById(id);
+    function renderUser() {
+      const n = user.name || '-';
+      $('userName').textContent = n;
+      $('userAvatar').textContent = n.split(/\s+/).filter(Boolean).map(w => w[0]).slice(0, 2).join('') || '-';
+    }
+    renderUser();
+    $('logoutBtn').addEventListener('click', logout);
+
+    $('profName').value = user.name || '';
+    $('profEmail').value = user.email || '';
+    $('profPhone').value = user.phone || '';
+
+    const ns = Object.assign({}, user.notifSettings || {});
+    $('chInApp').checked = !!ns.inApp;
+    $('chEmail').checked = !!ns.email;
+    const ev = ns.events || {};
+    $('evNewAnswer').checked = ev.newAnswer !== false;
+    $('evAnswerUpdated').checked = ev.answerUpdated !== false;
+    $('evClosed').checked = ev.requestClosed !== false;
+    $('evCourt').checked = ev.courtReminder !== false;
+    (ns.courtDays || []).forEach(d => { const el = $('d' + d); if (el) el.checked = true; });
+
+    function renderTg() {
+      const box = $('tgBox');
+      if (ns.telegramConnected) {
+        box.innerHTML =
+          '<div class="telegram-box connected">' +
+            '<div class="telegram-status">✓ Telegram подключён: ' + esc(ns.telegramId || 'бот') + '</div>' +
+            '<button type="button" class="btn btn-secondary btn-sm" id="tgToggle">Отключить</button>' +
+          '</div>';
+      } else {
+        box.innerHTML =
+          '<div class="telegram-box">' +
+            '<div class="telegram-status">Telegram не подключён</div>' +
+            '<p style="font-size:13px;color:var(--text-secondary);margin-bottom:10px">Нажмите, чтобы подключить бота (демо)</p>' +
+            '<button type="button" class="btn btn-primary btn-sm" id="tgToggle">Подключить бота</button>' +
+          '</div>';
+      }
+      $('tgToggle').addEventListener('click', () => {
+        if (ns.telegramConnected) {
+          disconnectTelegram(); ns.telegramConnected = false; ns.telegramId = '';
+          toast('Telegram отключён');
+        } else {
+          connectTelegram('@lawyer_demo'); ns.telegramConnected = true; ns.telegramId = '@lawyer_demo';
+          toast('Telegram-бот подключён', 'success');
+        }
+        renderTg();
+        $('tgToggle').focus();
+      });
+    }
+    renderTg();
+
+    function renderPlans() {
+      const info = getLawyerPlan(user);
+      const limitText = info.limit == null ? 'безлимит' : (info.used + ' / ' + info.limit + ' заявок');
+      $('planStatus').innerHTML = '<strong>' + esc(info.plan.name) + '</strong> · ' + esc(limitText) +
+        ' · до окончания: ' + (info.expired ? 'истёк' : esc(info.daysLeft) + ' дн.');
+      $('planGrid').innerHTML = Object.values(LAWYER_PLANS).map(pl => {
+        const active = info.plan.id === pl.id;
+        const limit = pl.reqLimit == null ? 'Безлимит' : (pl.reqLimit + ' заявок');
+        const btn = active
+          ? '<span class="plan-card-badge">Текущий</span>'
+          : '<button type="button" class="btn btn-primary btn-sm" data-plan="' + esc(pl.id) + '" aria-label="Выбрать тариф ' + esc(pl.name) + '">Выбрать</button>';
+        return '<div class="plan-card ' + (active ? 'active' : '') + '">' +
+          '<div class="plan-card-name">' + esc(pl.name) + '</div>' +
+          '<div class="plan-card-price">' + (pl.price ? esc(pl.price.toLocaleString('ru-RU')) + ' ₽' : 'Бесплатно') + '</div>' +
+          '<div class="plan-card-meta">' + esc(limit) + ' · ' + esc(pl.days) + ' дн.</div>' +
+          btn + '</div>';
+      }).join('');
+    }
+    $('planGrid').addEventListener('click', e => {
+      const b = e.target.closest('[data-plan]');
+      if (!b) return;
+      b.disabled = true;
+      setLawyerPlan(b.getAttribute('data-plan'));
+      toast('Тариф обновлён (демо)', 'success');
+      setTimeout(() => location.reload(), 500);
+    });
+    renderPlans();
+
+    // ---------- Профиль: валидация ----------
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    function setErr(fid, msg) {
+      const inp = $(fid), err = $('err-' + fid), fg = $('fg-' + fid);
+      err.textContent = msg || '';
+      err.classList.toggle('show', !!msg);
+      err.style.display = msg ? 'block' : '';
+      if (fg) fg.classList.toggle('has-error', !!msg);
+      if (msg) inp.setAttribute('aria-invalid', 'true'); else inp.removeAttribute('aria-invalid');
+    }
+    function validateProfile() {
+      const name = $('profName').value.trim();
+      const email = $('profEmail').value.trim();
+      const errs = [];
+      if (!name) errs.push(['profName', 'Укажите ФИО']);
+      else if (name.length < 2) errs.push(['profName', 'ФИО слишком короткое']);
+      if (!email) errs.push(['profEmail', 'Укажите email']);
+      else if (!EMAIL_RE.test(email)) errs.push(['profEmail', 'Неверный формат email, пример: name@example.ru']);
+      setErr('profName', (errs.find(e => e[0] === 'profName') || [])[1]);
+      setErr('profEmail', (errs.find(e => e[0] === 'profEmail') || [])[1]);
+      return errs;
+    }
+    let profileTried = false;
+    ['profName', 'profEmail'].forEach(fid => $(fid).addEventListener('input', () => { if (profileTried) validateProfile(); }));
+    $('profileForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const btn = $('saveProfileBtn');
+      if (btn.disabled) return;
+      profileTried = true;
+      const errs = validateProfile();
+      if (errs.length) { $(errs[0][0]).focus(); return; }
+      btn.disabled = true;
+      updateProfile({
+        name: $('profName').value.trim(),
+        email: $('profEmail').value.trim(),
+        phone: $('profPhone').value.trim()
+      });
+      user = loadState().currentUser || user;
+      renderUser();
+      toast('Профиль сохранён', 'success');
+      setTimeout(() => { btn.disabled = false; }, 400);
+    });
+
+    $('saveNotifBtn').addEventListener('click', () => {
+      const courtDays = [];
+      if ($('d7').checked) courtDays.push(7);
+      if ($('d3').checked) courtDays.push(3);
+      if ($('d0').checked) courtDays.push(0);
+      saveNotifSettings({
+        inApp: $('chInApp').checked,
+        email: $('chEmail').checked,
+        courtDays,
+        events: {
+          newAnswer: $('evNewAnswer').checked,
+          answerUpdated: $('evAnswerUpdated').checked,
+          requestClosed: $('evClosed').checked,
+          courtReminder: $('evCourt').checked
+        }
+      });
+      toast('Настройки уведомлений сохранены', 'success');
+    });
+
+    mountNotificationBell();
+
+    const notifs = getNotificationsForUser().slice(0, 12);
+    const list = $('notifList');
+    if (!notifs.length) {
+      list.innerHTML = '<p style="color:var(--text-muted);font-size:14px">Пока нет уведомлений</p>';
+    } else {
+      list.innerHTML = notifs.map(n =>
+        '<div class="notif-row">' +
+          '<div class="t">' + esc(n.title) + '</div>' +
+          '<div class="b">' + esc(n.body) + '</div>' +
+          '<div class="d">' + esc(formatDateTime(n.createdAt)) + '</div>' +
+        '</div>').join('');
+    }
+  })();
+  </script>
+</body>
+</html>

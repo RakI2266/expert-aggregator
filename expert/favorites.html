@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expert Letters - Избранное</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body style="display:flex">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3L2 8l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="sidebar-logo-text">
+          <h1>Expert Letters</h1>
+          <span>Кабинет эксперта</span>
+        </div>
+      </div>
+    </div>
+        <nav class="sidebar-nav">
+      <a href="feed.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+        <span>Все заявки</span>
+      </a>
+      <a href="favorites.html" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>Избранное</span>
+        <span class="nav-count" id="navFavCount">0</span>
+      </a>
+      <a href="answers.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        <span>Мои ответы</span>
+        <span class="nav-count" id="navAnsCount">0</span>
+      </a>
+      <a href="hidden.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        <span>Скрытые</span>
+      </a>
+<a href="settings.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span>Настройки</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="userAvatar">ЭС</div>
+        <div class="user-details">
+          <div class="name" id="userName">-</div>
+          <div class="role">Экспертная организация</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <h2>Избранное</h2>
+      <div class="topbar-actions">
+        <button type="button" class="btn btn-secondary" id="logoutBtn">Выйти</button>
+      </div>
+    </header>
+
+    <div class="content">
+      <p style="font-size:14px;color:var(--text-secondary);margin-bottom:20px">
+        Заявки, которые вы отслеживаете до ответа. После отправки ответа заявка появляется в «Мои ответы».
+      </p>
+      <div class="feed-list" id="list"></div>
+      <div class="empty-state" id="emptyState" style="display:none">
+        <div class="empty-state-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <h3>В избранном пусто</h3>
+        <p>Добавляйте интересные заявки в избранное, чтобы быстро вернуться к ним.</p>
+        <a href="feed.html" class="btn btn-primary btn-sm">Перейти в ленту</a>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    [hidden] { display:none !important; }
+    .feed-card-title a { color:inherit; text-decoration:none; }
+    .feed-card-title a:hover { text-decoration:underline; }
+    .feed-card-title, .feed-card-meta span { overflow-wrap:anywhere; }
+    .feed-card-badges { display:inline-flex; gap:6px; align-items:center; flex-wrap:wrap; }
+  </style>
+
+  <script src="../js/app.js"></script>
+  <script>
+  (function () {
+    const state = requireAuth('expert');
+    if (!state) return;
+    const user = state.currentUser;
+    const $ = id => document.getElementById(id);
+    $('userName').textContent = user.orgName || user.name;
+    $('userAvatar').textContent = (user.orgName || user.name).slice(0, 2);
+    $('logoutBtn').addEventListener('click', logout);
+
+    function refreshNavCounts() {
+      try {
+        const fav = getFavorites().length;
+        const ans = getMyAnswers(user.id).length;
+        const elF = $('navFavCount'), elA = $('navAnsCount');
+        if (elF) { elF.textContent = fav; elF.classList.toggle('has-items', fav > 0); }
+        if (elA) { elA.textContent = ans; elA.classList.toggle('has-items', ans > 0); }
+      } catch (e) {}
+    }
+    refreshNavCounts();
+
+
+    function cardHtml(r, actions) {
+      const rid = encodeURIComponent(r.id);
+      return '<div class="feed-card" data-id="' + esc(r.id) + '">' +
+        '<div class="feed-card-header">' +
+          '<div class="feed-card-title"><a href="request.html?id=' + rid + '">' + esc(r.caseNumber) + '</a></div>' +
+          '<span class="feed-card-badges"><span class="answers-count-pill">Откликов: ' + countActiveAnswers(r) + '</span>' + appStatusBadge(r) + '</span>' +
+        '</div>' +
+        '<div class="feed-card-meta">' +
+          '<span>' + esc(r.court) + '</span>' +
+          '<span>' + esc(normalizeExpertiseType(r.expertiseType)) + '</span>' +
+          '<span>Приём до: <strong>' + esc(formatDate(r.acceptUntil)) + '</strong>' + (isAccepting(r) ? ' (' + esc(daysLeft(r.acceptUntil)) + ')' : '') + '</span>' +
+          (r.hearingDate ? '<span>Суд: ' + esc(formatHearing(r.hearingDate, r.hearingTime)) + '</span>' : '') +
+        '</div>' +
+        '<div class="feed-card-actions">' + actions.replace(/__RID__/g, rid) + '</div>' +
+      '</div>';
+    }
+
+    function render() {
+      const list = getFavorites();
+      const el = $('list');
+      const empty = $('emptyState');
+      if (!list.length) { el.innerHTML = ''; empty.style.display = 'block'; return; }
+      empty.style.display = 'none';
+      el.innerHTML = list.map(r => cardHtml(r,
+        '<a href="request.html?id=__RID__" class="btn btn-primary btn-sm">Открыть</a>' +
+        '<button type="button" class="btn btn-secondary btn-sm" data-act="unfav">Убрать из избранного</button>')).join('');
+    }
+    $('list').addEventListener('click', e => {
+      const b = e.target.closest('button[data-act="unfav"]');
+      if (!b) return;
+      const id = b.closest('.feed-card').dataset.id;
+      toggleFavorite(id);
+      render();
+      refreshNavCounts();
+      toast('Убрано из избранного', 'success', {
+        actionLabel: 'Отменить',
+        onAction: () => { toggleFavorite(id); render(); refreshNavCounts(); }
+      });
+    });
+    render();
+
+    mountNotificationBell();
+  })();
+  </script>
+</body>
+</html>

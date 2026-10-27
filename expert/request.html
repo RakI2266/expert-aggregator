@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expert Letters - Заявка</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body style="display:flex">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3L2 8l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="sidebar-logo-text">
+          <h1>Expert Letters</h1>
+          <span>Кабинет эксперта</span>
+        </div>
+      </div>
+    </div>
+        <nav class="sidebar-nav">
+      <a href="feed.html" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+        <span>Все заявки</span>
+      </a>
+      <a href="favorites.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>Избранное</span>
+        <span class="nav-count" id="navFavCount">0</span>
+      </a>
+      <a href="answers.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        <span>Мои ответы</span>
+        <span class="nav-count" id="navAnsCount">0</span>
+      </a>
+      <a href="hidden.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        <span>Скрытые</span>
+      </a>
+<a href="settings.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span>Настройки</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="userAvatar">ЭС</div>
+        <div class="user-details">
+          <div class="name" id="userName">-</div>
+          <div class="role">Экспертная организация</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h2 id="pageTitle">Заявка</h2>
+      </div>
+      <div class="topbar-actions">
+        <a href="feed.html" class="btn btn-secondary">К ленте</a>
+        <button type="button" class="btn btn-secondary" id="logoutBtn">Выйти</button>
+      </div>
+    </header>
+
+    <div class="content content-wide content-compact" id="pageContent">
+      <div id="changeBanner" class="change-banner" hidden></div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Данные заявки</h3>
+          <span class="req-badges"><span id="answersPill"></span><span id="statusBadge"></span></span>
+        </div>
+        <div class="card-body" id="dataBody"></div>
+      </div>
+
+      <div id="statusNote"></div>
+      <div class="action-bar" id="actionBar"></div>
+
+      <div class="card" id="myAnswerCard" hidden>
+        <div class="card-header"><h3>Мой ответ</h3><span id="outcomeBadge"></span></div>
+        <div class="card-body" id="myAnswerBody"></div>
+      </div>
+
+      <div class="card chat-card-wrap" id="chatCard" hidden>
+        <div class="card-body" style="padding:0" id="chatMount"></div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    [hidden] { display:none !important; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .link-btn { background:none; border:0; padding:0; font:inherit; color:var(--primary, #2563EB); cursor:pointer; text-align:left; overflow-wrap:anywhere; }
+    .link-btn:hover { text-decoration:underline; }
+    .req-badges { display:inline-flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    #dataBody .value, #myAnswerBody, .change-banner { overflow-wrap:anywhere; }
+    .status-note { border-radius:var(--radius, 12px); padding:12px 16px; margin:0 0 12px; font-size:14px; line-height:1.45; border:1px solid var(--border, #E2E8F0); background:#F8FAFC; }
+    .status-note.warn { background:#FFFBEB; border-color:#FDE68A; color:#92400E; }
+    .status-note.ok { background:#ECFDF5; border-color:#A7F3D0; color:#065F46; }
+    .status-note strong { font-weight:650; }
+    .action-bar .tooltip-hint { flex-basis:100%; font-size:12.5px; color:var(--text-muted, #64748B); margin:0; }
+    .action-bar { flex-wrap:wrap; }
+    .request-not-found { text-align:center; padding:48px 16px; }
+    .answer-file-line { font-size:13.5px; margin-top:8px; overflow-wrap:anywhere; }
+    .change-banner .diff-list { margin:8px 0 0; }
+  </style>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/chat-ui.js"></script>
+  <script>
+  (function () {
+    const state = requireAuth('expert');
+    if (!state) return;
+    const user = state.currentUser;
+    document.getElementById('userName').textContent = user.orgName || user.name;
+    document.getElementById('userAvatar').textContent = (user.orgName || user.name).slice(0, 2);
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+
+    function refreshNavCounts() {
+      try {
+        const fav = getFavorites().length;
+        const ans = getMyAnswers(user.id).length;
+        const elF = document.getElementById('navFavCount');
+        const elA = document.getElementById('navAnsCount');
+        if (elF) { elF.textContent = fav; elF.classList.toggle('has-items', fav > 0); }
+        if (elA) { elA.textContent = ans; elA.classList.toggle('has-items', ans > 0); }
+      } catch (e) {}
+    }
+    refreshNavCounts();
+
+    const id = new URLSearchParams(location.search).get('id');
+    const request = id ? getRequest(id) : null;
+
+    if (!request) {
+      document.title = 'Expert Letters - Заявка не найдена';
+      document.getElementById('pageTitle').textContent = 'Заявка не найдена';
+      document.getElementById('pageContent').innerHTML =
+        '<div class="card"><div class="empty-state request-not-found" style="display:block">' +
+          '<h3>Заявка не найдена</h3>' +
+          '<p>Возможно, ссылка устарела или заявка удалена.</p>' +
+          '<a href="feed.html" class="btn btn-primary btn-sm">Вернуться в ленту</a>' +
+        '</div></div>';
+      mountNotificationBell();
+      return;
+    }
+
+    // Отметить заявку как просмотренную (метка «Новая» в ленте)
+    try {
+      const key = 'el_seen_' + user.id;
+      const seen = JSON.parse(localStorage.getItem(key) || '[]');
+      const arr = Array.isArray(seen) ? seen : [];
+      if (!arr.includes(request.id)) { arr.push(request.id); localStorage.setItem(key, JSON.stringify(arr.slice(-500))); }
+    } catch (e) {}
+
+    const rid = encodeURIComponent(request.id);
+    const st = effectiveStatus(request);
+    const accepting = st === 'accepting';
+
+    document.getElementById('pageTitle').textContent = request.caseNumber;
+    document.title = 'Expert Letters - ' + request.caseNumber;
+    document.getElementById('statusBadge').innerHTML = appStatusBadge(request);
+    document.getElementById('answersPill').innerHTML = '<span class="answers-count-pill">Откликов: ' + countActiveAnswers(request) + '</span>';
+
+    const left = accepting ? ' <span class="days">(' + esc(daysLeft(request.acceptUntil)) + ')</span>' : '';
+    const attachments = request.attachments || [];
+    document.getElementById('dataBody').innerHTML =
+      '<div class="data-grid">' +
+        '<div class="data-cell"><div class="label">Номер дела</div><div class="value highlight">' + esc(request.caseNumber) + '</div></div>' +
+        '<div class="data-cell span-2"><div class="label">Суд</div><div class="value">' + esc(request.court) + '</div></div>' +
+        '<div class="data-cell"><div class="label">Дата заседания</div><div class="value">' + esc(formatHearing(request.hearingDate, request.hearingTime)) + '</div></div>' +
+        '<div class="data-cell"><div class="label">Принимать ответы до</div><div class="value highlight">' + esc(formatDate(request.acceptUntil)) + left + '</div></div>' +
+        '<div class="data-cell"><div class="label">Опубликована</div><div class="value">' + esc(formatDateTime(request.publishedAt)) + '</div></div>' +
+        '<div class="data-cell span-3"><div class="label">Вид экспертизы</div><div class="value">' + esc(normalizeExpertiseType(request.expertiseType)) + '</div></div>' +
+        '<div class="data-cell span-3"><div class="label">Вопросы</div><div class="value"><ol class="questions-list">' +
+          (request.questions || []).map(q => '<li>' + esc(q) + '</li>').join('') + '</ol></div></div>' +
+        (request.additionalInfo ? '<div class="data-cell span-3"><div class="label">Доп. информация</div><div class="value">' + esc(request.additionalInfo) + '</div></div>' : '') +
+        (attachments.length ? '<div class="data-cell span-3"><div class="label">Вложения</div><div class="value"><ul class="attach-list">' +
+          attachments.map(f => '<li><button type="button" class="link-btn attach-dl" data-file="' + esc(f) + '">📄 ' + esc(f) + '</button></li>').join('') + '</ul></div></div>' : '') +
+      '</div>';
+    document.getElementById('dataBody').addEventListener('click', e => {
+      if (e.target.closest('.attach-dl')) toast('Демо: скачивание файла появится в рабочей версии', 'info');
+    });
+
+    const myAnswer = request.answers.find(a => a.organizationId === user.id && !a.withdrawn) || null;
+    const myWithdrawn = !myAnswer ? request.answers.filter(a => a.organizationId === user.id && a.withdrawn)
+      .sort((a, b) => new Date(b.withdrawnAt || 0) - new Date(a.withdrawnAt || 0))[0] : null;
+    const fav = isFavorite(request.id);
+    const canAnswer = accepting && !myAnswer;
+    const editable = !!(myAnswer && canEditAnswer(request, myAnswer));
+    const changedAfterAnswer = !!(myAnswer && request.lastEditedAt && new Date(request.lastEditedAt) > new Date(myAnswer.submittedAt));
+    const changes = changedAfterAnswer ? getRequestChangeDiff(request) : [];
+
+    // Баннер изменений
+    const changeBox = document.getElementById('changeBanner');
+    if (changedAfterAnswer) {
+      changeBox.hidden = false;
+      changeBox.innerHTML =
+        '<div class="change-banner-title">Заявка изменена после вашего ответа</div>' +
+        '<div class="change-banner-sub">' + (editable
+          ? 'Проверьте изменения и при необходимости обновите предложение.'
+          : 'Приём ответов завершён - обновить предложение уже нельзя.') +
+          (request.lastEditedAt ? ' Изменено: ' + esc(formatDateTime(request.lastEditedAt)) + '.' : '') + '</div>' +
+        (changes.length ? '<ul class="diff-list">' + changes.map(c =>
+          '<li><span class="diff-label">' + esc(c.label) + '</span>' +
+          '<span class="diff-before"><span class="sr-only">Было: </span>' + esc(c.before) + '</span>' +
+          '<span class="diff-after"><span class="sr-only">Стало: </span>' + esc(c.after) + '</span></li>').join('') + '</ul>' : '') +
+        (editable ? '<a href="answer.html?id=' + rid + '&edit=' + encodeURIComponent(myAnswer.id) + '" class="btn btn-primary btn-sm" style="margin-top:12px">Обновить предложение</a>' : '');
+    }
+
+    // Статус заявки для эксперта
+    const noteEl = document.getElementById('statusNote');
+    if (st === 'expired') {
+      noteEl.innerHTML = '<div class="status-note warn"><strong>Срок приёма истёк</strong> ' + esc(formatDate(request.acceptUntil)) +
+        (myAnswer ? '. Юрист выбирает исполнителя - мы сообщим о результате.' : '. Отправить информационное письмо уже нельзя.') + '</div>';
+    } else if (st === 'closed') {
+      let txt = 'Приём ответов закрыт' + (request.closedAt ? ' ' + esc(formatDateTime(request.closedAt)) : '') + '.';
+      if (myAnswer) {
+        const o = getAnswerOutcome(request, myAnswer);
+        txt += ' Итог по вашему ответу: ' + outcomeBadge(o);
+      }
+      noteEl.innerHTML = '<div class="status-note' + (myAnswer && getAnswerOutcome(request, myAnswer) === 'selected' ? ' ok' : '') + '">' + txt + '</div>';
+    }
+
+    // Действия
+    let actions = '';
+    if (canAnswer) {
+      actions += '<a href="answer.html?id=' + rid + '" class="btn btn-primary">Подать информационное письмо</a>';
+    } else if (!myAnswer && st === 'expired') {
+      actions += '<button type="button" class="btn btn-primary" disabled aria-disabled="true" aria-describedby="answerHint">Подать информационное письмо</button>' +
+        '<p class="tooltip-hint" id="answerHint">Срок приёма ответов истёк - подать письмо нельзя.</p>';
+    }
+    if (myAnswer && accepting) {
+      if (editable) actions += '<a href="answer.html?id=' + rid + '&edit=' + encodeURIComponent(myAnswer.id) + '" class="btn btn-primary">Обновить предложение</a>';
+      actions += '<button type="button" class="btn btn-secondary" data-act="withdraw">Отозвать ответ</button>';
+    }
+    if (myAnswer) {
+      if (fav) actions += '<button type="button" class="btn btn-secondary" data-act="fav">★ Убрать из избранного</button>';
+    } else {
+      if (st !== 'closed' || fav) actions += '<button type="button" class="btn btn-secondary" data-act="fav" aria-pressed="' + (fav ? 'true' : 'false') + '">' + (fav ? '★ В избранном' : '☆ В избранное') + '</button>';
+      actions += '<button type="button" class="btn btn-ghost" data-act="hide">Скрыть</button>';
+    }
+    const bar = document.getElementById('actionBar');
+    bar.innerHTML = actions;
+    bar.hidden = !actions;
+    bar.addEventListener('click', e => {
+      const b = e.target.closest('button[data-act]');
+      if (!b || b.disabled) return;
+      if (b.dataset.act === 'fav') doFav();
+      else if (b.dataset.act === 'hide') doHide();
+      else if (b.dataset.act === 'withdraw') doWithdraw(b);
+    });
+
+    // Мой ответ
+    const shownAnswer = myAnswer || myWithdrawn;
+    if (shownAnswer) {
+      document.getElementById('myAnswerCard').hidden = false;
+      document.getElementById('outcomeBadge').innerHTML = outcomeBadge(getAnswerOutcome(request, shownAnswer));
+      let note = '';
+      if (myWithdrawn && !myAnswer) {
+        note = '<p class="form-hint" style="margin-top:10px">Вы отозвали ответ ' + esc(formatDateTime(myWithdrawn.withdrawnAt)) + '.' +
+          (accepting ? ' Можно отправить новое предложение.' : '') + '</p>';
+      } else if (editable) {
+        note = '<p style="font-size:13px;color:#059669;margin-top:10px">Заявка изменена юристом - нажмите «Обновить предложение», чтобы отправить новую версию.</p>';
+      } else if (accepting) {
+        note = '<p class="form-hint" style="margin-top:10px">Изменить предложение можно после правок юристом; иначе - отозвать и отправить заново.</p>';
+      }
+      const a = shownAnswer;
+      document.getElementById('myAnswerBody').innerHTML =
+        '<div class="response-card" style="border:none">' +
+          '<div class="response-meta">' +
+            '<div class="meta-item">Стоимость: <strong>' + esc(formatPrice(a.price)) + '</strong></div>' +
+            '<div class="meta-item">Срок: <strong>' + esc(a.termDays) + ' дн.</strong></div>' +
+            '<div class="meta-item">Эксперт: <strong>' + esc(a.expertName) + '</strong></div>' +
+            (a.withdrawn ? '' : '<div class="meta-item">Статус: ' + answerStatusBadge(a.status) + '</div>') +
+            '<div class="meta-item">Отправлено: <strong>' + esc(formatDateTime(a.submittedAt)) + '</strong></div>' +
+          '</div>' +
+          (a.additionalInfo ? '<div class="response-comment">' + esc(a.additionalInfo) + '</div>' : '') +
+          '<div class="answer-file-line">Файл: ' + esc(a.fileName || '-') + (a.fileSize ? ' (' + esc(formatFileSize(a.fileSize)) + ')' : '') + '</div>' +
+          note +
+        '</div>';
+    }
+
+    function doFav() {
+      const on = toggleFavorite(request.id);
+      toast(on ? 'Добавлено в избранное' : 'Убрано из избранного', 'success');
+      setTimeout(() => location.reload(), 400);
+    }
+    function doHide() {
+      hideRequest(request.id);
+      toast('Заявка скрыта', 'success', {
+        actionLabel: 'Отменить',
+        onAction: () => { unhideRequest(request.id); toast('Заявка возвращена в ленту', 'success'); }
+      });
+      refreshNavCounts();
+    }
+    function doWithdraw(btn) {
+      if (!myAnswer) return;
+      if (!confirm('Отозвать предложение? Юрист больше не увидит этот ответ.')) return;
+      btn.disabled = true;
+      if (withdrawAnswer(request.id, myAnswer.id)) {
+        refreshNavCounts();
+        toast('Ответ отозван', 'success');
+        setTimeout(() => location.reload(), 500);
+      } else {
+        btn.disabled = false;
+        toast('Не удалось отозвать: приём ответов уже завершён', 'error');
+      }
+    }
+
+    // Чат - после активного ответа
+    if (myAnswer && typeof mountChat === 'function') {
+      document.getElementById('chatCard').hidden = false;
+      mountChat({
+        mount: document.getElementById('chatMount'),
+        request: request,
+        organizationId: user.id,
+        organizationName: user.orgName || user.name
+      });
+      if (location.hash === '#chatMount') {
+        setTimeout(() => { const c = document.getElementById('chatCard'); if (c) c.scrollIntoView({ block: 'start' }); }, 50);
+      }
+    }
+
+    mountNotificationBell();
+  })();
+  </script>
+</body>
+</html>

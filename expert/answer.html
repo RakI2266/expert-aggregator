@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expert Letters - Ответ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body style="display:flex">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3L2 8l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="sidebar-logo-text">
+          <h1>Expert Letters</h1>
+          <span>Кабинет эксперта</span>
+        </div>
+      </div>
+    </div>
+        <nav class="sidebar-nav">
+      <a href="feed.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+        <span>Все заявки</span>
+      </a>
+      <a href="favorites.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>Избранное</span>
+        <span class="nav-count" id="navFavCount">0</span>
+      </a>
+      <a href="answers.html" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        <span>Мои ответы</span>
+        <span class="nav-count" id="navAnsCount">0</span>
+      </a>
+      <a href="hidden.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        <span>Скрытые</span>
+      </a>
+<a href="settings.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span>Настройки</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="userAvatar">ЭС</div>
+        <div class="user-details">
+          <div class="name" id="userName">-</div>
+          <div class="role">Экспертная организация</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <h2 id="pageTitle">Подать информационное письмо</h2>
+      <div class="topbar-actions">
+        <a class="btn btn-secondary" id="backLink" href="feed.html">Назад</a>
+        <button type="button" class="btn btn-secondary" id="logoutBtn">Выйти</button>
+      </div>
+    </header>
+
+    <div class="content content-wide content-compact" id="pageContent">
+      <div class="card">
+        <div class="card-header"><h3 id="caseLabel">Заявка</h3></div>
+        <div class="card-body" style="padding: 24px;">
+          <form id="answerForm" novalidate>
+            <div class="form-errors" id="formErrors" role="alert" hidden></div>
+            <div class="answer-form-layout">
+              <div class="form-group" id="fg-price">
+                <label for="price">Стоимость, ₽ <span class="req-mark" aria-hidden="true">*</span></label>
+                <input type="number" id="price" name="price" required min="1" step="1" inputmode="numeric" placeholder="150000" aria-describedby="err-price">
+                <div class="field-error" id="err-price"></div>
+              </div>
+              <div class="form-group" id="fg-termDays">
+                <label for="termDays">Срок, календарных дней <span class="req-mark" aria-hidden="true">*</span></label>
+                <input type="number" id="termDays" name="termDays" required min="1" max="365" step="1" inputmode="numeric" placeholder="10" aria-describedby="hint-termDays err-termDays">
+                <p class="hint" id="hint-termDays">В карточке юриста срок показывается как «N дн.» - календарные дни.</p>
+                <div class="field-error" id="err-termDays"></div>
+              </div>
+              <div class="form-group full" id="fg-expertName">
+                <label for="expertName">ФИО эксперта <span class="req-mark" aria-hidden="true">*</span></label>
+                <input type="text" id="expertName" name="expertName" required maxlength="200" autocomplete="name" placeholder="Иванов Иван Иванович" aria-describedby="err-expertName">
+                <div class="field-error" id="err-expertName"></div>
+              </div>
+              <div class="form-group full" id="fg-additionalInfo">
+                <label for="additionalInfo">Комментарий к предложению</label>
+                <textarea id="additionalInfo" name="additionalInfo" rows="3" maxlength="2000" placeholder="Краткое пояснение - юрист увидит его в карточке ответа" aria-describedby="hint-additionalInfo err-additionalInfo"></textarea>
+                <p class="hint" id="hint-additionalInfo">Не указывайте телефоны, email, ссылки и мессенджеры - общение только на платформе.</p>
+                <div class="forbidden-preview" id="infoForbidden" hidden></div>
+                <div class="field-error" id="err-additionalInfo"></div>
+              </div>
+              <div class="form-group full" id="fg-file">
+                <label for="fileInput">Файл информационного письма (PDF, до 20 МБ) <span class="req-mark" aria-hidden="true">*</span></label>
+                <input type="file" id="fileInput" name="file" accept=".pdf,application/pdf" aria-describedby="fileInfo err-file">
+                <p class="hint" id="fileInfo">Обязательно. Формат PDF, размер до 20 МБ.</p>
+                <div class="field-error" id="err-file"></div>
+              </div>
+            </div>
+            <div class="form-actions" id="formActions">
+              <button type="submit" class="btn btn-primary" id="submitBtn">Проверить перед отправкой</button>
+              <a class="btn btn-secondary" id="cancelLink" href="feed.html">Отмена</a>
+            </div>
+          </form>
+          <div class="preview-card" id="previewCard" hidden>
+            <h4>Так юрист увидит ваше предложение</h4>
+            <div class="preview-meta" id="previewMeta"></div>
+            <div class="preview-comment" id="previewComment" hidden></div>
+            <div id="previewFile" style="font-size:13px;color:var(--text-secondary);overflow-wrap:anywhere"></div>
+            <div class="preview-actions">
+              <button type="button" class="btn btn-primary" id="confirmSendBtn">Отправить</button>
+              <button type="button" class="btn btn-secondary" id="backToEditBtn">Исправить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    [hidden] { display:none !important; }
+    .form-group.has-error .field-error, .field-error.show { display:block; }
+    .req-mark { color:#DC2626; font-weight:700; }
+    .forbidden-preview { margin-top:6px; padding:8px 10px; border:1px dashed #FCA5A5; background:#FFF7F7; border-radius:8px; font-size:13px; line-height:1.5; white-space:pre-wrap; overflow-wrap:anywhere; color:var(--text-main); }
+    .forbidden-preview mark { background:#FECACA; color:#991B1B; border-radius:3px; padding:0 2px; font-weight:600; }
+    .forbidden-preview .fp-title { display:block; font-size:12px; font-weight:600; color:#B91C1C; margin-bottom:4px; white-space:normal; }
+    .preview-meta .meta-value { overflow-wrap:anywhere; }
+    .preview-comment { white-space:pre-wrap; overflow-wrap:anywhere; }
+    #fileInput { max-width:100%; }
+    .answer-state { text-align:center; padding:40px 16px; }
+    .answer-state .btn + .btn { margin-left:8px; }
+  </style>
+
+  <script src="../js/app.js"></script>
+  <script>
+  (function () {
+    const state = requireAuth('expert');
+    if (!state) return;
+    const user = state.currentUser;
+    document.getElementById('userName').textContent = user.orgName || user.name;
+    document.getElementById('userAvatar').textContent = (user.orgName || user.name).slice(0, 2);
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+    const $ = id => document.getElementById(id);
+
+    (function refreshNavCounts() {
+      try {
+        const fav = getFavorites().length;
+        const ans = getMyAnswers(user.id).length;
+        const elF = $('navFavCount'), elA = $('navAnsCount');
+        if (elF) { elF.textContent = fav; elF.classList.toggle('has-items', fav > 0); }
+        if (elA) { elA.textContent = ans; elA.classList.toggle('has-items', ans > 0); }
+      } catch (e) {}
+    })();
+
+    const params = new URLSearchParams(location.search);
+    const requestId = params.get('id');
+    const editAnswerId = params.get('edit');
+    const request = requestId ? getRequest(requestId) : null;
+
+    function showState(title, text, links) {
+      $('pageContent').innerHTML =
+        '<div class="card"><div class="empty-state answer-state" style="display:block">' +
+          '<h3>' + esc(title) + '</h3><p>' + esc(text) + '</p>' +
+          links.map(l => '<a href="' + esc(l.href) + '" class="btn ' + (l.primary ? 'btn-primary' : 'btn-secondary') + ' btn-sm">' + esc(l.label) + '</a>').join('') +
+        '</div></div>';
+      mountNotificationBell();
+    }
+
+    if (!request) {
+      document.title = 'Expert Letters - Заявка не найдена';
+      $('pageTitle').textContent = 'Заявка не найдена';
+      showState('Заявка не найдена', 'Возможно, ссылка устарела или заявка удалена.', [{ href: 'feed.html', label: 'Вернуться в ленту', primary: true }]);
+      return;
+    }
+    const rid = encodeURIComponent(request.id);
+    $('backLink').href = 'request.html?id=' + rid;
+    $('cancelLink').href = 'request.html?id=' + rid;
+    $('caseLabel').textContent = 'Заявка ' + request.caseNumber;
+
+    const st = effectiveStatus(request);
+    if (st !== 'accepting') {
+      showState(st === 'expired' ? 'Срок приёма ответов истёк' : 'Приём ответов закрыт',
+        st === 'expired' ? 'Отправить или изменить письмо по этой заявке уже нельзя.' : 'Юрист завершил приём ответов по этой заявке.',
+        [{ href: 'request.html?id=' + rid, label: 'Открыть заявку', primary: true }, { href: 'feed.html', label: 'В ленту' }]);
+      return;
+    }
+
+    let editAns = null;
+    if (editAnswerId) {
+      editAns = request.answers.find(a => a.id === editAnswerId && a.organizationId === user.id && !a.withdrawn) || null;
+      if (!editAns || !canEditAnswer(request, editAns)) {
+        showState('Изменение недоступно', 'Изменить ответ можно только после того, как юрист изменит заявку. Иначе - отзовите ответ и отправьте новый.',
+          [{ href: 'request.html?id=' + rid, label: 'Открыть заявку', primary: true }, { href: 'answers.html', label: 'Мои ответы' }]);
+        return;
+      }
+      $('pageTitle').textContent = 'Изменить ответ';
+      $('submitBtn').textContent = 'Проверить перед обновлением';
+      $('price').value = editAns.price;
+      $('termDays').value = editAns.termDays;
+      $('expertName').value = editAns.expertName;
+      $('additionalInfo').value = editAns.additionalInfo || '';
+      $('fileInfo').textContent = 'Текущий файл: ' + (editAns.fileName || '-') + (editAns.fileSize ? ' (' + formatFileSize(editAns.fileSize) + ')' : '') + '. Выберите новый PDF, чтобы заменить.';
+    } else if (hasActiveAnswer(request.id, user.id)) {
+      showState('Вы уже ответили на эту заявку', 'Ваше предложение находится в разделе «Мои ответы».',
+        [{ href: 'answers.html', label: 'Мои ответы', primary: true }, { href: 'request.html?id=' + rid, label: 'Открыть заявку' }]);
+      return;
+    }
+
+    // ---------- Файл ----------
+    let selectedFile = null;
+    const FIELD_INPUT = { price: 'price', termDays: 'termDays', expertName: 'expertName', additionalInfo: 'additionalInfo', file: 'fileInput' };
+    const FIELD_ORDER = ['price', 'termDays', 'expertName', 'additionalInfo', 'file'];
+
+    function setFieldError(field, msg) {
+      const input = $(FIELD_INPUT[field]);
+      const err = $('err-' + field);
+      const fg = $('fg-' + field);
+      if (!input || !err) return;
+      err.textContent = msg || '';
+      err.classList.toggle('show', !!msg);
+      err.style.display = msg ? 'block' : 'none';
+      if (fg) fg.classList.toggle('has-error', !!msg);
+      if (msg) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
+    }
+    function clearErrors() {
+      FIELD_ORDER.forEach(f => setFieldError(f, ''));
+      $('formErrors').hidden = true;
+      $('formErrors').textContent = '';
+    }
+    function showErrors(errs) {
+      clearErrors();
+      const byField = {};
+      errs.forEach(e => { if (e.field && FIELD_INPUT[e.field] && !byField[e.field]) byField[e.field] = e.message; });
+      Object.keys(byField).forEach(f => setFieldError(f, byField[f]));
+      const general = errs.filter(e => !e.field || !FIELD_INPUT[e.field]);
+      if (general.length) {
+        $('formErrors').hidden = false;
+        $('formErrors').textContent = general.map(e => e.message).join(' ');
+      }
+      const first = FIELD_ORDER.find(f => byField[f]);
+      if (first) $(FIELD_INPUT[first]).focus();
+      renderForbidden();
+    }
+
+    function describeFile(f) {
+      return f.name + ' (' + formatFileSize(f.size) + ')';
+    }
+    $('fileInput').addEventListener('change', () => {
+      const f = $('fileInput').files[0] || null;
+      if (!f) {
+        selectedFile = null;
+        setFieldError('file', editAns ? '' : 'Прикрепите информационное письмо в PDF');
+        return;
+      }
+      const err = validatePdfFile(f);
+      if (err) {
+        selectedFile = null;
+        setFieldError('file', err);
+        $('fileInfo').textContent = 'Обязательно. Формат PDF, размер до 20 МБ.';
+        return;
+      }
+      selectedFile = f;
+      setFieldError('file', '');
+      $('fileInfo').textContent = 'Выбран файл: ' + describeFile(f);
+    });
+
+    // ---------- Подсветка запрещённых фрагментов ----------
+    function renderForbidden() {
+      const text = $('additionalInfo').value;
+      const box = $('infoForbidden');
+      const found = findForbiddenInText(text);
+      if (!found.length) { box.hidden = true; box.innerHTML = ''; return false; }
+      let html = '', pos = 0;
+      found.forEach(m => {
+        html += esc(text.slice(pos, m.index)) + '<mark>' + esc(text.slice(m.index, m.index + m.length)) + '</mark>';
+        pos = m.index + m.length;
+      });
+      html += esc(text.slice(pos));
+      box.innerHTML = '<span class="fp-title">Найдены контакты или ссылки - уберите выделенное:</span>' + html;
+      box.hidden = false;
+      return true;
+    }
+    let fpT = null;
+    $('additionalInfo').addEventListener('input', () => {
+      clearTimeout(fpT);
+      fpT = setTimeout(() => {
+        const bad = renderForbidden();
+        if (!bad && $('err-additionalInfo').textContent) setFieldError('additionalInfo', '');
+      }, 200);
+    });
+    ['price', 'termDays', 'expertName'].forEach(f => $(f).addEventListener('input', () => {
+      if ($('err-' + f).textContent) setFieldError(f, '');
+    }));
+
+    // ---------- Сбор и проверка ----------
+    function collectData() {
+      const f = selectedFile;
+      return {
+        price: $('price').value,
+        termDays: $('termDays').value,
+        expertName: $('expertName').value.trim(),
+        additionalInfo: $('additionalInfo').value.trim(),
+        fileName: f ? f.name : (editAns ? editAns.fileName : ''),
+        fileSize: f ? f.size : (editAns ? (editAns.fileSize || 0) : 0)
+      };
+    }
+    function validateAll(data) {
+      const errs = validateAnswerData(data).slice();
+      // Проверка самого файла (тип/размер) - при подаче обязательна; при изменении - если выбран новый
+      const fileInputFile = $('fileInput').files[0] || null;
+      if (fileInputFile || !editAns) {
+        const fe = validatePdfFile(fileInputFile || selectedFile);
+        if (fe) {
+          const i = errs.findIndex(e => e.field === 'file');
+          if (i >= 0) errs.splice(i, 1);
+          errs.push({ field: 'file', message: fe });
+        }
+      }
+      return errs;
+    }
+
+    let pendingData = null;
+    let sending = false;
+
+    function showPreview(data) {
+      pendingData = data;
+      $('answerForm').hidden = true;
+      $('previewCard').hidden = false;
+      $('previewMeta').innerHTML =
+        '<div class="meta-label">Организация</div><div class="meta-value">' + esc(user.orgName || user.name) + '</div>' +
+        '<div class="meta-label">Эксперт</div><div class="meta-value">' + esc(data.expertName) + '</div>' +
+        '<div class="meta-label">Стоимость</div><div class="meta-value">' + esc(formatPrice(data.price)) + '</div>' +
+        '<div class="meta-label">Срок</div><div class="meta-value">' + esc(Number(data.termDays)) + ' дн.</div>' +
+        '<div class="meta-label">Статус</div><div class="meta-value">' + (editAns ? 'Будет обновлено' : 'Будет отправлено') + '</div>';
+      const comm = $('previewComment');
+      comm.hidden = !data.additionalInfo;
+      comm.textContent = data.additionalInfo || '';
+      $('previewFile').textContent = 'Файл: ' + data.fileName + (data.fileSize ? ' (' + formatFileSize(data.fileSize) + ')' : '');
+      $('confirmSendBtn').textContent = editAns ? 'Обновить предложение' : 'Отправить';
+      $('confirmSendBtn').disabled = false;
+      $('previewCard').scrollIntoView({ block: 'start', behavior: 'smooth' });
+      $('confirmSendBtn').focus({ preventScroll: true });
+    }
+
+    function backToEdit() {
+      $('previewCard').hidden = true;
+      $('answerForm').hidden = false;
+      pendingData = null;
+      $('submitBtn').focus();
+    }
+
+    function confirmSend() {
+      if (!pendingData || sending) return;
+      const errs = validateAll(pendingData);
+      if (errs.length) { backToEdit(); showErrors(errs); return; }
+      sending = true;
+      const btn = $('confirmSendBtn');
+      btn.disabled = true;
+      btn.setAttribute('aria-busy', 'true');
+      const res = editAns
+        ? updateAnswer(request.id, editAns.id, pendingData)
+        : submitAnswer(request.id, pendingData);
+      if (!res || res.error) {
+        sending = false;
+        btn.disabled = false;
+        btn.removeAttribute('aria-busy');
+        const msg = (res && res.error) || 'Не удалось отправить ответ';
+        if (res && res.errors && res.errors.length) { backToEdit(); showErrors(res.errors); }
+        toast(msg, 'error');
+        return;
+      }
+      toast(editAns ? 'Ответ обновлён. Старая версия сохранена в истории.' : 'Письмо отправлено. Заявка перемещена в «Мои ответы».', 'success');
+      setTimeout(() => location.href = 'answers.html', 900);
+    }
+
+    $('answerForm').addEventListener('submit', e => {
+      e.preventDefault();
+      if (sending) return;
+      const data = collectData();
+      const errs = validateAll(data);
+      if (errs.length) { showErrors(errs); return; }
+      clearErrors();
+      showPreview(data);
+    });
+    $('confirmSendBtn').addEventListener('click', confirmSend);
+    $('backToEditBtn').addEventListener('click', backToEdit);
+
+    mountNotificationBell();
+  })();
+  </script>
+</body>
+</html>

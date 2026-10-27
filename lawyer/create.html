@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expert Letters - Создать заявку</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+    .form-fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+    .form-fieldset[disabled] { opacity: .55; }
+    .field-error.show { display: block; }
+    .field-warn { display: none; margin-top: 6px; font-size: 12.5px; color: #B45309; font-weight: 500; line-height: 1.35; }
+    .field-warn.show { display: block; }
+    .hearing-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hearing-row .sub { display: flex; flex-direction: column; gap: 4px; }
+    .hearing-row .sub label { font-size: 12.5px; font-weight: 500; color: var(--text-secondary); }
+    .hearing-row input[type="date"] { width: 170px; max-width: 100%; }
+    .hearing-row input[type="time"] { width: 130px; max-width: 100%; }
+    .questions-group { border: 0; padding: 0; margin: 0; min-width: 0; }
+    .questions-group legend { padding: 0; }
+    .question-row .question-input { min-width: 0; flex: 1 1 auto; }
+    .question-input[aria-invalid="true"] { border-color: #FCA5A5; background: #FEF2F2; }
+    .modal-card { max-height: calc(100vh - 32px); overflow: auto; }
+    .modal-card.wide { max-width: 560px; }
+    .diff-list { word-break: break-word; }
+    .recipients-note { margin-top: 12px; font-size: 14px; font-weight: 600; }
+    .draft-note { font-size: 12.5px; color: var(--text-muted); margin-left: auto; align-self: center; }
+    @media (max-width: 720px) {
+      .form-row { grid-template-columns: 1fr !important; }
+      .draft-note { margin-left: 0; flex-basis: 100%; }
+    }
+  </style>
+</head>
+<body style="display:flex">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3L2 8l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="sidebar-logo-text">
+          <h1>Expert Letters</h1>
+          <span>Личный кабинет юриста</span>
+        </div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <span>Мои заявки</span>
+      </a>
+      <a href="create.html" class="nav-item active" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        <span>Создать заявку</span>
+      </a>
+      <a href="settings.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span>Настройки</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="userAvatar">-</div>
+        <div class="user-details">
+          <div class="name" id="userName">-</div>
+          <div class="role">Юрист</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <h2 id="pageTitle">Создать заявку</h2>
+      <div class="topbar-actions">
+        <a href="dashboard.html" class="btn btn-secondary">К списку</a>
+        <button type="button" class="btn btn-secondary" id="logoutBtn">Выйти</button>
+      </div>
+    </header>
+
+    <div class="content content-wide content-compact" id="pageContent">
+      <div id="lockBanner" hidden></div>
+      <form id="createForm" novalidate>
+        <fieldset class="form-fieldset" id="formFields">
+          <legend class="sr-only">Данные заявки</legend>
+          <div class="form-section">
+            <div class="form-section-title"><span class="step-badge">1</span> Дело, суд и сроки</div>
+            <div class="form-row">
+              <div class="form-group" id="fg-caseNumber">
+                <label for="caseNumber" class="label-required">Номер дела <span class="req-mark" aria-hidden="true">*</span></label>
+                <input type="text" id="caseNumber" placeholder="А40-123456/2026" autocomplete="off" aria-required="true" aria-describedby="err-caseNumber">
+                <div class="field-error" id="err-caseNumber"></div>
+              </div>
+              <div class="form-group" id="fg-court">
+                <label for="court" class="label-required">Суд <span class="req-mark" aria-hidden="true">*</span></label>
+                <input type="text" id="court" list="courtsList" placeholder="Начните вводить название суда" autocomplete="off" aria-required="true" aria-describedby="err-court warn-court">
+                <datalist id="courtsList"></datalist>
+                <div class="field-error" id="err-court"></div>
+                <div class="field-warn" id="warn-court" aria-live="polite"></div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group" id="fg-expertiseType">
+                <label for="expertiseType">Вид экспертизы</label>
+                <select id="expertiseType"></select>
+              </div>
+              <div class="form-group" id="fg-acceptUntil">
+                <label for="acceptUntil" class="label-required">Принимать ответы до <span class="req-mark" aria-hidden="true">*</span></label>
+                <input type="date" id="acceptUntil" aria-required="true" aria-describedby="err-acceptUntil hint-acceptUntil">
+                <div class="field-error" id="err-acceptUntil"></div>
+                <p class="hint form-hint" id="hint-acceptUntil">По умолчанию +14 дней. Не позже даты заседания. Можно закрыть досрочно на странице заявки.</p>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group" id="fg-hearingDate">
+                <span class="label-like" style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">Судебное заседание</span>
+                <div class="hearing-row">
+                  <div class="sub">
+                    <label for="hearingDate">Дата</label>
+                    <input type="date" id="hearingDate" aria-describedby="err-hearingDate">
+                  </div>
+                  <div class="sub">
+                    <label for="hearingTime">Время (необязательно)</label>
+                    <input type="time" id="hearingTime">
+                  </div>
+                </div>
+                <div class="field-error" id="err-hearingDate"></div>
+              </div>
+              <div class="form-group"></div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-title"><span class="step-badge">2</span> Вопросы и материалы</div>
+            <fieldset class="form-group questions-group" id="fg-questions" aria-describedby="hint-questions err-questions">
+              <legend class="label-required" style="font-size:13px;font-weight:600;margin-bottom:6px">Вопросы на экспертизу <span class="req-mark" aria-hidden="true">*</span></legend>
+              <p class="hint form-hint" id="hint-questions" style="margin-bottom:8px">Обязательно. Укажите хотя бы один вопрос - эксперты ответят по ним.</p>
+              <div id="questionsList"></div>
+              <div class="field-error" id="err-questions"></div>
+              <button type="button" class="btn btn-ghost btn-sm" style="margin-top:8px" id="addQuestionBtn">+ Добавить ещё вопрос <span style="opacity:.55;font-weight:400">(до 20)</span></button>
+            </fieldset>
+            <div class="form-group" id="fg-additionalInfo">
+              <label for="additionalInfo">Дополнительная информация</label>
+              <textarea id="additionalInfo" placeholder="Объект, материалы, особые условия..." aria-describedby="err-additionalInfo"></textarea>
+              <div class="field-error" id="err-additionalInfo"></div>
+            </div>
+            <div class="form-group">
+              <label for="fileInput">Вложения</label>
+              <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.jpg,.png,.zip" aria-describedby="hint-files">
+              <p class="hint form-hint" id="hint-files">Заявку и документы увидят все проверенные экспертные организации. Прикладывайте только то, что нужно для оценки стоимости и сроков, а лишние персональные данные сторон лучше обезличить (п. 5.3 <a href="../offer.html" target="_blank" rel="noopener">оферты</a>). В демо сохраняются только имена файлов.</p>
+              <div class="file-chips" id="fileChips"></div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="submitBtn">Опубликовать</button>
+            <a href="dashboard.html" class="btn btn-secondary" id="cancelLink">Отмена</a>
+            <span class="draft-note" id="draftNote" aria-live="polite"></span>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="diffModal">
+    <div class="modal-card wide" role="dialog" aria-modal="true" aria-labelledby="diffTitle" aria-describedby="diffRecipients">
+      <h3 id="diffTitle">Проверьте изменения</h3>
+      <p class="modal-hint">Эксперты увидят, что именно изменилось, и смогут обновить предложения.</p>
+      <ul class="diff-list" id="diffList"></ul>
+      <p class="recipients-note" id="diffRecipients"></p>
+      <div class="preview-actions">
+        <button type="button" class="btn btn-primary" id="diffConfirm">Сохранить и уведомить</button>
+        <button type="button" class="btn btn-secondary" id="diffBack">Вернуться</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+  (function () {
+    const state = requireAuth('lawyer');
+    if (!state) return;
+    const user = state.currentUser;
+    const userName = user.name || '-';
+    document.getElementById('userName').textContent = userName;
+    document.getElementById('userAvatar').textContent = userName.split(/\s+/).filter(Boolean).map(w => w[0]).slice(0, 2).join('') || '-';
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+
+    const DRAFT_KEY = 'el_draft_create';
+    const params = new URLSearchParams(location.search);
+    const editId = params.get('edit');
+    const $ = id => document.getElementById(id);
+
+    // ---------- Режим редактирования: заявка должна существовать и быть открытой ----------
+    let editReq = null;
+    if (editId) {
+      editReq = getRequest(editId);
+      if (!editReq || editReq.lawyerId !== user.id || editReq.status === 'closed') {
+        const closed = editReq && editReq.status === 'closed' && editReq.lawyerId === user.id;
+        $('pageTitle').textContent = closed ? 'Редактирование недоступно' : 'Заявка не найдена';
+        $('pageContent').innerHTML =
+          '<div class="card"><div class="empty-state">' +
+            '<h3>' + (closed ? 'Приём по заявке закрыт' : 'Заявка не найдена') + '</h3>' +
+            '<p>' + (closed ? 'Закрытую заявку редактировать нельзя.' : 'Возможно, ссылка устарела или заявка принадлежит другому пользователю.') + '</p>' +
+            (closed ? '<a href="request.html?id=' + encodeURIComponent(editId) + '" class="btn btn-primary btn-sm">К заявке</a> ' : '') +
+            '<a href="dashboard.html" class="btn btn-secondary btn-sm">К списку заявок</a>' +
+          '</div></div>';
+        mountNotificationBell();
+        return;
+      }
+    }
+
+    // ---------- Справочники ----------
+    const dl = $('courtsList');
+    COURTS.forEach(c => { const o = document.createElement('option'); o.value = c; dl.appendChild(o); });
+    const expSelect = $('expertiseType');
+    function fillExpertise(extra) {
+      expSelect.innerHTML = '';
+      const list = EXPERTISE_TYPES.slice();
+      if (extra && !list.includes(extra)) list.push(extra);
+      list.forEach(t => { const o = document.createElement('option'); o.value = t; o.textContent = t; expSelect.appendChild(o); });
+    }
+    fillExpertise();
+
+    const today = todayStr();
+    $('acceptUntil').min = today;
+    $('hearingDate').min = today;
+
+    let questions = [''];
+    let attachments = [];
+
+    // ---------- Вопросы и вложения ----------
+    function renderQuestions() {
+      $('questionsList').innerHTML = questions.map((q, i) =>
+        '<div class="question-row">' +
+          '<span class="question-num" aria-hidden="true">' + (i + 1) + '</span>' +
+          '<input type="text" class="input question-input" id="q-' + i + '" data-q="' + i + '" value="' + esc(q) + '"' +
+            ' placeholder="Сформулируйте вопрос эксперту..." aria-label="Вопрос №' + (i + 1) + '" aria-describedby="err-questions">' +
+          (questions.length > 1 ? '<button type="button" class="btn-icon-remove" data-rmq="' + i + '" aria-label="Удалить вопрос №' + (i + 1) + '" title="Удалить">×</button>' : '') +
+        '</div>').join('');
+    }
+    $('questionsList').addEventListener('input', e => {
+      const inp = e.target.closest('[data-q]');
+      if (!inp) return;
+      questions[+inp.getAttribute('data-q')] = inp.value;
+      onFormChange();
+    });
+    $('questionsList').addEventListener('click', e => {
+      const b = e.target.closest('[data-rmq]');
+      if (!b || questions.length <= 1) return;
+      const i = +b.getAttribute('data-rmq');
+      questions.splice(i, 1);
+      renderQuestions();
+      const next = $('q-' + Math.min(i, questions.length - 1));
+      if (next) next.focus();
+      onFormChange();
+    });
+    $('addQuestionBtn').addEventListener('click', () => {
+      if (questions.length >= 20) { toast('Максимум 20 вопросов', 'error'); return; }
+      questions.push('');
+      renderQuestions();
+      $('q-' + (questions.length - 1)).focus();
+      onFormChange();
+    });
+
+    function renderChips() {
+      $('fileChips').innerHTML = attachments.map((name, i) =>
+        '<span class="file-chip">' + esc(name) + ' <button type="button" data-rmf="' + i + '" aria-label="Убрать файл ' + esc(name) + '">&times;</button></span>').join('');
+    }
+    $('fileChips').addEventListener('click', e => {
+      const b = e.target.closest('[data-rmf]');
+      if (!b) return;
+      attachments.splice(+b.getAttribute('data-rmf'), 1);
+      renderChips();
+      onFormChange();
+    });
+    $('fileInput').addEventListener('change', function () {
+      Array.from(this.files || []).forEach(f => { if (!attachments.includes(f.name)) attachments.push(f.name); });
+      this.value = '';
+      renderChips();
+      onFormChange();
+    });
+
+    // ---------- Сбор / заполнение формы ----------
+    function collect() {
+      return {
+        caseNumber: $('caseNumber').value.trim(),
+        court: $('court').value.trim(),
+        expertiseType: $('expertiseType').value,
+        hearingDate: $('hearingDate').value,
+        hearingTime: $('hearingTime').value,
+        acceptUntil: $('acceptUntil').value,
+        additionalInfo: $('additionalInfo').value.trim(),
+        attachments: attachments.slice(),
+        questions: questions.slice()
+      };
+    }
+    function fill(d) {
+      $('caseNumber').value = d.caseNumber || '';
+      $('court').value = d.court || '';
+      const et = normalizeExpertiseType(d.expertiseType);
+      fillExpertise(et);
+      $('expertiseType').value = et;
+      $('hearingDate').value = d.hearingDate || '';
+      $('hearingTime').value = d.hearingTime || '';
+      $('acceptUntil').value = d.acceptUntil || '';
+      $('additionalInfo').value = d.additionalInfo || '';
+      questions = (d.questions && d.questions.length) ? d.questions.map(String) : [''];
+      attachments = Array.isArray(d.attachments) ? d.attachments.map(String) : [];
+      renderQuestions();
+      renderChips();
+      checkCourt();
+    }
+    const snap = () => JSON.stringify(collect());
+
+    const defaults = {
+      caseNumber: '', court: '', expertiseType: DEFAULT_EXPERTISE_TYPE, hearingDate: '', hearingTime: '',
+      acceptUntil: addDaysStr(14), additionalInfo: '', attachments: [], questions: ['']
+    };
+
+    // ---------- Суд не из справочника - предупреждение (не блокирует) ----------
+    function checkCourt() {
+      const v = $('court').value.trim();
+      const w = $('warn-court');
+      if (v && !COURTS.includes(v)) {
+        w.textContent = 'Суда нет в справочнике - проверьте название. Опубликовать всё равно можно.';
+        w.classList.add('show');
+      } else { w.textContent = ''; w.classList.remove('show'); }
+    }
+    $('court').addEventListener('input', checkCourt);
+    $('court').addEventListener('change', checkCourt);
+
+    // ---------- Ошибки валидации ----------
+    const FIELD_IDS = ['caseNumber', 'court', 'acceptUntil', 'hearingDate', 'questions', 'additionalInfo'];
+    function clearErrors() {
+      FIELD_IDS.forEach(f => {
+        const e = $('err-' + f); if (e) { e.textContent = ''; e.classList.remove('show'); e.style.display = ''; }
+        const fg = $('fg-' + f); if (fg) fg.classList.remove('has-error');
+        const inp = $(f); if (inp) inp.removeAttribute('aria-invalid');
+      });
+      document.querySelectorAll('.question-input').forEach(i => i.removeAttribute('aria-invalid'));
+    }
+    function markQuestionInputs(errs) {
+      const inputs = Array.from(document.querySelectorAll('.question-input'));
+      const seen = new Set();
+      let any = false;
+      inputs.forEach(inp => {
+        const v = inp.value.trim();
+        let bad = false;
+        if (!v && inputs.length > 1) bad = true;
+        if (v) {
+          const k = v.toLowerCase();
+          if (seen.has(k)) bad = true;
+          seen.add(k);
+          if (findForbiddenInText(v).length) bad = true;
+        }
+        if (bad) { inp.setAttribute('aria-invalid', 'true'); any = true; }
+      });
+      if (!any && inputs[0] && errs.length) inputs[0].setAttribute('aria-invalid', 'true');
+    }
+    function showErrors(errors, focusFirst) {
+      clearErrors();
+      const byField = {};
+      errors.forEach(e => {
+        (byField[e.field] = byField[e.field] || []);
+        if (!byField[e.field].includes(e.message)) byField[e.field].push(e.message);
+      });
+      Object.keys(byField).forEach(f => {
+        const el = $('err-' + f);
+        if (el) {
+          el.innerHTML = (f === 'questions' ? byField[f] : byField[f].slice(0, 1)).map(m => '<div>' + esc(m) + '</div>').join('');
+          el.classList.add('show');
+          el.style.display = 'block';
+        }
+        const fg = $('fg-' + f); if (fg) fg.classList.add('has-error');
+        if (f === 'questions') markQuestionInputs(byField[f]);
+        else { const inp = $(f); if (inp) inp.setAttribute('aria-invalid', 'true'); }
+      });
+      if (focusFirst) {
+        const first = document.querySelector('#createForm [aria-invalid="true"]');
+        if (first) { first.focus(); first.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+      }
+    }
+    let triedSubmit = false;
+    function liveValidate() {
+      if (!triedSubmit) return;
+      showErrors(validateRequestData(collect()), false);
+    }
+
+    // ---------- Черновик и несохранённые изменения ----------
+    let baseline = null;
+    let submitted = false;
+    let draftTimer = null;
+    function isDirty() { return baseline !== null && snap() !== baseline; }
+    function saveDraft() {
+      if (editId || submitted) return;
+      try {
+        const d = collect();
+        if (JSON.stringify(d) === JSON.stringify(defaults)) { localStorage.removeItem(DRAFT_KEY); $('draftNote').textContent = ''; return; }
+        d.savedAt = new Date().toISOString();
+        localStorage.setItem(DRAFT_KEY, JSON.stringify(d));
+        $('draftNote').textContent = 'Черновик сохранён ' + formatMsgTime(d.savedAt);
+      } catch (e) {}
+    }
+    function clearDraft() { try { localStorage.removeItem(DRAFT_KEY); } catch (e) {} }
+    function onFormChange() {
+      liveValidate();
+      if (!editId) { clearTimeout(draftTimer); draftTimer = setTimeout(saveDraft, 400); }
+    }
+    ['caseNumber', 'court', 'acceptUntil', 'hearingDate', 'hearingTime', 'additionalInfo', 'expertiseType'].forEach(fid => {
+      $(fid).addEventListener('input', onFormChange);
+      $(fid).addEventListener('change', onFormChange);
+    });
+    window.addEventListener('beforeunload', e => {
+      if (submitted || !isDirty()) return;
+      e.preventDefault();
+      e.returnValue = '';
+    });
+
+    // ---------- Начальное заполнение ----------
+    if (editReq) {
+      $('pageTitle').textContent = 'Редактировать заявку';
+      document.title = 'Expert Letters - Редактировать заявку';
+      $('submitBtn').textContent = 'Сохранить изменения';
+      $('cancelLink').href = 'request.html?id=' + encodeURIComponent(editReq.id);
+      fill(editReq);
+    } else {
+      fill(defaults);
+      let draft = null;
+      try { draft = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null'); } catch (e) { draft = null; }
+      if (draft && typeof draft === 'object') {
+        fill(Object.assign({}, defaults, draft));
+        $('draftNote').textContent = draft.savedAt ? 'Черновик от ' + formatDateTime(draft.savedAt) : 'Восстановлен черновик';
+        toast('Восстановлен несохранённый черновик', 'info', {
+          actionLabel: 'Очистить',
+          onAction: () => { clearDraft(); fill(defaults); baseline = snap(); clearErrors(); triedSubmit = false; $('draftNote').textContent = ''; }
+        });
+      }
+    }
+    baseline = snap();
+
+    // ---------- Тариф: блокировка создания ----------
+    if (!editId) {
+      const plan = getLawyerPlan(user);
+      if (plan.expired || !plan.canCreate) {
+        const lb = $('lockBanner');
+        lb.hidden = false;
+        lb.innerHTML =
+          '<div class="lock-banner" role="alert">' +
+            '<span class="lock-banner-icon" aria-hidden="true">🔒</span>' +
+            '<div class="lock-banner-text"><strong>' + (plan.expired ? 'Срок тарифа истёк' : 'Лимит заявок по тарифу исчерпан') + '</strong>' +
+              '<div>Публикация новых заявок недоступна. Черновик формы сохранится.</div></div>' +
+            '<a href="settings.html#plan" class="btn btn-primary btn-sm">Выбрать тариф</a>' +
+          '</div>';
+        $('formFields').disabled = true;
+      }
+    }
+
+    // ---------- Модалка diff ----------
+    const diffModal = $('diffModal');
+    let diffOpener = null;
+    function openDiff(preview) {
+      $('diffList').innerHTML = preview.changes.map(c =>
+        '<li><span class="diff-label">' + esc(c.label) + '</span> ' +
+        '<span class="diff-before">' + esc(c.before) + '</span> ' +
+        '<span class="diff-after">' + esc(c.after) + '</span></li>').join('');
+      $('diffRecipients').textContent = 'Уведомим экспертов: ' + preview.recipients;
+      diffOpener = document.activeElement;
+      diffModal.classList.add('show');
+      $('diffConfirm').disabled = false;
+      $('diffConfirm').focus();
+    }
+    function closeDiff() {
+      diffModal.classList.remove('show');
+      releaseSubmit();
+      const t = (diffOpener && document.body.contains(diffOpener)) ? diffOpener : $('submitBtn');
+      t.focus();
+    }
+    $('diffBack').addEventListener('click', closeDiff);
+    diffModal.addEventListener('click', e => { if (e.target === diffModal) closeDiff(); });
+    document.addEventListener('keydown', e => {
+      if (!diffModal.classList.contains('show')) return;
+      if (e.key === 'Escape') { e.preventDefault(); closeDiff(); return; }
+      if (e.key === 'Tab') {
+        const items = Array.from(diffModal.querySelectorAll('button:not([disabled])'));
+        const first = items[0], last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        else if (!diffModal.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+      }
+    });
+    let pendingData = null;
+    $('diffConfirm').addEventListener('click', () => {
+      const btn = $('diffConfirm');
+      if (btn.disabled || !pendingData) return;
+      btn.disabled = true;
+      const res = updateRequest(editId, pendingData);
+      if (!res) { btn.disabled = false; toast('Не удалось сохранить: заявка закрыта или недоступна', 'error'); return; }
+      submitted = true;
+      diffModal.classList.remove('show');
+      toast('Заявка обновлена. Эксперты уведомлены об изменениях.', 'success');
+      setTimeout(() => { location.href = 'request.html?id=' + encodeURIComponent(editId); }, 700);
+    });
+
+    // ---------- Отправка ----------
+    let busy = false;
+    const submitBtn = $('submitBtn');
+    const submitLabel = submitBtn.textContent;
+    function lockSubmit(text) { busy = true; submitBtn.disabled = true; submitBtn.setAttribute('aria-busy', 'true'); if (text) submitBtn.textContent = text; }
+    function releaseSubmit() { busy = false; submitBtn.disabled = false; submitBtn.removeAttribute('aria-busy'); submitBtn.textContent = submitLabel; }
+
+    $('createForm').addEventListener('submit', e => {
+      e.preventDefault();
+      if (busy || $('formFields').disabled) return;
+      triedSubmit = true;
+      const raw = collect();
+      const errors = validateRequestData(raw);
+      if (errors.length) {
+        showErrors(errors, true);
+        toast('Проверьте поля формы: ' + errors[0].message, 'error');
+        return;
+      }
+      clearErrors();
+      const data = Object.assign({}, raw, { questions: raw.questions.map(q => q.trim()).filter(Boolean) });
+
+      if (editId) {
+        const preview = previewRequestDiff(editId, data);
+        if (!preview.changes.length) { toast('Изменений нет - сохранять нечего', 'info'); return; }
+        lockSubmit();
+        pendingData = data;
+        openDiff(preview);
+        return;
+      }
+
+      lockSubmit('Публикуем…');
+      const req = createRequest(data);
+      if (!req || req.error) {
+        releaseSubmit();
+        toast((req && req.error) || 'Не удалось опубликовать заявку', 'error');
+        return;
+      }
+      submitted = true;
+      clearDraft();
+      toast('Заявка опубликована', 'success');
+      setTimeout(() => { location.href = 'request.html?id=' + encodeURIComponent(req.id); }, 700);
+    });
+
+    mountNotificationBell();
+  })();
+  </script>
+</body>
+</html>

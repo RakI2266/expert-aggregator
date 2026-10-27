@@ -1,0 +1,240 @@
+/* Cinematic overlay — dark full-bleed hero, glass surfaces, film still. */
+:root {
+  --bg: #07080b;
+  --bg-elevated: #0c0d11;
+  --bg-soft: #14161c;
+  --bg-card: rgba(255, 255, 255, 0.035);
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --text: #f4f4f5;
+  --text-secondary: #c4c4cc;
+  --text-muted: #9a9aa3;
+  --primary: #f4f4f5;
+  --primary-light: rgba(255, 255, 255, 0.06);
+  --primary-soft: rgba(255, 255, 255, 0.12);
+  --accent: #e8e4dc;
+  --shadow: none;
+  --shadow-lg: 0 30px 80px -40px rgba(0, 0, 0, 0.8);
+}
+
+body {
+  background: #07080b;
+  color: #f4f4f5;
+}
+
+.header {
+  background: rgba(7, 8, 11, 0.55);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px) saturate(1.2);
+}
+.logo-mark {
+  background: #f4f4f5;
+  box-shadow: none;
+}
+.logo-mark svg { fill: #111; }
+.logo-text, .logo-text span { color: #f4f4f5; }
+.nav a { color: rgba(244, 244, 245, 0.72); }
+.nav a:hover { color: #fff; }
+.btn-ghost { color: rgba(244, 244, 245, 0.8); }
+.btn-ghost:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
+.btn-primary {
+  background: #f5f5f4;
+  color: #111;
+  box-shadow: 0 8px 30px -12px rgba(0, 0, 0, 0.6);
+}
+.btn-primary:hover { box-shadow: 0 12px 34px -12px rgba(0, 0, 0, 0.7); }
+.btn-outline {
+  background: rgba(255, 255, 255, 0.04);
+  color: #f4f4f5;
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: none;
+}
+.btn-outline:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.4); }
+.btn-light { background: #f5f5f4; color: #111; box-shadow: 0 16px 40px -18px rgba(0, 0, 0, 0.8); }
+.menu-toggle { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.16); color: #fff; }
+.mobile-nav { background: #0c0d11; border-color: rgba(255,255,255,.1); }
+.mobile-nav a { color: #e4e4e7; }
+.mobile-nav a:hover { background: rgba(255,255,255,.06); color: #fff; }
+
+/* Hero as a filmed still */
+.hero {
+  min-height: 100svh;
+  padding: calc(var(--header-h) + 72px) 28px 0;
+  background: #05060a;
+  color: #f5f5f4;
+}
+.hero-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url('../assets/hero-court.jpg') center 42% / cover no-repeat;
+  transform: scale(1.08);
+  animation: heroKen 32s ease-in-out infinite alternate;
+}
+.hero-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(5, 6, 10, 0.62) 0%, rgba(5, 6, 10, 0.28) 22%, rgba(5, 6, 10, 0.45) 58%, #07080b 100%),
+    radial-gradient(90% 70% at 50% 35%, transparent 10%, rgba(0, 0, 0, 0.45) 100%);
+}
+@keyframes heroKen {
+  from { transform: scale(1.06) translate3d(0, 0, 0); }
+  to { transform: scale(1.12) translate3d(0, -1.5%, 0); }
+}
+.hero .aurora { display: none; }
+.hero-center, .logo-strip-section { position: relative; z-index: 1; }
+.hero h1 {
+  color: #fff;
+  font-size: clamp(44px, 6.2vw, 88px);
+  font-weight: 650;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  max-width: 980px;
+  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.35);
+}
+.hero h1 .accent { color: #fff; font-weight: 500; }
+.hero-lead {
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-size: clamp(16px, 1.5vw, 18px);
+  max-width: 640px;
+  margin: 0 auto 40px;
+}
+.audience-card,
+.audience-card--lawyer {
+  background: rgba(10, 11, 14, 0.52);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(18px) saturate(1.15);
+  color: #f4f4f5;
+}
+.audience-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.28); }
+.audience-eyebrow {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #f5f5f4;
+}
+.audience-card h2 { color: #fff; }
+.audience-card p, .cta-note { color: rgba(244, 244, 245, 0.74) !important; }
+.hero-stats {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+  box-shadow: none;
+  margin-top: 8px;
+}
+.hero-stat + .hero-stat { border-left-color: rgba(255, 255, 255, 0.12); }
+.hero-stat .value { color: #fff; font-size: clamp(28px, 3vw, 40px); letter-spacing: -0.04em; }
+.hero-stat .label { color: rgba(255, 255, 255, 0.62); }
+
+.logo-strip-section {
+  background: transparent;
+  border-bottom: 0;
+  padding-bottom: 48px;
+}
+.logo-strip-header h2, .logo-strip-header p { color: rgba(255,255,255,.62); }
+.logo-strip-header a { color: #fff !important; }
+.logo-item {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.section { color: #f4f4f5; }
+.section-header h2 { color: #fff; font-size: clamp(32px, 4vw, 52px); letter-spacing: -0.04em; line-height: 1.05; }
+.section-header p { color: #b4b4bc; }
+
+.role-switch, .pricing-tabs {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.rs-btn, .pricing-tab { color: #c4c4cc; }
+.rs-btn[aria-selected="true"], .pricing-tab.active {
+  background: #f5f5f4;
+  color: #111;
+  box-shadow: none;
+}
+
+.cmp {
+  background: #101114;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+.cmp-head div { color: #a1a1aa; }
+.cmp-head div + div, .cmp-new {
+  background: rgba(255, 255, 255, 0.04);
+  color: #f4f4f5;
+}
+.cmp-head div + div { color: #fff; }
+.cmp-row { border-top-color: rgba(255, 255, 255, 0.08); }
+.cmp-old { color: #8b8b93; }
+.cmp-old svg { color: #6b6b73; }
+.cmp-new { border-left-color: rgba(255, 255, 255, 0.08); }
+.cmp-new svg { color: #e7e5e4; }
+.cmp-foot { border-top-color: rgba(255, 255, 255, 0.08); color: #fff; }
+
+.final {
+  background:
+    linear-gradient(180deg, #07080b, rgba(7, 8, 11, 0.72) 30%, rgba(7, 8, 11, 0.88)),
+    url('../assets/hero-court.jpg') center 70% / cover no-repeat;
+}
+.final .aurora { opacity: 0.35; }
+.final h2 { font-size: clamp(40px, 5.4vw, 76px); letter-spacing: -0.045em; }
+
+.step-card, .feature-card, .how-benefits li, .review-card, .faq-item, .price-card {
+  background: rgba(255, 255, 255, 0.035);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+  color: #f4f4f5;
+}
+.price-card.featured {
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: none;
+}
+.step-card h3, .feature-card h3, .price-name, .price-value { color: #fff; }
+.step-card p, .feature-card p, .price-desc, .price-limit, .pricing-note, .faq-answer { color: #b4b4bc; }
+.step-3d {
+  background: linear-gradient(180deg, #f7f5f2, #ece8e1);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+.expertise-list span {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #e4e4e7;
+  box-shadow: none;
+}
+.pricing-section { background: transparent; }
+.pricing-pills span {
+  background: rgba(255,255,255,.04) !important;
+  border-color: rgba(255,255,255,.1) !important;
+  color: #d4d4d8 !important;
+}
+.price-features li { color: #d4d4d8; }
+.review-card blockquote { color: #f4f4f5; }
+.review-name { color: #fff; }
+.review-avatar { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.12); color: #fff; }
+.faq-item summary { color: #f4f4f5; }
+.faq-item[open] { border-color: rgba(255,255,255,.22); }
+.how-benefits strong { color: #fff; }
+.how-benefits .b-icon { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.1); color: #f5f5f4; }
+.text-link { color: #e4e4e7; }
+.text-link:hover { color: #fff; }
+
+.footer { background: #07080b; border-top-color: rgba(255,255,255,.08); }
+.footer-col h4, .footer-brand { color: #fff; }
+.footer-bottom { border-top-color: rgba(255,255,255,.08); }
+
+/* Product mock stays a light instrument on the dark page */
+.window { color: #0f172a; }
+.win-side { color: #cbd5e1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-photo { animation: none; transform: none; }
+}
+@media (max-width: 640px) {
+  .hero { padding: calc(var(--header-h) + 28px) 16px 0; min-height: auto; }
+  .hero h1 { font-size: 40px; letter-spacing: -0.04em; }
+}

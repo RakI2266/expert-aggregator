@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expert Letters - Настройки</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body style="display:flex">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3L2 8l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="sidebar-logo-text">
+          <h1>Expert Letters</h1>
+          <span>Кабинет эксперта</span>
+        </div>
+      </div>
+    </div>
+        <nav class="sidebar-nav">
+      <a href="feed.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+        <span>Все заявки</span>
+      </a>
+      <a href="favorites.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>Избранное</span>
+        <span class="nav-count" id="navFavCount">0</span>
+      </a>
+      <a href="answers.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        <span>Мои ответы</span>
+        <span class="nav-count" id="navAnsCount">0</span>
+      </a>
+      <a href="hidden.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        <span>Скрытые</span>
+      </a>
+<a href="settings.html" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span>Настройки</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="userAvatar">ЭС</div>
+        <div class="user-details">
+          <div class="name" id="userName">-</div>
+          <div class="role">Экспертная организация</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <h2>Настройки</h2>
+      <div class="topbar-actions">
+        <button type="button" class="btn btn-secondary" id="logoutBtn">Выйти</button>
+      </div>
+    </header>
+
+    <div class="content content-narrow">
+      <div class="card">
+        <div class="card-header"><h3>Профиль организации</h3></div>
+        <div class="card-body" style="padding: 24px;">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="profOrg">Название организации</label>
+              <input type="text" id="profOrg">
+            </div>
+            <div class="form-group">
+              <label for="profContact">Контактное лицо</label>
+              <input type="text" id="profContact">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="profEmail">Email</label>
+              <input type="email" id="profEmail" autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="profPhone">Телефон</label>
+              <input type="tel" id="profPhone" autocomplete="tel">
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary" id="saveProfileBtn">Сохранить профиль</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h3>Суды в ленте</h3></div>
+        <div class="card-body" style="padding: 20px 24px;">
+          <p style="font-size:13.5px;color:var(--text-secondary);margin-bottom:12px;line-height:1.5">
+            Выберите суды, заявки по которым лента показывает по умолчанию (фильтр «Мои суды»). В ленте всегда можно выбрать «Все суды».
+          </p>
+          <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+            <button type="button" class="btn btn-secondary btn-sm" id="courtsAllBtn">Выбрать все</button>
+            <button type="button" class="btn btn-ghost btn-sm" id="courtsNoneBtn">Снять все</button>
+          </div>
+          <p class="form-hint" id="courtsSource" style="font-size:13px;color:var(--text-secondary);margin:0 0 8px"></p>
+          <fieldset class="courts-fieldset"><legend class="sr-only">Суды для ленты</legend><div class="courts-grid" id="courtsGrid"></div></fieldset>
+          <button type="button" class="btn btn-primary" style="margin-top:14px" id="saveCourtsBtn">Сохранить суды</button>
+          <p class="form-hint" id="courtsSaved" role="status" aria-live="polite" style="font-size:13px;margin-top:8px" hidden></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h3>Уведомления</h3></div>
+        <div class="card-body" style="padding: 24px;">
+          <div class="settings-section">
+            <h4>Важные</h4>
+            <div class="checkbox-row"><input type="checkbox" id="evChanged"><label for="evChanged">Изменение заявки, на которую я ответил</label></div>
+            <div class="checkbox-row"><input type="checkbox" id="evClosed"><label for="evClosed">Закрытие заявки</label></div>
+            <div class="checkbox-row"><input type="checkbox" id="evCourt"><label for="evCourt">Приближение даты суда</label></div>
+          </div>
+
+          <div class="settings-section">
+            <h4>Информационные</h4>
+            <div class="checkbox-row"><input type="checkbox" id="evNew"><label for="evNew">Новые заявки</label></div>
+            <div class="checkbox-row"><input type="checkbox" id="evNewPref"><label for="evNewPref">Новые заявки по моим судам / направлениям</label></div>
+          </div>
+
+          <div class="settings-section">
+            <h4>Напоминания о дате суда</h4>
+            <div class="checkbox-row"><input type="checkbox" id="d7"><label for="d7">За 7 дней</label></div>
+            <div class="checkbox-row"><input type="checkbox" id="d3"><label for="d3">За 3 дня</label></div>
+            <div class="checkbox-row"><input type="checkbox" id="d0"><label for="d0">В день заседания</label></div>
+          </div>
+
+          <div class="settings-section">
+            <h4>Куда получать</h4>
+            <div class="checkbox-row"><input type="checkbox" id="chInApp"><label for="chInApp">В платформе</label></div>
+            <div class="checkbox-row"><input type="checkbox" id="chEmail"><label for="chEmail">Email</label></div>
+            <div class="checkbox-row"><input type="checkbox" id="chTgFlag"><label for="chTgFlag">Telegram</label></div>
+          </div>
+
+          <div class="settings-section">
+            <h4>Telegram</h4>
+            <div id="tgBox"></div>
+          </div>
+
+          <button type="button" class="btn btn-primary" id="saveNotifBtn">Сохранить уведомления</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h3>Последние уведомления</h3></div>
+        <div class="card-body" id="notifList" style="padding: 16px 24px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    [hidden] { display:none !important; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .courts-fieldset { border:0; margin:0; padding:0; min-width:0; }
+    .courts-grid label { overflow-wrap:anywhere; }
+    #courtsSaved { color:#047857; }
+    .notif-row { padding:12px 0; border-bottom:1px solid #F1F5F9; overflow-wrap:anywhere; }
+    .telegram-status { overflow-wrap:anywhere; }
+  </style>
+
+  <script src="../js/app.js"></script>
+  <script>
+  (function () {
+    const state = requireAuth('expert');
+    if (!state) return;
+    const user = state.currentUser;
+    const $ = id => document.getElementById(id);
+    $('userName').textContent = user.orgName || user.name;
+    $('userAvatar').textContent = (user.orgName || user.name).slice(0, 2);
+    $('logoutBtn').addEventListener('click', logout);
+
+    function refreshNavCounts() {
+      try {
+        const fav = getFavorites().length;
+        const ans = getMyAnswers(user.id).length;
+        const elF = $('navFavCount'), elA = $('navAnsCount');
+        if (elF) { elF.textContent = fav; elF.classList.toggle('has-items', fav > 0); }
+        if (elA) { elA.textContent = ans; elA.classList.toggle('has-items', ans > 0); }
+      } catch (e) {}
+    }
+    refreshNavCounts();
+
+    $('profOrg').value = user.orgName || user.name || '';
+    $('profContact').value = user.contact || '';
+    $('profEmail').value = user.email || '';
+    $('profPhone').value = user.phone || '';
+
+    // Суды для «Мои суды» (getExpertDefaultCourts: сохранённые или по регионам)
+    const grid = $('courtsGrid');
+    function courtsSourceText(u) {
+      if (Array.isArray(u.preferredCourts) && u.preferredCourts.length) return 'Сохранено судов: ' + u.preferredCourts.length + '. Лента показывает их по умолчанию.';
+      const byRegion = getExpertDefaultCourts(Object.assign({}, u, { preferredCourts: [] }));
+      if (byRegion.length) return 'Суды пока не сохранены - отмечены суды по вашим регионам (' + (u.regions || []).join(', ') + '). Сохраните, чтобы закрепить выбор.';
+      return 'Суды не выбраны - фильтр «Мои суды» в ленте недоступен.';
+    }
+    function renderCourts(u) {
+      const selected = getExpertDefaultCourts(u);
+      grid.innerHTML = COURTS.map((c, i) => {
+        const id = 'court_' + i;
+        return '<label for="' + id + '"><input type="checkbox" id="' + id + '" value="' + esc(c) + '"' + (selected.includes(c) ? ' checked' : '') + '>' + esc(c) + '</label>';
+      }).join('');
+      $('courtsSource').textContent = courtsSourceText(u);
+    }
+    renderCourts(user);
+
+    $('courtsAllBtn').addEventListener('click', () => grid.querySelectorAll('input[type=checkbox]').forEach(cb => { cb.checked = true; }));
+    $('courtsNoneBtn').addEventListener('click', () => grid.querySelectorAll('input[type=checkbox]').forEach(cb => { cb.checked = false; }));
+    $('saveCourtsBtn').addEventListener('click', () => {
+      const btn = $('saveCourtsBtn');
+      btn.disabled = true;
+      const selected = [...grid.querySelectorAll('input[type=checkbox]:checked')].map(cb => cb.value).filter(c => COURTS.includes(c));
+      updateProfile({ preferredCourts: selected });
+      const u = loadState().currentUser || user;
+      const effective = getExpertDefaultCourts(u);
+      const hint = $('courtsSaved');
+      hint.hidden = false;
+      if (selected.length) {
+        hint.textContent = 'Сохранено судов: ' + selected.length + '. Лента будет показывать эти суды по умолчанию.';
+      } else if (effective.length) {
+        hint.textContent = 'Список судов очищен. «Мои суды» будут определяться по вашим регионам: ' + effective.join(', ') + '.';
+      } else {
+        hint.textContent = 'Список судов очищен - лента будет показывать все суды.';
+      }
+      renderCourts(u);
+      toast('Суды сохранены', 'success');
+      btn.disabled = false;
+    });
+
+    const ns = user.notifSettings || {};
+    $('chInApp').checked = !!ns.inApp;
+    $('chEmail').checked = !!ns.email;
+    $('chTgFlag').checked = !!ns.telegram;
+    const ev = ns.events || {};
+    $('evNew').checked = ev.newRequest !== false;
+    $('evNewPref').checked = !!ev.newRequestPreferred;
+    $('evChanged').checked = ev.requestChanged !== false;
+    $('evClosed').checked = ev.requestClosed !== false;
+    $('evCourt').checked = ev.courtReminder !== false;
+    (ns.courtDays || []).forEach(d => { const el = $('d' + d); if (el) el.checked = true; });
+
+    function renderTg() {
+      const box = $('tgBox');
+      if (ns.telegramConnected) {
+        box.innerHTML =
+          '<div class="telegram-box connected">' +
+            '<div class="telegram-status">✓ Telegram подключён: ' + esc(ns.telegramId || 'бот') + '</div>' +
+            '<button type="button" class="btn btn-secondary btn-sm" data-act="tg-off">Отключить</button>' +
+          '</div>';
+      } else {
+        box.innerHTML =
+          '<div class="telegram-box">' +
+            '<div class="telegram-status">Telegram не подключён</div>' +
+            '<p style="font-size:13px;color:var(--text-secondary);margin-bottom:10px">Нажмите, чтобы подключить бота (демо)</p>' +
+            '<button type="button" class="btn btn-primary btn-sm" data-act="tg-on">Подключить бота</button>' +
+          '</div>';
+      }
+    }
+    $('tgBox').addEventListener('click', e => {
+      const b = e.target.closest('button[data-act]');
+      if (!b) return;
+      if (b.dataset.act === 'tg-on') {
+        connectTelegram('@expert_demo');
+        ns.telegramConnected = true; ns.telegramId = '@expert_demo'; ns.telegram = true;
+        $('chTgFlag').checked = true;
+        toast('Telegram-бот подключён', 'success');
+      } else {
+        disconnectTelegram();
+        ns.telegramConnected = false; ns.telegramId = ''; ns.telegram = false;
+        $('chTgFlag').checked = false;
+        toast('Telegram отключён');
+      }
+      renderTg();
+    });
+    renderTg();
+
+    $('saveProfileBtn').addEventListener('click', () => {
+      const org = $('profOrg').value.trim();
+      if (!org) { toast('Укажите название организации', 'error'); $('profOrg').focus(); return; }
+      $('saveProfileBtn').disabled = true;
+      updateProfile({
+        orgName: org,
+        name: org,
+        contact: $('profContact').value.trim(),
+        email: $('profEmail').value.trim(),
+        phone: $('profPhone').value.trim()
+      });
+      $('userName').textContent = org;
+      $('userAvatar').textContent = org.slice(0, 2);
+      toast('Профиль сохранён', 'success');
+      $('saveProfileBtn').disabled = false;
+    });
+
+    $('saveNotifBtn').addEventListener('click', () => {
+      const courtDays = [];
+      if ($('d7').checked) courtDays.push(7);
+      if ($('d3').checked) courtDays.push(3);
+      if ($('d0').checked) courtDays.push(0);
+      saveNotifSettings({
+        inApp: $('chInApp').checked,
+        email: $('chEmail').checked,
+        telegram: $('chTgFlag').checked,
+        courtDays,
+        events: {
+          newRequest: $('evNew').checked,
+          newRequestPreferred: $('evNewPref').checked,
+          requestChanged: $('evChanged').checked,
+          requestClosed: $('evClosed').checked,
+          courtReminder: $('evCourt').checked
+        }
+      });
+      toast('Настройки уведомлений сохранены', 'success');
+    });
+
+    const notifs = getNotificationsForUser().slice(0, 12);
+    const list = $('notifList');
+    if (!notifs.length) {
+      list.innerHTML = '<p style="color:var(--text-muted);font-size:14px">Пока нет уведомлений</p>';
+    } else {
+      list.innerHTML = notifs.map(n =>
+        '<div class="notif-row">' +
+          '<div style="font-weight:600;font-size:14px">' + (n.requestId ? '<a href="request.html?id=' + encodeURIComponent(n.requestId) + '">' + esc(n.title) + '</a>' : esc(n.title)) + '</div>' +
+          '<div style="font-size:13.5px;color:var(--text-secondary);margin-top:2px">' + esc(n.body) + '</div>' +
+          '<div style="font-size:12px;color:var(--text-muted);margin-top:4px">' + esc(formatDateTime(n.createdAt)) + '</div>' +
+        '</div>').join('');
+    }
+
+    mountNotificationBell();
+  })();
+  </script>
+</body>
+</html>
