@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expert Letters - Экспертные организации</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { margin: 0; background: var(--bg, #F8FAFC); font-family: Inter, system-ui, sans-serif; color: var(--text-main, #0F172A); }
+    .pub-nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #E2E8F0;
+    }
+    .pub-nav-inner {
+      max-width: 1120px; margin: 0 auto;
+      padding: 14px 28px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .pub-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; font-weight: 700; font-size: 15px; }
+    .pub-brand-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: linear-gradient(135deg, #2563EB, #1D4ED8);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pub-brand-icon svg { width: 18px; height: 18px; fill: none; stroke: white; stroke-width: 2; }
+    .pub-nav-links { display: flex; align-items: center; gap: 8px; }
+    .pub-nav-links a.nav-text {
+      font-size: 14px; color: #64748B; text-decoration: none; padding: 8px 12px; border-radius: 8px;
+    }
+    .pub-nav-links a.nav-text:hover { color: #0F172A; background: #F1F5F9; }
+    .pub-hero {
+      max-width: 1120px; margin: 0 auto;
+      padding: 48px 28px 20px;
+      text-align: center;
+    }
+    .pub-hero h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 8px; }
+    .pub-hero p { font-size: 15px; color: #64748B; margin: 0; }
+    .pub-content { max-width: 1120px; margin: 0 auto; padding: 12px 28px 64px; }
+    .pub-orgs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+    }
+    .pub-org-card {
+      display: flex; flex-direction: column; align-items: center;
+      background: white;
+      border: 1px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 18px 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color .15s, box-shadow .15s, transform .15s;
+      min-height: 128px;
+    }
+    .pub-org-card:hover {
+      border-color: #BFDBFE;
+      box-shadow: 0 8px 24px rgba(37,99,235,0.1);
+      transform: translateY(-2px);
+    }
+    .pub-org-logo {
+      height: 56px; width: 100%;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 12px;
+    }
+    .pub-org-logo img {
+      max-width: 100%; max-height: 52px;
+      object-fit: contain;
+    }
+    .pub-org-name {
+      font-size: 13px; font-weight: 600;
+      text-align: center; line-height: 1.35;
+      color: #0F172A;
+    }
+    .pub-footer {
+      border-top: 1px solid #E2E8F0;
+      padding: 20px 28px;
+      text-align: center;
+      font-size: 13px; color: #64748B; line-height: 1.6;
+    }
+    .pub-footer a { color: #475569; }
+    @media (max-width: 640px) {
+      .pub-nav-inner { padding: 12px 16px; }
+      .pub-hero { padding: 32px 16px 12px; }
+      .pub-hero h1 { font-size: 22px; }
+      .pub-content { padding: 8px 16px 48px; }
+      .pub-orgs-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="pub-nav">
+    <div class="pub-nav-inner">
+      <a class="pub-brand" href="landing.html">
+        <div class="pub-brand-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3L2 8l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        Expert Letters
+      </a>
+      <div class="pub-nav-links">
+        <a class="nav-text" href="landing.html">На главную</a>
+        <a class="btn btn-primary btn-sm" href="index.html">Войти</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="pub-hero">
+    <h1>Экспертные организации</h1>
+    <p>Организации, работающие с заявками на платформе</p>
+  </div>
+
+  <div class="pub-content">
+    <div class="pub-orgs-grid" id="orgsGrid"></div>
+  </div>
+
+  <div class="pub-footer">
+    <div>© 2026 Expert Letters · <span data-legal="operatorShort">ИП Рак Илья Александрович</span> · ИНН <span data-legal="inn">772407077928</span> · ОГРНИП <span data-legal="ogrnip">322774600594779</span></div>
+    <div style="margin-top:6px"><a href="privacy.html">Политика обработки персональных данных</a> · <a href="consent.html">Согласие на обработку ПДн</a> · <a href="offer.html">Публичная оферта</a></div>
+  </div>
+
+  <script src="js/legal.js"></script>
+  <script src="js/orgs.js"></script>
+  <script>
+    (function () {
+      var list = EXPERT_ORGS.slice();
+      for (var i = list.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = list[i]; list[i] = list[j]; list[j] = t;
+      }
+      document.getElementById('orgsGrid').innerHTML = list.map(function (o) {
+        return '<div class="pub-org-card">' +
+          '<div class="pub-org-logo"><img src="' + orgLogoUrlFromRoot(o.logo) + '?v=2" alt="" loading="lazy"></div>' +
+          '<div class="pub-org-name">' + o.shortName + '</div>' +
+        '</div>';
+      }).join('');
+    })();
+  </script>
+</body>
+</html>
