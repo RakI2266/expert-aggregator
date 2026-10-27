@@ -12,9 +12,6 @@
   <meta property="og:locale" content="ru_RU">
   <meta name="theme-color" content="#07080b">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232563EB'/%3E%3Cstop offset='1' stop-color='%231E40AF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Cpath d='M16 7L6 12l10 5 10-5-10-5zM6 21l10 5 10-5M6 16.5l10 5 10-5' fill='none' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #F7F9FC;
@@ -1006,6 +1003,8 @@
     @media (min-width: 901px) and (min-height: 620px) and (max-height: 740px) { .hero { padding-bottom: 4px; } .hero .logo-strip-header { margin-bottom: 4px; } }
 
     /* ===== Появление элементов (один раз на слайд) ===== */
+    html:not(.hero-text-on) .hero-first .hero-copy,
+    html:not(.hero-text-on) .hero-first .scroll-hint { opacity: 0 !important; visibility: hidden; }
     html.reveal-ready .rv:not(.in) { opacity: 0; transform: translateY(24px); }
     .rv { transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
     .audience-card.rv, .price-card.rv { transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1), border-color .2s, box-shadow .2s; }
@@ -1016,12 +1015,7 @@
       main > #compare.section, main > #pricing.section { justify-content: flex-start; padding-top: 48px; }
     }
   </style>
-<style>
-html:not(.hero-text-on) .hero-first .hero-copy,
-html:not(.hero-text-on) .hero-first .scroll-hint { opacity: 0 !important; visibility: hidden; }
-html.hero-text-on .hero-first .hero-copy,
-html.hero-text-on .hero-first .scroll-hint { visibility: visible; }
-</style>
+  <link rel="stylesheet" href="css/air.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Перейти к содержимому</a>
@@ -1065,26 +1059,22 @@ html.hero-text-on .hero-first .scroll-hint { visibility: visible; }
   <main id="main">
   <section class="hero" id="top">
     <div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span><span class="a4"></span><span class="a5"></span><i class="grain"></i></div>
-    <div class="hero-center">
-      <h1><span class="ln">Экспертиза без лишних</span> <span class="ln accent">звонков и писем</span></h1>
-      <p class="hero-lead"><span>Разместите заявку один раз - её видят экспертные организации платформы.</span> <span>Ответы приходят информационным письмом со стоимостью и сроком.</span></p>
-
-      <div class="audience-grid solo">
-        <article class="audience-card audience-card--lawyer" aria-labelledby="aud-lawyer-title">
-          <span class="audience-eyebrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M5 7h14M7 7l-3 7a3 3 0 0 0 6 0L7 7zm10 0l-3 7a3 3 0 0 0 6 0l-3-7zM8 21h8"/></svg>
-            Для юристов
-          </span>
-          <h2 id="aud-lawyer-title"><span class="ln">Получите информационные письма</span><span class="ln"> от нескольких экспертных организаций</span><span class="ln"> в одном месте</span></h2>
-          <p><span class="ln">Разместите одну заявку на судебную экспертизу -</span><span class="ln"> без рассылки писем и обзвона экспертных организаций.</span></p>
-          <p><span class="ln">Укажите номер дела, суд, вопросы эксперту</span><span class="ln"> и добавьте документы - организации ответят сами.</span></p>
-          <a href="#how" class="btn btn-primary btn-lg" data-role-link="lawyers">Разместить заявку</a>
+    <div class="hero-first">
+      <div class="hero-stage">
+        <div class="hero-copy">
+          <p class="eyebrow">Для юристов</p>
+          <h1><span class="ln">Экспертиза</span><span class="ln">без лишних</span><span class="ln accent">звонков и писем</span></h1>
+          <p class="hero-lead">Разместите заявку один раз - её видят экспертные организации платформы. Ответы приходят информационным письмом со стоимостью и сроком.</p>
+          <div class="hero-cta">
+            <a href="#how" class="btn btn-primary btn-lg" data-role-link="lawyers">Разместить заявку</a>
+            <a href="experts.html" class="link-quiet">Я эксперт <span aria-hidden="true">→</span></a>
+          </div>
           <span class="cta-note">Ответы придут в кабинет к дате, которую вы укажете.</span>
-          <p class="hero-side-link"><a href="experts.html">Я эксперт</a></p>
-        </article>
-
+        </div>
       </div>
-
+      <a class="scroll-hint" href="#compare" aria-label="Прокрутить вниз"><i aria-hidden="true"></i>Листайте</a>
+    </div>
+    <div class="hero-meta">
       <ul class="hero-stats" aria-label="Коротко о платформе">
         <li class="hero-stat">
           <div class="value" data-org-count>29</div>
@@ -1099,8 +1089,7 @@ html.hero-text-on .hero-first .scroll-hint { visibility: visible; }
           <div class="label">дней бесплатно</div>
         </li>
       </ul>
-    </div>
-    <div class="logo-strip-section" id="orgs" aria-labelledby="orgs-title">
+      <div class="logo-strip-section" id="orgs" aria-labelledby="orgs-title">
     <div class="logo-strip-header">
       <h2 id="orgs-title">Экспертные организации на платформе</h2>
       <p><span data-org-count-text>29 экспертных организаций</span> отвечают на заявки юристов · <a href="organizations.html" style="color:var(--primary);font-weight:600;text-decoration:none">Все организации →</a></p>
@@ -1109,13 +1098,14 @@ html.hero-text-on .hero-first .scroll-hint { visibility: visible; }
       <div class="logo-track" id="logoTrack" role="list"></div>
     </div>
   </div>
+    </div>
   </section>
 
   
 
   <section class="section" id="compare" aria-labelledby="cmp-title">
     <div class="section-header">
-      <h2 id="cmp-title"><span class="ln">Что меняется для юриста</span></h2>
+      <h2 id="cmp-title"><span class="ln">Что меняется</span><span class="ln"><em>для юриста</em></span></h2>
     </div>
     <div class="cmp-stack">
     <div class="cmp" data-cmp="lawyers" role="tabpanel">
@@ -1133,7 +1123,7 @@ html.hero-text-on .hero-first .scroll-hint { visibility: visible; }
   <section class="final" aria-labelledby="final-title">
     <div class="aurora aurora--dark" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span><span class="a5"></span><i class="grain"></i></div>
     <div class="final-inner">
-      <h2 id="final-title"><span class="ln">Одна заявка</span><span class="ln"> без лишних звонков и писем</span></h2>
+      <h2 id="final-title"><span class="ln">Одна заявка</span><span class="ln"><em>без лишних звонков и писем</em></span></h2>
       <div class="final-cta">
         <a href="#pricing" class="btn btn-light btn-lg">Попробовать бесплатно</a>
       </div>
@@ -1142,7 +1132,7 @@ html.hero-text-on .hero-first .scroll-hint { visibility: visible; }
 
 <section class="section" id="how" aria-labelledby="how-title">
     <div class="section-header">
-      <h2 id="how-title"><span class="ln">Весь путь в одном кабинете -</span><span class="ln"> без рассылки запросов и обзвона организаций</span></h2>
+      <h2 id="how-title"><span class="ln">Весь путь <em>в одном кабинете</em> -</span><span class="ln">без рассылки запросов и обзвона организаций</span></h2>
     </div>
         <div class="flow">
           <div class="steps-wrap">
@@ -1280,7 +1270,7 @@ html.hero-text-on .hero-first .scroll-hint { visibility: visible; }
 
   <section class="section" id="expertise">
     <div class="section-header">
-      <h2>Виды экспертиз</h2>
+      <h2>Виды <em>экспертиз</em></h2>
       <p>Судебные строительно-технические экспертизы и смежные исследования.</p>
     </div>
     <div class="expertise-list">
@@ -1299,7 +1289,7 @@ html.hero-text-on .hero-first .scroll-hint { visibility: visible; }
 
   <section class="section pricing-section" id="pricing">
     <div class="section-header">
-      <h2>Тарифы и условия</h2>
+      <h2>Тарифы <em>и условия</em></h2>
     </div>
     <div class="pricing-panel active" id="panel-lawyers" role="tabpanel" aria-labelledby="tab-lawyers" tabindex="0">
       <div class="pricing-pills" style="margin-bottom:28px">
@@ -1384,7 +1374,7 @@ html.hero-text-on .hero-first .scroll-hint { visibility: visible; }
 
   <section class="section" id="faq" aria-labelledby="faq-title">
     <div class="section-header">
-      <h2 id="faq-title">Частые вопросы</h2>
+      <h2 id="faq-title">Частые <em>вопросы</em></h2>
       <p>Если не нашли ответ - напишите нам, ответим в рабочее время.</p>
     </div>
     <div class="faq-list">
@@ -1464,6 +1454,7 @@ html.hero-text-on .hero-first .scroll-hint { visibility: visible; }
     </div>
     <div class="footer-bottom">
       <span>© 2026 Expert Letters</span>
+      <a href="/expert-letters-two-landings.zip" download="expert-letters-two-landings.zip">Скачать проект</a>
       <span class="footer-legal"><span data-legal="operatorShort">ИП Рак Илья Александрович</span> · ИНН <span data-legal="inn">772407077928</span> · ОГРНИП <span data-legal="ogrnip">322774600594779</span> · <a data-legal-mail><span data-legal="email" data-label="email">[email]</span></a></span>
     </div>
   </footer>
@@ -1712,70 +1703,6 @@ html.hero-text-on .hero-first .scroll-hint { visibility: visible; }
     })();
   </script>
 
-
-  <script>
-    /* Появление текста и элементов слайда */
-    (function () {
-      if (!('IntersectionObserver' in window)) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      var groups = [
-        ['.hero', ['h1', '.hero-lead', '.audience-card', '.hero-stats', '.logo-strip-header', '.logo-marquee']],
-        ['#compare', ['h2', '.role-switch', '.cmp-stack']],
-        ['.final', ['h2', '.final-cta']],
-        ['#how', ['h2', '.role-switch', '.flow-steps li', '.flow-stage']],
-        ['#expertise', ['h2', '.section-header p', '.expertise-list > *']],
-        ['#pricing', ['h2', '.pricing-tabs', '.pricing-pills', '.pricing-panel.active .price-card', '.pricing-note', '.pricing-cta-wrap']],
-        ['#reviews', ['h2', '.review-card']],
-        ['#faq', ['h2', '.section-header p', '.faq-item']]
-      ];
-      var root = document.documentElement;
-      groups.forEach(function (g) {
-        var sec = document.querySelector(g[0]); if (!sec) return;
-        var n = 0, listIdx = {};
-        g[1].forEach(function (q) {
-          sec.querySelectorAll(q).forEach(function (el) {
-            if (el.classList.contains('rv')) return;
-            var d;
-            if (q === '.flow-steps li') {            /* оба списка шагов идут одинаково */
-              var k = el.parentElement.dataset.role || 'x';
-              listIdx[k] = (listIdx[k] || 0) + 1; d = (n + listIdx[k] - 1) * 80;
-            } else { d = n * 80; n++; }
-            el.classList.add('rv');
-            el.style.transitionDelay = Math.min(d, 900) + 'ms';
-          });
-          if (q === '.flow-steps li') n += 5;
-        });
-        sec._rv = true;
-      });
-      function armReveal() {
-        root.classList.add('reveal-ready');
-        root.classList.add('hero-text-on');
-      }
-      if (window.__three3dReady) setTimeout(armReveal, 280);
-      else {
-        var t0 = Date.now();
-        var iv = setInterval(function () {
-          if (window.__three3dReady || Date.now() - t0 > 1600) {
-            clearInterval(iv);
-            setTimeout(armReveal, 280);
-          }
-        }, 40);
-      }
-      function show(sec) {
-        sec.querySelectorAll('.rv:not(.in)').forEach(function (el) {
-          el.classList.add('in');
-          var clear = function () { el.style.transitionDelay = ''; el.removeEventListener('transitionend', clear); };
-          el.addEventListener('transitionend', clear);
-          setTimeout(clear, 2000);
-        });
-      }
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) { if (en.isIntersecting) { show(en.target); io.unobserve(en.target); } });
-      }, { threshold: 0.25 });
-      groups.forEach(function (g) { var sec = document.querySelector(g[0]); if (sec) io.observe(sec); });
-    })();
-  </script>
-
   <script src="js/orgs.js"></script>
   <script>
     (function () {
@@ -1815,5 +1742,9 @@ html.hero-text-on .hero-first .scroll-hint { visibility: visible; }
   </script>
 
   <script src="js/legal.js"></script>
+  <script src="js/reveal.js"></script>
+  <script src="js/three.min.js"></script>
+  <script src="js/hero3d.js"></script>
+  <script src="js/how3d.js"></script>
 </body>
 </html>
