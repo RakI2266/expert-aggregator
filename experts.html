@@ -1003,6 +1003,8 @@
     @media (min-width: 901px) and (min-height: 620px) and (max-height: 740px) { .hero { padding-bottom: 4px; } .hero .logo-strip-header { margin-bottom: 4px; } }
 
     /* ===== Появление элементов (один раз на слайд) ===== */
+    html:not(.hero-text-on) .hero-first .hero-copy,
+    html:not(.hero-text-on) .hero-first .scroll-hint { opacity: 0 !important; visibility: hidden; }
     html.reveal-ready .rv:not(.in) { opacity: 0; transform: translateY(24px); }
     .rv { transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
     .audience-card.rv, .price-card.rv { transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1), border-color .2s, box-shadow .2s; }

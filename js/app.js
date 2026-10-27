@@ -114,7 +114,38 @@ function effectiveStatus(req) {
 function isAccepting(req) { return effectiveStatus(req) === 'accepting'; }
 
 // ---------- Storage ----------
-const SCHEMA_VERSION = 3;
+const SCHEMA_VERSION = 4;
+function emptyCompany(role) {
+  return {
+    solo: role === 'lawyer',
+    name: '',
+    inn: '',
+    kpp: '',
+    ogrn: '',
+    address: '',
+    logo: '' // data URL
+  };
+}
+function ensureOrgFields(u) {
+  if (!u || typeof u !== 'object') return u;
+  if (!u.teamRole) u.teamRole = 'admin';
+  if (typeof u.seeAll !== 'boolean') u.seeAll = true;
+  if (!Array.isArray(u.employees)) u.employees = [];
+  if (!u.company || typeof u.company !== 'object') {
+    u.company = emptyCompany(u.role);
+    if (u.role === 'expert') {
+      u.company.solo = false;
+      u.company.name = u.orgName || u.name || '';
+    } else if (u.orgName) {
+      u.company.solo = false;
+      u.company.name = u.orgName;
+    }
+  }
+  if (u.role === 'expert' && !u.company.name && (u.orgName || u.name)) {
+    u.company.name = u.orgName || u.name;
+  }
+  return u;
+}
 function migrateState(s) {
   if (!Array.isArray(s.threads)) s.threads = [];
   if (!Array.isArray(s.notifications)) s.notifications = [];
@@ -124,6 +155,9 @@ function migrateState(s) {
     if (!Array.isArray(r.answers)) r.answers = [];
     if (!Array.isArray(r.editHistory)) r.editHistory = [];
   });
+  if (!s.users || typeof s.users !== 'object') s.users = {};
+  Object.keys(s.users).forEach(id => { ensureOrgFields(s.users[id]); });
+  if (s.currentUser) ensureOrgFields(s.currentUser);
   s.schemaVersion = SCHEMA_VERSION;
   return s;
 }
@@ -1803,4 +1837,155 @@ function resetDemo() {
     });
   } catch (e) {}
   location.reload();
+}
+
+// ---------- Компания и сотрудники (MVP) ----------
+function uidEmp() {
+  return 'emp-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 7);
+}
+
+function getActiveUserRecord(state) {
+  if (!state || !state.currentUser) return null;
+  ensureOrgFields(state.currentUser);
+  const u = state.users[state.currentUser.id];
+  if (u) ensureOrgFields(u);
+  return u || state.currentUser;
+}
+
+function syncCurrentUser(state, u) {
+  if (!state || !u) return;
+  state.users[u.id] = u;
+  if (state.currentUser && state.currentUser.id === u.id) {
+    state.currentUser = Object.assign({}, u);
+  }
+}
+
+function getCompanyProfile(state) {
+  const u = getActiveUserRecord(state);
+  return u ? (u.company || emptyCompany(u.role)) : emptyCompany('lawyer');
+}
+
+function saveCompanyProfile(fields) {
+  const state = loadState();
+  const u = getActiveUserRecord(state);
+  if (!u) return { error: 'Нет пользователя' };
+  if (u.teamRole === 'employee') return { error: 'Только администратор может менять компанию' };
+  const c = Object.assign({}, u.company || emptyCompany(u.role), fields || {});
+  if (typeof c.solo === 'string') c.solo = c.solo === 'true' || c.solo === true;
+  u.company = c;
+  if (c.name) {
+    if (u.role === 'expert') u.orgName = c.name;
+  }
+  syncCurrentUser(state, u);
+  saveState(state);
+  return { ok: true, company: c };
+}
+
+function listEmployees(state, opts) {
+  const u = getActiveUserRecord(state || loadState());
+  if (!u) return [];
+  const all = Array.isArray(u.employees) ? u.employees.slice() : [];
+  const includeDeleted = opts && opts.includeDeleted;
+  if (includeDeleted) return all;
+  // Удалённых не показываем в UI, но запись остаётся — действия на платформе не трогаем
+  return all.filter(e => e && e.status !== 'deleted');
+}
+
+function addEmployee(payload) {
+  const state = loadState();
+  const u = getActiveUserRecord(state);
+  if (!u) return { error: 'Нет пользователя' };
+  if (u.teamRole === 'employee') return { error: 'Только администратор может добавлять сотрудников' };
+  const name = String(payload.name || '').trim();
+  const email = String(payload.email || '').trim().toLowerCase();
+  if (!name) return { error: 'Укажите ФИО' };
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { error: 'Укажите корректный email' };
+  const role = payload.role === 'admin' ? 'admin' : 'employee';
+  const seeAll = role === 'admin' ? true : !!payload.seeAll;
+  const method = payload.method === 'email' ? 'email' : 'manual';
+  if (!Array.isArray(u.employees)) u.employees = [];
+  // Не считаем удалённых — можно добавить снова того же email
+  if (u.employees.some(e => e.status !== 'deleted' && (e.email || '').toLowerCase() === email)) {
+    return { error: 'Сотрудник с таким email уже есть' };
+  }
+  const emp = {
+    id: uidEmp(),
+    name: name,
+    email: email,
+    role: role,
+    seeAll: seeAll,
+    method: method,
+    status: method === 'email' ? 'invited' : 'active',
+    inviteNote: method === 'email'
+      ? 'Приглашение создано (имитация). Ссылка: #invite/' + email
+      : 'Добавлен вручную',
+    createdAt: new Date().toISOString(),
+    deletedAt: null,
+    blockedAt: null
+  };
+  u.employees.push(emp);
+  syncCurrentUser(state, u);
+  saveState(state);
+  return { ok: true, employee: emp };
+}
+
+function updateEmployee(empId, patch) {
+  const state = loadState();
+  const u = getActiveUserRecord(state);
+  if (!u) return { error: 'Нет пользователя' };
+  if (u.teamRole === 'employee') return { error: 'Только администратор' };
+  const emp = (u.employees || []).find(e => e.id === empId);
+  if (!emp) return { error: 'Сотрудник не найден' };
+  if (patch.name != null) emp.name = String(patch.name).trim();
+  if (patch.email != null) emp.email = String(patch.email).trim().toLowerCase();
+  if (patch.role === 'admin' || patch.role === 'employee') emp.role = patch.role;
+  if (typeof patch.seeAll === 'boolean') emp.seeAll = emp.role === 'admin' ? true : patch.seeAll;
+  if (emp.role === 'admin') emp.seeAll = true;
+  if (patch.status === 'active' || patch.status === 'blocked' || patch.status === 'invited' || patch.status === 'deleted') {
+    emp.status = patch.status;
+  }
+  syncCurrentUser(state, u);
+  saveState(state);
+  return { ok: true, employee: emp };
+}
+
+/** Мягкое удаление: запись остаётся, статус deleted. История действий на платформе не удаляется. */
+function removeEmployee(empId) {
+  const state = loadState();
+  const u = getActiveUserRecord(state);
+  if (!u) return { error: 'Нет пользователя' };
+  if (u.teamRole === 'employee') return { error: 'Только администратор' };
+  const emp = (u.employees || []).find(e => e.id === empId);
+  if (!emp) return { error: 'Сотрудник не найден' };
+  emp.status = 'deleted';
+  emp.deletedAt = new Date().toISOString();
+  syncCurrentUser(state, u);
+  saveState(state);
+  return { ok: true, employee: emp };
+}
+
+/** Блокировка / разблокировка без удаления истории */
+function setEmployeeBlocked(empId, blocked) {
+  const state = loadState();
+  const u = getActiveUserRecord(state);
+  if (!u) return { error: 'Нет пользователя' };
+  if (u.teamRole === 'employee') return { error: 'Только администратор' };
+  const emp = (u.employees || []).find(e => e.id === empId);
+  if (!emp || emp.status === 'deleted') return { error: 'Сотрудник не найден' };
+  if (blocked) {
+    emp.status = 'blocked';
+    emp.blockedAt = new Date().toISOString();
+  } else {
+    emp.status = emp.method === 'email' && !emp.activatedAt ? 'invited' : 'active';
+    emp.blockedAt = null;
+  }
+  syncCurrentUser(state, u);
+  saveState(state);
+  return { ok: true, employee: emp };
+}
+
+function isOrgAdmin(user) {
+  if (!user) return false;
+  ensureOrgFields(user);
+  return user.teamRole !== 'employee';
 }

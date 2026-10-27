@@ -485,3 +485,25 @@ main > #pricing.section {
   .reviews-grid { gap: clamp(20px, 4vh, 48px); }
   .review-card blockquote { font-size: clamp(20px, 1.9vw, 28px); }
 }
+
+
+/* 3D first, then text — no FOUC of hero copy */
+html:not(.hero-text-on) .hero-first .hero-copy,
+html:not(.hero-text-on) .hero-first .scroll-hint {
+  opacity: 0 !important;
+  visibility: hidden;
+  pointer-events: none;
+}
+html.hero-text-on .hero-first .hero-copy,
+html.hero-text-on .hero-first .scroll-hint {
+  visibility: visible;
+  pointer-events: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  html:not(.hero-text-on) .hero-first .hero-copy,
+  html:not(.hero-text-on) .hero-first .scroll-hint {
+    opacity: 1 !important;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}

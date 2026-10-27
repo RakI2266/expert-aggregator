@@ -3,238 +3,179 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Expert Letters - Вход</title>
+  <title>Expert Letters — Вход</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <style>
+    html, body { min-height: 100%; }
     body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      background: var(--bg);
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #F7F9FC;
+      color: #0F172A;
+      overflow-x: hidden;
     }
     body::before {
-      content: '';
+      content: "";
       position: fixed;
-      top: -30%; right: -20%;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
-      pointer-events: none; z-index: 0;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(680px 680px at -6% -12%, rgba(147,197,253,.55), transparent 68%),
+        radial-gradient(620px 620px at 108% -8%, rgba(196,181,253,.42), transparent 70%),
+        radial-gradient(560px 560px at 50% 40%, rgba(165,243,252,.28), transparent 68%),
+        #F7F9FC;
     }
-    body::after {
-      content: '';
-      position: fixed;
-      bottom: -20%; left: -15%;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, transparent 70%);
-      pointer-events: none; z-index: 0;
-    }
-    .login-wrapper { position: relative; z-index: 1; width: 100%; max-width: 480px; }
-    .login-card {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 10px 40px -10px rgba(15, 23, 42, 0.12);
-      padding: 48px 40px 36px;
-      border: 1px solid rgba(226, 232, 240, 0.8);
-    }
-    .logo { text-align: center; margin-bottom: 8px; }
-    .logo-icon {
-      width: 56px; height: 56px;
-      background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%);
-      border-radius: 14px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.35);
-    }
-    .logo-icon svg { width: 28px; height: 28px; fill: white; }
-    .logo h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.4px; margin-bottom: 8px; }
-    .logo p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; max-width: 320px; margin: 0 auto; }
-    .roles { margin-top: 36px; display: flex; flex-direction: column; gap: 12px; }
-    .role-card {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      padding: 18px 20px;
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      background: #FAFBFC;
-      cursor: pointer;
-      transition: all 0.22s ease;
-      text-decoration: none;
-      color: inherit;
+    #top {
       position: relative;
-      overflow: hidden;
-    }
-    .role-card::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 0;
-      background: var(--primary);
-      transition: width 0.22s ease;
-    }
-    .role-card:hover {
-      border-color: var(--primary);
-      background: var(--primary-light);
-      box-shadow: 0 4px 16px -4px rgba(37, 99, 235, 0.15);
-      transform: translateY(-1px);
-    }
-    .role-card:hover::before { width: 4px; }
-    .role-icon {
-      width: 44px; height: 44px;
-      border-radius: 10px;
+      min-height: 100svh;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      background: white;
-      border: 1px solid var(--border);
+      align-items: flex-end;
+      padding: 0;
+      z-index: 1;
     }
-    .role-icon.lawyer svg { fill: #2563EB; }
-    .role-icon.expert svg { fill: #0EA5E9; }
-    .role-icon svg { width: 22px; height: 22px; }
-    .role-content h3 { font-size: 15.5px; font-weight: 600; margin-bottom: 4px; letter-spacing: -0.2px; }
-    .role-content p { font-size: 13px; color: var(--text-secondary); line-height: 1.45; }
-    .role-arrow {
-      margin-left: auto;
-      align-self: center;
-      opacity: 0;
-      transform: translateX(-6px);
-      transition: all 0.22s ease;
-      color: var(--primary);
+    .hero-first {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
     }
-    .role-card:hover .role-arrow { opacity: 1; transform: translateX(0); }
-    .demo-notice {
-      margin-top: 32px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-      text-align: center;
+    .login-hero {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 48px 40px 56px;
+      display: grid;
+      gap: 28px;
     }
-    .demo-notice .label {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      margin-bottom: 10px;
-    }
-    .demo-notice .label svg { width: 14px; height: 14px; fill: var(--text-muted); }
-    .demo-notice p { font-size: 13px; color: var(--text-muted); line-height: 1.55; max-width: 340px; margin: 0 auto; }
-    .footer {
-      margin-top: 28px;
-      text-align: center;
-      font-size: 12.5px;
-      color: var(--text-muted);
-    }
-    .footer a { color: var(--primary); font-weight: 500; }
-    .footer a:hover { text-decoration: underline; }
-    .footer .legal-links { margin-top: 8px; }
-    .footer .legal-links a { font-weight: 400; color: var(--text-secondary); }
-    .footer .legal-req { margin-top: 4px; font-size: 12px; }
-
     .back-home {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      margin-bottom: 20px;
       font-size: 13.5px;
       font-weight: 550;
-      color: var(--text-secondary);
+      color: #475569;
       text-decoration: none;
-      transition: color 0.15s;
+      width: fit-content;
     }
-    .back-home:hover { color: var(--primary); }
+    .back-home:hover { color: #1E40AF; }
     .back-home svg { width: 16px; height: 16px; }
-    @media (max-width: 520px) {
-      .login-card { padding: 36px 24px 28px; }
-      .logo h1 { font-size: 22px; }
+    .login-kicker {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #64748B;
+      margin: 0 0 10px;
+    }
+    .login-hero h1 {
+      font-family: Manrope, Inter, sans-serif;
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin: 0 0 14px;
+      max-width: 16ch;
+    }
+    .login-lead {
+      font-size: clamp(15px, 1.5vw, 18px);
+      color: #475569;
+      line-height: 1.55;
+      margin: 0 0 28px;
+      max-width: 42ch;
+    }
+    .login-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+    .login-ctas a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 22px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform .15s, box-shadow .15s, background .15s;
+    }
+    .login-ctas a.primary {
+      background: #2563EB;
+      color: #fff;
+      box-shadow: 0 10px 28px -8px rgba(37, 99, 235, 0.55);
+    }
+    .login-ctas a.primary:hover {
+      background: #1D4ED8;
+      transform: translateY(-1px);
+    }
+    .login-ctas a.secondary {
+      background: transparent;
+      color: #0F172A;
+      border: 1.5px solid #CBD5E1;
+    }
+    .login-ctas a.secondary:hover {
+      border-color: #2563EB;
+      color: #1E40AF;
+      background: rgba(255,255,255,.55);
+    }
+    .login-meta {
+      margin-top: 8px;
+      font-size: 13.5px;
+      color: #64748B;
+      max-width: 48ch;
+      line-height: 1.5;
+    }
+    .login-footer {
+      margin-top: 20px;
+      font-size: 12.5px;
+      color: #64748B;
+    }
+    .login-footer a { color: #2563EB; font-weight: 500; text-decoration: none; }
+    .login-footer a:hover { text-decoration: underline; }
+    .login-footer .legal-links { margin-top: 6px; }
+    .login-footer .legal-links a { font-weight: 400; color: #475569; }
+    @media (max-width: 720px) {
+      .login-hero { padding: 28px 20px 36px; }
+      .login-ctas a { width: 100%; }
     }
   </style>
 </head>
 <body>
-  <div class="login-wrapper">
-    <div class="login-card">
+  <section id="top" aria-label="Вход">
+    <div class="hero-first" aria-hidden="true"></div>
+    <div class="login-hero">
       <a href="landing.html" class="back-home">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         На главную
       </a>
-      <div class="logo">
-        <div class="logo-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 3L2 8l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <div>
+        <p class="login-kicker">Expert Letters</p>
+        <h1>Начните работу в одном кабинете</h1>
+        <p class="login-lead">Создавайте заявки на экспертизу или отвечайте на них — без рассылки и обзвона организаций.</p>
+        <div class="login-ctas">
+          <a href="lawyer/dashboard.html" class="primary" id="btnLawyer" onclick="event.preventDefault(); loginAs('lawyer');">Войти как юрист</a>
+          <a href="expert/feed.html" class="secondary" id="btnExpert" onclick="event.preventDefault(); loginAs('expert');">Войти как эксперт</a>
         </div>
-        <h1>Expert Letters</h1>
-        <p>Агрегатор заявок на судебно-строительную<br>техническую экспертизу</p>
-      </div>
-
-      <div class="roles">
-        <a href="lawyer/dashboard.html" class="role-card" id="btnLawyer" onclick="event.preventDefault(); loginAs('lawyer');">
-          <div class="role-icon lawyer">
-            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-          </div>
-          <div class="role-content">
-            <h3>Войти как юрист</h3>
-            <p>Создавать заявки и получать<br>информационные письма</p>
-          </div>
-          <svg class="role-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 18l6-6-6-6"/>
-          </svg>
-        </a>
-
-        <a href="expert/feed.html" class="role-card" id="btnExpert" onclick="event.preventDefault(); loginAs('expert');">
-          <div class="role-icon expert">
-            <svg viewBox="0 0 24 24"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg>
-          </div>
-          <div class="role-content">
-            <h3>Войти как экспертная организация</h3>
-            <p>Просматривать заявки и отправлять ответы</p>
-          </div>
-          <svg class="role-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 18l6-6-6-6"/>
-          </svg>
-        </a>
-      </div>
-
-      <div class="demo-notice">
-        <div class="label">
-          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-          Демо-режим
+        <p class="login-meta">Демо-режим: данные хранятся в браузере. Можно создавать заявки, отвечать и управлять сотрудниками.</p>
+        <div class="login-footer">
+          © 2026 Expert Letters · <a href="#" onclick="resetDemo(); return false;">Сбросить демо-данные</a>
+          <div class="legal-links"><a href="privacy.html">Политика обработки персональных данных</a> · <a href="offer.html">Публичная оферта</a></div>
         </div>
-        <p>
-          Данные сохраняются в браузере (localStorage).<br>
-          Можно создавать заявки, отвечать, редактировать и закрывать приём.
-        </p>
       </div>
     </div>
+  </section>
 
-    <div class="footer">
-      © 2026 Expert Letters · <a href="#" onclick="resetDemo(); return false;">Сбросить демо-данные</a>
-      <div class="legal-links"><a href="privacy.html">Политика обработки персональных данных</a> · <a href="offer.html">Публичная оферта</a></div>
-      <div class="legal-req"><span data-legal="operatorShort">ИП Рак Илья Александрович</span> · ИНН <span data-legal="inn">772407077928</span> · ОГРНИП <span data-legal="ogrnip">322774600594779</span></div>
-    </div>
-  </div>
   <script src="js/app.js"></script>
   <script src="js/legal.js"></script>
-  <script>
-    // fallback if app.js failed to define loginAs
-    if (typeof loginAs !== 'function') {
-      console.error('app.js failed to load loginAs');
-      document.getElementById('btnLawyer')?.addEventListener('click', function(e) {
-        e.preventDefault();
-        alert('Ошибка загрузки скрипта. Обновите страницу (Ctrl+F5).');
-      });
-      document.getElementById('btnExpert')?.addEventListener('click', function(e) {
-        e.preventDefault();
-        alert('Ошибка загрузки скрипта. Обновите страницу (Ctrl+F5).');
-      });
-    }
-  </script>
+  <script src="js/three.min.js"></script>
+  <script src="js/hero3d.js"></script>
 </body>
 </html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expert Letters — Аналитика</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/analytics.css">
+</head>
+<body style="display:flex">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3L2 8l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="sidebar-logo-text">
+          <h1>Expert Letters</h1>
+          <span>Кабинет эксперта</span>
+        </div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="feed.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+        <span>Все заявки</span>
+      </a>
+      <a href="favorites.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>Избранное</span>
+      </a>
+      <a href="answers.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        <span>Мои ответы</span>
+      </a>
+      <a href="hidden.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        <span>Скрытые</span>
+      </a>
+      <a href="analytics.html" class="nav-item active" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-6"/></svg>
+        <span>Аналитика</span>
+      </a>
+      <a href="settings.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span>Настройки</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="userAvatar">-</div>
+        <div class="user-details">
+          <div class="name" id="userName">-</div>
+          <div class="role">Экспертная организация</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <h2>Аналитика</h2>
+      <div class="topbar-actions">
+        <button type="button" class="btn btn-secondary" id="logoutBtn">Выйти</button>
+      </div>
+    </header>
+    <div class="content">
+      <p class="an-lead anim-fade">Сводка по откликам и ленте. Данные демо — из браузера.</p>
+      <div class="kpi-grid" id="kpiGrid"></div>
+      <div class="an-grid">
+        <div class="card an-card anim-card">
+          <div class="card-header"><h3>Отклики по неделям</h3></div>
+          <div class="card-body an-chart-wrap">
+            <div id="lineChart" class="line-chart"></div>
+            <div class="chart-legend">
+              <span><i style="background:#2563EB"></i> Отправленные отклики</span>
+            </div>
+          </div>
+        </div>
+        <div class="card an-card anim-card" style="--d:80ms">
+          <div class="card-header"><h3>Активность</h3></div>
+          <div class="card-body">
+            <div id="barChart" class="bar-chart"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/analytics.js"></script>
+  <script>
+  (function () {
+    var state = requireAuth('expert');
+    if (!state) return;
+    var user = state.currentUser;
+    var $ = function (id) { return document.getElementById(id); };
+    $('userName').textContent = user.orgName || user.name || '-';
+    $('userAvatar').textContent = (user.orgName || user.name || '-').slice(0, 2);
+    $('logoutBtn').addEventListener('click', logout);
+
+    var stats = ELAnalytics.expertStats(user.id);
+    $('kpiGrid').innerHTML = stats.kpis.map(function (k, i) {
+      return '<div class="kpi anim-card" style="--d:' + (i * 60) + 'ms"><div class="kpi-val">' + k.value + '</div><div class="kpi-label">' + k.label + '</div></div>';
+    }).join('');
+    ELAnalytics.renderLineChart($('lineChart'), stats.byWeek, ['sent'], ['#2563EB']);
+    ELAnalytics.renderBarChart($('barChart'), stats.statusBars);
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+.an-lead {
+  font-size: 14px;
+  color: var(--text-secondary, #475569);
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.kpi {
+  background: #fff;
+  border: 1px solid var(--border, #E2E8F0);
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.kpi-val {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #0F172A;
+  line-height: 1.1;
+}
+.kpi-label {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #64748B;
+}
+.an-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 14px;
+}
+.an-card .card-header { padding: 14px 16px; }
+.an-card .card-body { padding: 8px 16px 16px; }
+.an-chart-wrap { min-height: 220px; }
+.line-chart { width: 100%; }
+.chart-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: #64748B;
+}
+.chart-legend i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.bar-chart { display: flex; flex-direction: column; gap: 10px; }
+.bar-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 36px;
+  gap: 10px;
+  align-items: center;
+  opacity: 0;
+  transform: translateX(-8px);
+  animation: barIn .45s cubic-bezier(.2,.7,.2,1) forwards;
+  animation-delay: calc(var(--i, 0) * 70ms + 120ms);
+}
+.bar-label { font-size: 13px; color: #475569; }
+.bar-track {
+  height: 10px;
+  background: #F1F5F9;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  width: 0;
+  transition: width .7s cubic-bezier(.2,.7,.2,1);
+  transition-delay: calc(var(--i, 0) * 70ms + 180ms);
+}
+.bar-val { font-size: 13px; font-weight: 600; color: #0F172A; text-align: right; }
+@keyframes barIn {
+  to { opacity: 1; transform: none; }
+}
+.chart-line {
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  animation: drawLine 1s ease forwards;
+  animation-delay: .15s;
+}
+.chart-dot {
+  opacity: 0;
+  animation: fadeDot .35s ease forwards;
+  animation-delay: .85s;
+}
+@keyframes drawLine {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes fadeDot {
+  to { opacity: 1; }
+}
+.anim-fade {
+  opacity: 0;
+  animation: fadeUp .5s ease forwards;
+}
+.anim-card {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp .55s cubic-bezier(.2,.7,.2,1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes fadeUp {
+  to { opacity: 1; transform: none; }
+}
+@media (max-width: 960px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .an-grid { grid-template-columns: 1fr; }
+  .bar-row { grid-template-columns: 100px 1fr 32px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade, .anim-card, .bar-row, .chart-line, .chart-dot {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+  .bar-fill { transition: none; }
+}

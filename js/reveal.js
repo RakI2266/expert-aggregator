@@ -94,9 +94,26 @@
   var started = false;
   function start() {
     if (started) return; started = true;
+    document.documentElement.classList.add('hero-text-on');
     heads.concat(blocks).forEach(function (el) { io.observe(el); });
   }
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start);
-  setTimeout(start, 700);        // страховка: текст не останется скрытым, даже если шрифты грузятся долго
-  if (!document.fonts) start();
+  function startAfter3d() {
+    var go = function () {
+      // небольшая пауза после 3D, затем текст
+      setTimeout(start, 280);
+    };
+    if (window.__three3dReady) { go(); return; }
+    var t0 = Date.now();
+    var iv = setInterval(function () {
+      if (window.__three3dReady || Date.now() - t0 > 1600) {
+        clearInterval(iv);
+        go();
+      }
+    }, 40);
+  }
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(startAfter3d);
+  }
+  setTimeout(startAfter3d, 900); // страховка
+  if (!document.fonts) startAfter3d();
 })();

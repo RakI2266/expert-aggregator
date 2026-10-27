@@ -16,6 +16,139 @@
     .notif-row .d { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
     @media (max-width: 720px) { .form-row { grid-template-columns: 1fr !important; } }
   </style>
+<style id="settings-acc-css">
+    .content.content-narrow {
+      max-width: 1100px;
+      padding: 12px 20px 28px !important;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .content.content-narrow > .card { margin-bottom: 0 !important; }
+    .settings-acc { overflow: visible; border-radius: 14px; }
+    .settings-acc-head {
+      width: 100%; display: flex; align-items: center; gap: 8px;
+      padding: 12px 14px; background: transparent; border: 0; cursor: pointer;
+      text-align: left; font: inherit; color: inherit;
+    }
+    .settings-acc-head h3 { margin: 0; flex: 1; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+    .settings-acc-head .chev {
+      width: 18px; height: 18px; color: #64748B; transition: transform .2s; flex-shrink: 0;
+    }
+    .settings-acc.open .settings-acc-head .chev { transform: rotate(180deg); }
+    .settings-acc-body {
+      /* animated via settings-motion */
+      padding: 0 14px;
+      border-top: 1px solid transparent;
+    }
+    .settings-acc-body .form-group { margin-bottom: 10px; }
+    .settings-acc-body .form-row { gap: 12px; margin-bottom: 4px; }
+    .settings-acc-body .settings-section { margin-bottom: 12px; }
+    .settings-acc-body .settings-section h4 { margin: 0 0 6px; font-size: 13px; }
+    .settings-acc-body .checkbox-row { margin-bottom: 4px; }
+    .info-tip {
+      position: relative; display: inline-flex; align-items: center; justify-content: center;
+      width: 18px; height: 18px; border-radius: 50%; border: 1px solid #CBD5E1;
+      color: #64748B; font-size: 11px; font-weight: 700; background: #fff; line-height: 1;
+      cursor: help; flex-shrink: 0;
+    }
+    .info-tip:hover, .info-tip:focus, .info-tip[data-open] { border-color: #2563EB; color: #2563EB; outline: none; }
+    .info-tip .tip-bubble {
+      position: absolute; z-index: 40; left: 50%; bottom: calc(100% + 8px);
+      transform: translateX(-50%) translateY(4px);
+      width: min(260px, 72vw); padding: 9px 11px;
+      background: #0F172A; color: #F8FAFC; font-size: 12px; font-weight: 400;
+      line-height: 1.4; border-radius: 10px; text-align: left;
+      box-shadow: 0 12px 28px -10px rgba(15,23,42,.45);
+      opacity: 0; visibility: hidden; transition: opacity .15s, transform .15s;
+      pointer-events: none;
+    }
+    .info-tip:hover .tip-bubble, .info-tip:focus .tip-bubble, .info-tip[data-open] .tip-bubble {
+      opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+    }
+    .info-tip .tip-bubble::after {
+      content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      border: 6px solid transparent; border-top-color: #0F172A;
+    }
+    .org-logo-preview {
+      width: 56px; height: 56px; border-radius: 10px; border: 1px solid var(--border);
+      background: #F8FAFC; object-fit: contain; display: block;
+    }
+    .emp-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .emp-table th, .emp-table td { text-align: left; padding: 8px 6px; border-bottom: 1px solid #F1F5F9; vertical-align: middle; }
+    .emp-table th { font-size: 11.5px; color: var(--text-secondary); font-weight: 600; }
+    .emp-badge {
+      display: inline-block; padding: 2px 7px; border-radius: 999px; font-size: 11.5px; font-weight: 600;
+      background: #EFF6FF; color: #1E40AF;
+    }
+    .emp-badge.employee { background: #F1F5F9; color: #475569; }
+    .emp-badge.blocked { background: #FEF2F2; color: #B91C1C; }
+    .emp-badge.invited { background: #FFFBEB; color: #B45309; }
+    .emp-actions { display: flex; gap: 4px; flex-wrap: wrap; }
+    .form-hint.ok { color: #047857; }
+    .form-hint.err { color: #B91C1C; }
+    .empty-state {
+      text-align: center; padding: 18px 12px; color: var(--text-secondary); font-size: 13.5px;
+      background: #F8FAFC; border-radius: 12px; border: 1px dashed #E2E8F0;
+    }
+    .role-lock-note {
+      font-size: 13px; color: var(--text-secondary); padding: 10px 12px;
+      background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 10px; margin-bottom: 10px;
+    }
+    .topbar h2 { font-size: 18px; }
+
+    .role-chip {
+      display: inline-flex; align-items: center; margin-left: 10px;
+      padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
+      vertical-align: middle; background: #EFF6FF; color: #1E40AF;
+    }
+    .role-chip.employee { background: #F1F5F9; color: #475569; }
+  </style>
+<style id="settings-motion">
+    /* Accordion + cards motion */
+    .content.content-narrow > .card.settings-acc {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: settingsCardIn .45s cubic-bezier(.2,.7,.2,1) forwards;
+      animation-delay: calc(var(--si, 0) * 55ms);
+    }
+    @keyframes settingsCardIn {
+      to { opacity: 1; transform: none; }
+    }
+    .settings-acc-body {
+      display: grid !important;
+      grid-template-rows: 0fr;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      border-top-color: transparent !important;
+      transition: grid-template-rows .35s cubic-bezier(.2,.7,.2,1), padding .35s ease, border-color .25s;
+      overflow: hidden;
+    }
+    .settings-acc-body > .acc-inner {
+      min-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity .28s ease, transform .35s cubic-bezier(.2,.7,.2,1);
+    }
+    .settings-acc.open > .settings-acc-body {
+      grid-template-rows: 1fr !important;
+      padding-top: 4px !important;
+      padding-bottom: 14px !important;
+      border-top: 1px solid #F1F5F9 !important;
+    }
+    .settings-acc.open > .settings-acc-body > .acc-inner {
+      opacity: 1;
+      transform: none;
+      transition-delay: .05s;
+    }
+    .settings-acc-head .chev { transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+    @media (prefers-reduced-motion: reduce) {
+      .content.content-narrow > .card.settings-acc { animation: none; opacity: 1; transform: none; }
+      .settings-acc-body, .settings-acc-body > .acc-inner { transition: none !important; }
+      .settings-acc.open > .settings-acc-body > .acc-inner { opacity: 1; }
+    }
+</style>
 </head>
 <body style="display:flex">
   <aside class="sidebar">
@@ -39,6 +172,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
         <span>Создать заявку</span>
       </a>
+      <a href="analytics.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-6"/></svg>
+        <span>Аналитика</span>
+      </a>
 <a href="settings.html" class="nav-item active" aria-current="page">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
         <span>Настройки</span>
@@ -57,109 +194,495 @@
 
   <div class="main">
     <header class="topbar">
-      <h2>Настройки</h2>
+      <h2>Настройки <span id="userRoleBadge" class="role-chip">—</span></h2>
       <div class="topbar-actions">
         <button type="button" class="btn btn-secondary" id="logoutBtn">Выйти</button>
       </div>
     </header>
 
     <div class="content content-narrow">
-      <div class="card" id="plan">
-        <div class="card-header"><h3>Тариф</h3></div>
-        <div class="card-body" style="padding:20px 24px">
-          <div id="planStatus" style="margin-bottom:16px"></div>
+      <div class="card settings-acc open" id="plan" data-acc style="--si:0">
+        <button type="button" class="settings-acc-head" aria-expanded="true">
+          <h3>Тариф</h3>
+          <span class="info-tip" aria-label="Справка" title="Текущий пакет и лимиты на заявки.">i<span class="tip-bubble">Текущий пакет и лимиты на заявки.</span></span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="settings-acc-body">
+          <div class="acc-inner">
+
+          <div id="planStatus" style="margin-bottom:10px"></div>
           <div class="plan-grid" id="planGrid"></div>
+
+        </div>
         </div>
       </div>
+      <div class="card settings-acc" data-acc style="--si:1">
+        <button type="button" class="settings-acc-head" aria-expanded="false">
+          <h3>Профиль</h3>
+          <span class="info-tip" aria-label="Справка" title="ФИО, email и телефон для заявок и связи.">i<span class="tip-bubble">ФИО, email и телефон для заявок и связи.</span></span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="settings-acc-body">
+          <div class="acc-inner">
 
-      <!-- Profile -->
-      <div class="card">
-        <div class="card-header"><h3>Профиль</h3></div>
-        <form class="card-body" style="padding: 24px;" id="profileForm" novalidate>
-          <div class="form-row">
-            <div class="form-group" id="fg-profName">
-              <label for="profName" class="label-required">ФИО <span class="req-mark" aria-hidden="true">*</span></label>
-              <input type="text" id="profName" autocomplete="name" aria-required="true" aria-describedby="err-profName">
-              <div class="field-error" id="err-profName"></div>
+          <form id="profileForm" novalidate>
+            <div class="form-row">
+              <div class="form-group" id="fg-profName">
+                <label for="profName" class="label-required">ФИО <span class="req-mark" aria-hidden="true">*</span></label>
+                <input type="text" id="profName" autocomplete="name" aria-required="true" aria-describedby="err-profName">
+                <div class="field-error" id="err-profName"></div>
+              </div>
+              <div class="form-group" id="fg-profEmail">
+                <label for="profEmail" class="label-required">Email <span class="req-mark" aria-hidden="true">*</span></label>
+                <input type="email" id="profEmail" autocomplete="email" aria-required="true" aria-describedby="err-profEmail">
+                <div class="field-error" id="err-profEmail"></div>
+              </div>
             </div>
-            <div class="form-group" id="fg-profEmail">
-              <label for="profEmail" class="label-required">Email <span class="req-mark" aria-hidden="true">*</span></label>
-              <input type="email" id="profEmail" autocomplete="email" aria-required="true" aria-describedby="err-profEmail">
-              <div class="field-error" id="err-profEmail"></div>
+            <div class="form-group">
+              <label for="profPhone">Телефон</label>
+              <input type="tel" id="profPhone" autocomplete="tel">
             </div>
-          </div>
-          <div class="form-group">
-            <label for="profPhone">Телефон</label>
-            <input type="tel" id="profPhone" autocomplete="tel">
-          </div>
-          <button type="submit" class="btn btn-primary" id="saveProfileBtn">Сохранить профиль</button>
-        </form>
+            <button type="submit" class="btn btn-primary btn-sm" id="saveProfileBtn">Сохранить профиль</button>
+          </form>
+
+        </div>
+        </div>
       </div>
+      <div class="card settings-acc" id="companyCard" data-acc style="--si:2">
+        <button type="button" class="settings-acc-head" aria-expanded="false">
+          <h3>Компания</h3>
+          <span class="info-tip" aria-label="Справка" title="Соло или реквизиты компании через DaData, логотип.">i<span class="tip-bubble">Соло или реквизиты компании через DaData, логотип.</span></span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="settings-acc-body">
+          <div class="acc-inner">
 
-      <!-- Notifications -->
-      <div class="card">
-        <div class="card-header"><h3>Уведомления</h3></div>
-        <div class="card-body" style="padding: 24px;">
+          <div class="checkbox-row" style="margin-bottom:10px">
+            <input type="checkbox" id="coSolo">
+            <label for="coSolo">Работаю соло (без компании)</label>
+          </div>
+          <div id="companyFields">
+            <div class="form-row">
+              <div class="form-group" style="flex:1">
+                <label for="partyQuery">ИНН или ОГРН</label>
+                <input type="text" id="partyQuery" placeholder="7707083893" inputmode="numeric" autocomplete="off">
+              </div>
+              <div class="form-group" style="align-self:flex-end">
+                <button type="button" class="btn btn-secondary btn-sm" id="dadataBtn">Найти</button>
+              </div>
+            </div>
+            <p class="form-hint" id="dadataStatus" role="status" aria-live="polite"></p>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="coName">Название</label>
+                <input type="text" id="coName">
+              </div>
+              <div class="form-group">
+                <label for="coInn">ИНН</label>
+                <input type="text" id="coInn" inputmode="numeric">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="coKpp">КПП</label>
+                <input type="text" id="coKpp" inputmode="numeric">
+              </div>
+              <div class="form-group">
+                <label for="coOgrn">ОГРН</label>
+                <input type="text" id="coOgrn" inputmode="numeric">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="coAddress">Адрес</label>
+              <input type="text" id="coAddress">
+            </div>
+            <div class="form-group">
+              <label for="coLogo">Логотип</label>
+              <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+                <img id="coLogoPreview" class="org-logo-preview" alt="" hidden>
+                <div>
+                  <input type="file" id="coLogo" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+                  <button type="button" class="btn btn-ghost btn-sm" id="coLogoClear" style="margin-top:6px">Убрать</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary btn-sm" id="saveCompanyBtn">Сохранить</button>
+          <p class="form-hint" id="companySaved" role="status"></p>
+
+        </div>
+        </div>
+      </div>
+      <div class="card settings-acc" id="employeesCard" data-acc style="--si:3">
+        <button type="button" class="settings-acc-head" aria-expanded="false">
+          <h3>Сотрудники</h3>
+          <span class="info-tip" aria-label="Справка" title="Роли и доступ. Удаление не стирает историю.">i<span class="tip-bubble">Роли и доступ. Удаление не стирает историю.</span></span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="settings-acc-body">
+          <div class="acc-inner">
+
+          <p class="role-lock-note" id="empAdminOnlyNote" hidden>Только администратор может управлять сотрудниками.</p>
+          <p style="font-size:13px;color:var(--text-secondary);margin:0 0 10px;line-height:1.45">
+            Удаление скрывает доступ, история действий на платформе сохраняется. Блокировка временно отключает вход.
+          </p>
+          <div id="empFormWrap">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="empName">ФИО</label>
+                <input type="text" id="empName" autocomplete="name">
+              </div>
+              <div class="form-group">
+                <label for="empEmail">Email</label>
+                <input type="email" id="empEmail" autocomplete="email">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="empRole">Роль</label>
+                <select id="empRole">
+                  <option value="employee">Сотрудник</option>
+                  <option value="admin">Администратор</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="empMethod">Способ</label>
+                <select id="empMethod">
+                  <option value="manual">Создать вручную</option>
+                  <option value="email">Приглашение на email (имитация)</option>
+                </select>
+              </div>
+            </div>
+            <div class="checkbox-row" id="empSeeAllRow">
+              <input type="checkbox" id="empSeeAll">
+              <label for="empSeeAll">Видит все заявки организации</label>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" id="addEmpBtn" style="margin-top:8px">Добавить</button>
+            <p class="form-hint" id="empStatus" role="status"></p>
+          </div>
+          <div style="margin-top:12px;overflow-x:auto">
+            <table class="emp-table">
+              <thead>
+                <tr><th>ФИО</th><th>Email</th><th>Роль</th><th>Доступ</th><th>Статус</th><th></th></tr>
+              </thead>
+              <tbody id="empBody"></tbody>
+            </table>
+          </div>
+
+        </div>
+        </div>
+      </div>
+      <div class="card settings-acc" data-acc style="--si:4">
+        <button type="button" class="settings-acc-head" aria-expanded="false">
+          <h3>Уведомления</h3>
+          <span class="info-tip" aria-label="Справка" title="Каналы и события по заявкам и суду.">i<span class="tip-bubble">Каналы и события по заявкам и суду.</span></span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="settings-acc-body">
+          <div class="acc-inner">
+
           <div class="settings-section">
             <h4>Каналы</h4>
-            <div class="checkbox-row">
-              <input type="checkbox" id="chInApp">
-              <label for="chInApp">Внутри сайта</label>
-            </div>
-            <div class="checkbox-row">
-              <input type="checkbox" id="chEmail">
-              <label for="chEmail">Email</label>
-            </div>
+            <div class="checkbox-row"><input type="checkbox" id="chInApp"><label for="chInApp">Внутри сайта</label></div>
+            <div class="checkbox-row"><input type="checkbox" id="chEmail"><label for="chEmail">Email</label></div>
           </div>
-
           <div class="settings-section">
             <h4>Telegram</h4>
             <div id="tgBox"></div>
           </div>
-
           <div class="settings-section">
             <h4>События</h4>
-            <div class="checkbox-row">
-              <input type="checkbox" id="evNewAnswer">
-              <label for="evNewAnswer">Новый ответ эксперта</label>
-            </div>
-            <div class="checkbox-row">
-              <input type="checkbox" id="evAnswerUpdated">
-              <label for="evAnswerUpdated">Эксперт обновил ответ</label>
-            </div>
-            <div class="checkbox-row">
-              <input type="checkbox" id="evClosed">
-              <label for="evClosed">Заявка закрыта</label>
-            </div>
-            <div class="checkbox-row">
-              <input type="checkbox" id="evCourt">
-              <label for="evCourt">Напоминание о дате суда</label>
-            </div>
+            <div class="checkbox-row"><input type="checkbox" id="evNewAnswer"><label for="evNewAnswer">Новый ответ эксперта</label></div>
+            <div class="checkbox-row"><input type="checkbox" id="evAnswerUpdated"><label for="evAnswerUpdated">Эксперт обновил ответ</label></div>
+            <div class="checkbox-row"><input type="checkbox" id="evClosed"><label for="evClosed">Заявка закрыта</label></div>
+            <div class="checkbox-row"><input type="checkbox" id="evCourt"><label for="evCourt">Напоминание о дате суда</label></div>
           </div>
-
           <div class="settings-section">
             <h4>Напоминания о дате суда</h4>
             <div class="checkbox-row"><input type="checkbox" id="d7"><label for="d7">За 7 дней</label></div>
             <div class="checkbox-row"><input type="checkbox" id="d3"><label for="d3">За 3 дня</label></div>
             <div class="checkbox-row"><input type="checkbox" id="d0"><label for="d0">В день заседания</label></div>
           </div>
+          <button type="button" class="btn btn-primary btn-sm" id="saveNotifBtn">Сохранить уведомления</button>
 
-          <button type="button" class="btn btn-primary" id="saveNotifBtn">Сохранить уведомления</button>
+        </div>
         </div>
       </div>
+      <div class="card settings-acc" data-acc style="--si:5">
+        <button type="button" class="settings-acc-head" aria-expanded="false">
+          <h3>Последние уведомления</h3>
+          <span class="info-tip" aria-label="Справка" title="Недавние уведомления аккаунта.">i<span class="tip-bubble">Недавние уведомления аккаунта.</span></span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="settings-acc-body">
+          <div class="acc-inner">
 
-      <div class="card">
-        <div class="card-header"><h3>Последние уведомления</h3></div>
-        <div class="card-body" id="notifList" style="padding: 16px 24px;"></div>
+          <div id="notifList"></div>
+
+        </div>
+        </div>
       </div>
     </div>
   </div>
 
   <script src="../js/app.js"></script>
+  <script src="../js/config.local.js"></script>
+  <script src="../js/dadata.js"></script>
+  <script>
+  (function () {
+    if (typeof getCompanyProfile !== 'function') return;
+    const $ = id => document.getElementById(id);
+    const state = loadState();
+    const user = state.currentUser || {};
+    const isAdmin = typeof isOrgAdmin === 'function' ? isOrgAdmin(user) : (user.teamRole !== 'employee');
+    const company = getCompanyProfile(state);
+
+    ['companyCard', 'employeesCard', 'plan'].forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el && !isAdmin) el.hidden = true;
+    });
+    if (!isAdmin) {
+      const note = $('empAdminOnlyNote');
+      if (note) note.hidden = false;
+      const wrap = $('empFormWrap');
+      if (wrap) wrap.hidden = true;
+    }
+
+    function setLogoPreview(url) {
+      const img = $('coLogoPreview');
+      if (!img) return;
+      if (url) { img.src = url; img.hidden = false; }
+      else { img.removeAttribute('src'); img.hidden = true; }
+    }
+    if ($('coName')) $('coName').value = company.name || '';
+    if ($('coInn')) $('coInn').value = company.inn || '';
+    if ($('coKpp')) $('coKpp').value = company.kpp || '';
+    if ($('coOgrn')) $('coOgrn').value = company.ogrn || '';
+    if ($('coAddress')) $('coAddress').value = company.address || '';
+    setLogoPreview(company.logo || '');
+
+    const solo = $('coSolo');
+    if (solo) {
+      solo.checked = !!company.solo;
+      const fields = $('companyFields');
+      const empCard = $('employeesCard');
+      function syncSolo() {
+        if (fields) fields.hidden = solo.checked;
+        if (empCard && isAdmin) empCard.hidden = solo.checked;
+      }
+      solo.addEventListener('change', syncSolo);
+      syncSolo();
+    }
+
+    $('dadataBtn') && $('dadataBtn').addEventListener('click', async function () {
+      const st = $('dadataStatus');
+      const q = (($('partyQuery') && $('partyQuery').value) || '').trim();
+      if (!q) { if (st) { st.textContent = 'Укажите ИНН или ОГРН'; st.className = 'form-hint err'; } return; }
+      if (!window.DaDataParty) { if (st) { st.textContent = 'Модуль DaData не загружен'; st.className = 'form-hint err'; } return; }
+      if (st) { st.textContent = 'Ищем…'; st.className = 'form-hint'; }
+      try {
+        const party = await DaDataParty.findById(q);
+        if (!party) { if (st) { st.textContent = 'Ничего не найдено'; st.className = 'form-hint err'; } return; }
+        if ($('coName')) $('coName').value = party.name || '';
+        if ($('coInn')) $('coInn').value = party.inn || '';
+        if ($('coKpp')) $('coKpp').value = party.kpp || '';
+        if ($('coOgrn')) $('coOgrn').value = party.ogrn || '';
+        if ($('coAddress')) $('coAddress').value = party.address || '';
+        if (st) { st.textContent = 'Данные подставлены. Сохраните.'; st.className = 'form-hint ok'; }
+      } catch (e) {
+        if (st) { st.textContent = e.message || String(e); st.className = 'form-hint err'; }
+      }
+    });
+
+    let pendingLogo = company.logo || '';
+    if ($('coLogo')) $('coLogo').addEventListener('change', function () {
+      const f = this.files && this.files[0];
+      if (!f) return;
+      if (f.size > 800 * 1024) {
+        const st = $('companySaved');
+        if (st) { st.textContent = 'Файл больше 800 КБ'; st.className = 'form-hint err'; }
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function () {
+        pendingLogo = String(reader.result || '');
+        setLogoPreview(pendingLogo);
+      };
+      reader.readAsDataURL(f);
+    });
+    if ($('coLogoClear')) $('coLogoClear').addEventListener('click', function () {
+      pendingLogo = '';
+      if ($('coLogo')) $('coLogo').value = '';
+      setLogoPreview('');
+    });
+
+    if ($('saveCompanyBtn')) $('saveCompanyBtn').addEventListener('click', function () {
+      if (!isAdmin) return;
+      const soloEl = $('coSolo');
+      const res = saveCompanyProfile({
+        solo: soloEl ? !!soloEl.checked : false,
+        name: (($('coName') && $('coName').value) || '').trim(),
+        inn: (($('coInn') && $('coInn').value) || '').trim(),
+        kpp: (($('coKpp') && $('coKpp').value) || '').trim(),
+        ogrn: (($('coOgrn') && $('coOgrn').value) || '').trim(),
+        address: (($('coAddress') && $('coAddress').value) || '').trim(),
+        logo: pendingLogo || ''
+      });
+      const st = $('companySaved');
+      if (res.error) {
+        if (st) { st.textContent = res.error; st.className = 'form-hint err'; }
+        return;
+      }
+      if (st) { st.textContent = 'Сохранено'; st.className = 'form-hint ok'; }
+      if (typeof toast === 'function') toast('Компания сохранена');
+      const u = loadState().currentUser;
+      if (u && $('userName') && (u.orgName || u.name)) $('userName').textContent = u.orgName || u.name;
+    });
+
+    function escapeHtml(s) {
+      return String(s || '').replace(/[&<>"']/g, function (c) {
+        return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+      });
+    }
+    function renderEmployees() {
+      const body = $('empBody');
+      if (!body) return;
+      const list = listEmployees();
+      if (!list.length) {
+        body.innerHTML = '<tr><td colspan="6"><div class="empty-state">Пока нет сотрудников. Добавьте первого — вручную или приглашением.</div></td></tr>';
+        return;
+      }
+      body.innerHTML = list.map(function (e) {
+        const roleLabel = e.role === 'admin' ? 'Админ' : 'Сотрудник';
+        const access = e.role === 'admin' || e.seeAll ? 'Все заявки' : 'Только свои';
+        const status = e.status === 'invited' ? 'Приглашён' : (e.status === 'blocked' ? 'Заблокирован' : 'Активен');
+        const badgeExtra = e.status === 'blocked' ? ' blocked' : (e.status === 'invited' ? ' invited' : (e.role === 'admin' ? '' : ' employee'));
+        const actions = !isAdmin ? '' : (
+          (e.status === 'blocked'
+            ? '<button type="button" class="btn btn-ghost btn-sm emp-unblock" data-id="' + e.id + '">Разблокировать</button>'
+            : '<button type="button" class="btn btn-ghost btn-sm emp-block" data-id="' + e.id + '">Заблокировать</button>') +
+          '<button type="button" class="btn btn-ghost btn-sm emp-del" data-id="' + e.id + '">Удалить</button>'
+        );
+        return '<tr data-id="' + e.id + '">' +
+          '<td>' + escapeHtml(e.name) + '</td>' +
+          '<td>' + escapeHtml(e.email) + '</td>' +
+          '<td><span class="emp-badge ' + (e.role === 'admin' ? '' : 'employee') + '">' + roleLabel + '</span></td>' +
+          '<td>' + access + '</td>' +
+          '<td><span class="emp-badge' + badgeExtra + '">' + status + '</span></td>' +
+          '<td class="emp-actions">' + actions + '</td></tr>';
+      }).join('');
+    }
+    renderEmployees();
+
+    function syncSeeAllVisibility() {
+      const row = $('empSeeAllRow');
+      if (row) row.style.display = (($('empRole') && $('empRole').value) === 'admin') ? 'none' : '';
+    }
+    if ($('empRole')) $('empRole').addEventListener('change', syncSeeAllVisibility);
+    syncSeeAllVisibility();
+
+    if ($('addEmpBtn')) $('addEmpBtn').addEventListener('click', function () {
+      if (!isAdmin) return;
+      const res = addEmployee({
+        name: $('empName') && $('empName').value,
+        email: $('empEmail') && $('empEmail').value,
+        role: $('empRole') && $('empRole').value,
+        seeAll: !!($('empSeeAll') && $('empSeeAll').checked),
+        method: $('empMethod') && $('empMethod').value
+      });
+      const st = $('empStatus');
+      if (res.error) {
+        if (st) { st.textContent = res.error; st.className = 'form-hint err'; }
+        return;
+      }
+      if (st) {
+        st.textContent = res.employee.method === 'email'
+          ? 'Приглашение создано (имитация). ' + (res.employee.inviteNote || '')
+          : 'Сотрудник добавлен';
+        st.className = 'form-hint ok';
+      }
+      if ($('empName')) $('empName').value = '';
+      if ($('empEmail')) $('empEmail').value = '';
+      renderEmployees();
+    });
+
+    if ($('empBody')) $('empBody').addEventListener('click', function (e) {
+      if (!isAdmin) return;
+      const del = e.target.closest('.emp-del');
+      if (del) {
+        if (!confirm('Удалить сотрудника? История действий на платформе сохранится.')) return;
+        removeEmployee(del.getAttribute('data-id'));
+        renderEmployees();
+        return;
+      }
+      const block = e.target.closest('.emp-block');
+      if (block) {
+        setEmployeeBlocked(block.getAttribute('data-id'), true);
+        renderEmployees();
+        return;
+      }
+      const unblock = e.target.closest('.emp-unblock');
+      if (unblock) {
+        setEmployeeBlocked(unblock.getAttribute('data-id'), false);
+        renderEmployees();
+      }
+    });
+  })();
+  </script>
+
+  <script>
+  (function () {
+    function bindAccordion() {
+      document.querySelectorAll('[data-acc]').forEach(function (acc) {
+        var head = acc.querySelector('.settings-acc-head');
+        if (!head || head.dataset.bound) return;
+        head.dataset.bound = '1';
+        head.addEventListener('click', function (e) {
+          if (e.target.closest('.info-tip')) return;
+          e.preventDefault();
+          acc.classList.toggle('open');
+          head.setAttribute('aria-expanded', acc.classList.contains('open') ? 'true' : 'false');
+        });
+      });
+      document.querySelectorAll('.info-tip').forEach(function (tip) {
+        if (tip.dataset.bound) return;
+        tip.dataset.bound = '1';
+        tip.setAttribute('tabindex', '0');
+        tip.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var open = tip.hasAttribute('data-open');
+          document.querySelectorAll('.info-tip[data-open]').forEach(function (t) { t.removeAttribute('data-open'); });
+          if (!open) tip.setAttribute('data-open', '');
+        });
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bindAccordion);
+    } else {
+      bindAccordion();
+    }
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.info-tip')) {
+        document.querySelectorAll('.info-tip[data-open]').forEach(function (t) { t.removeAttribute('data-open'); });
+      }
+    });
+  })();
+  </script>
+
+
   <script>
   (function () {
     const state = requireAuth('lawyer');
     if (!state) return;
+    (function () {
+      var badge = document.getElementById('userRoleBadge');
+      if (!badge || !state.currentUser) return;
+      var admin = typeof isOrgAdmin === 'function' ? isOrgAdmin(state.currentUser) : (state.currentUser.teamRole !== 'employee');
+      badge.textContent = admin ? 'Администратор' : 'Сотрудник';
+      badge.classList.toggle('employee', !admin);
+    })();
+
     let user = state.currentUser;
     const $ = id => document.getElementById(id);
     function renderUser() {
@@ -320,5 +843,6 @@
     }
   })();
   </script>
+
 </body>
 </html>
